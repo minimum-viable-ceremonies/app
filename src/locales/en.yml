@@ -477,6 +477,10 @@ sidebar:
   expand: Expand the sidebar
   shareableLink: Shareable link
   teamsAndRoles: Team and roles
+  export: Export to calendar
+  exportHelptext: Export this room to your team's calendar
+  exportProcessing: Exporting...
+  exportFinished: Export complete!
   setupRoom: New room
   setupRoomTooltip: Create a new room
 themes:

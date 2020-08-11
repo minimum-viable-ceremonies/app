@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react"
 import { useTranslation } from "react-i18next"
 
 import Dropdown from "./dropdown"
+import Export from "./export"
 import ShareableLink from "./shareableLink"
 import Participant from "./participant"
 import ParticipantIcon from "./participantIcon"
@@ -9,7 +10,7 @@ import Context from "../contexts/room"
 import "../styles/sidebar.scss"
 
 const Sidebar = () => {
-  const { shareableLink, name, organization, participants, setEditingRoomId } = useContext(Context)
+  const { shareableLink, name, organization, participants, setEditingRoomId, features } = useContext(Context)
   const [expanded, setExpanded] = useState(true)
   const { t } = useTranslation()
 
@@ -41,6 +42,9 @@ const Sidebar = () => {
           </div>
         ))}
       </div>
+      {features.export && <div className="sidebar-option mvc-hover-state">
+        <Export />
+      </div>}
       <div className="sidebar-option mvc-hover-state">
         <Dropdown
           klass="light"
@@ -76,6 +80,9 @@ const Sidebar = () => {
           </div>
         ))}
       </div>
+      {features.export && <div className="sidebar-collapsed-item mvc-hover-state">
+        <Export collapsed={true} />
+      </div>}
       <div className="sidebar-collapsed-item mvc-hover-state">
         <Dropdown
           icon="basic/plus"

@@ -20,8 +20,8 @@ describe('Edit room', () => {
     cy.get('.sidebar-collapsed-item .sidebar-collapsed-participant')
     cy.get('.sidebar-collapsed-item .sidebar-collapsed-setup-room')
 
-    cy.get('.sidebar-collapsed-item .closed').click()
-    cy.get('sidebar.expanded')
+    cy.get('.sidebar.collapsed .dropdown-button').first().click()
+    cy.get('.sidebar.expanded')
   })
 
   it('Can add and remove a sprint week', () => {

@@ -2,12 +2,19 @@
   "uuid": "test-room-uuid",
   "name": "Example room",
   "weekCount": 1,
-  "ceremonies": [{
+  "ceremonies": {
     "checkin": {
       "async": true,
       "id": "checkin",
       "index": 0,
       "placement": "undecided"
     }
-  }]
+  },
+  "participants": {
+    "test-participant-uuid": {
+      "id": "test-participant-uuid",
+      "roles": ["actioner"],
+      "username": "Test participant"
+    }
+  }
 }

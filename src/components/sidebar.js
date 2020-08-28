@@ -77,12 +77,14 @@ const Sidebar = () => {
         ))}
       </div>
       <div className="sidebar-collapsed-item mvc-hover-state">
-        <Dropdown
-          icon="basic/plus"
-          size={16}
-          tooltip={t("sidebar.setupRoomTooltip")}
-          onClick={() => setEditingRoomId(true)}
-        />
+        <div className="sidebar-collapsed-setup-room">
+          <Dropdown
+            icon="basic/plus"
+            size={16}
+            tooltip={t("sidebar.setupRoomTooltip")}
+            onClick={() => setEditingRoomId(true)}
+          />
+        </div>
       </div>
     </div>
   )

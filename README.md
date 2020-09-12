@@ -70,7 +70,7 @@ FRESHCHAT_HOST=https://wchat.au.freshchat.com
 
 Visit our [translation page](https://translate.minimal.cards) to translate Minimum Viable Ceremonies into your language!
 
-In order to publish translations, you'll need to set an API key for Crowdin:
+In order to publish or sync translations, you'll need to set an API key for Crowdin:
 ```shell
 CROWDIN_API_KEY=<API_TOKEN>
 ```

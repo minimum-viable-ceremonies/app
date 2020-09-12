@@ -14,7 +14,7 @@ board:
 cadences:
   undecided:
     name: Ceremonies
-    miniName: Undecided
+    miniName: Sin decidir
     description: Ceremonies which haven't been processed yet
   daily:
     name: Daily

@@ -1,6 +1,6 @@
 # Minimum Viable Ceremonies
 
-This is an app designed to help teams improve their processes, a part of https://minimal.cards.
+This is an app designed to help teams improve their agile processes, a part of https://minimal.cards. This repo is live at https://mvc.minimal.cards
 
 It's written on the excellent [Gatsby](https://www.gatsbyjs.org/) framework, with a [Firebase](https://firebase.google.com/) backend.
 

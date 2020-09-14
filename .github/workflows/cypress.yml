@@ -12,11 +12,11 @@ jobs:
           path: serviceAccount.json
           contents: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           write-mode: overwrite
-    - uses: w9jds/firebase-action@master
-      with:
-        args: deploy --only database --project ${{ secrets.FIREBASE_DOMAIN }}
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      - uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only database --project ${{ secrets.FIREBASE_DOMAIN }}
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       - uses: cypress-io/github-action@v2
         with:
           command: npm run test:ci

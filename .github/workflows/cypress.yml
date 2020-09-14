@@ -14,7 +14,7 @@ jobs:
           write-mode: overwrite
       - uses: w9jds/firebase-action@master
         with:
-          args: deploy --only database --project ${{ secrets.FIREBASE_DOMAIN }}
+          args: deploy --only database --project ${{ secrets.FIREBASE_TEST_DOMAIN }}
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       - uses: cypress-io/github-action@v2

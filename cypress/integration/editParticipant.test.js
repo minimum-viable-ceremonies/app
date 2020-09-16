@@ -7,12 +7,12 @@ describe('Edit participant', () => {
     })
   })
 
-  it('Can edit a username', () => {
-    cy.get('input[name=username]').clear().type('New name')
+  it('Can edit a name', () => {
+    cy.get('input[name=displayName]').clear().type('New name')
 
     cy.wait(500)
     cy.fetchRoom('test-room-uuid').then(room => {
-      assert.equal(room.participants['test-participant-uuid'].username, 'New name')
+      assert.equal(room.participants['test-participant-uuid'].displayName, 'New name')
     })
   })
 

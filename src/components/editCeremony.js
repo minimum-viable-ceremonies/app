@@ -9,6 +9,8 @@ import Icon from "./icon"
 import ParticipantOption from "./participantOption"
 import Context from "../contexts/room"
 import "../styles/setup.scss"
+import cadenceData from "../data/cadences"
+import hourData from "../data/hours"
 
 const withOption = (value, option) => {
   switch (option) {
@@ -29,7 +31,7 @@ const withOption = (value, option) => {
 
 const EditCeremony = ({ onSubmit }) => {
   const { t } = useTranslation()
-  const { weekCount, editingCeremony, participants, modifyCeremony, cadenceData, hourData } = useContext(Context)
+  const { weekCount, editingCeremony, participants, modifyCeremony } = useContext(Context)
   const { id, placement, async, notes, startTime, endTime } = editingCeremony || {}
   const cadences = useMemo(() => (
     cadenceData
@@ -48,8 +50,8 @@ const EditCeremony = ({ onSubmit }) => {
   ), [startTimes, startTime])
   const peopleOptions = useMemo(() => (
     Object.values(participants).map(participant => ({
-      value: participant.id,
-      label: participant.username,
+      value: participant.uid,
+      label: participant.displayName,
     }))
   ), [participants])
 

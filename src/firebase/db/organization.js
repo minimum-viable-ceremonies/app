@@ -1,26 +1,23 @@
-import { signIn } from "../auth"
 import { navigate } from "gatsby"
 import { set, sync, unsync, load, debouncedWrite } from "./common"
 
 export default {
   create: ({ uuid, name, image }) => (
-    signIn()
-      .then(() => set(`organizations/${uuid}`, { uuid, name, image }))
-      .then(() => navigate(`organizations/${uuid}`))
+    set(`organizations/${uuid}`, { uuid, name, image }).then(() => (
+      navigate(`organizations/${uuid}`)
+    ))
   ),
 
   setup: ({ uuid, modifyFeature }) => {
     if (!uuid) { return Promise.resolve({}) }
 
-    return signIn().then(() => {
-      sync(`organizations/${uuid}/features`, snapshot => (
-        Object.entries(snapshot.toJSON() || {}).map(([key, value]) => (
-          modifyFeature(key, value)
-        ))
+    sync(`organizations/${uuid}/features`, snapshot => (
+      Object.entries(snapshot.toJSON() || {}).map(([key, value]) => (
+        modifyFeature(key, value)
       ))
+    ))
 
-      return load(`organizations/${uuid}`)
-    })
+    return load(`organizations/${uuid}`).then(r => console.log(r) || r).catch(console.log)
   },
 
   teardown: uuid => {

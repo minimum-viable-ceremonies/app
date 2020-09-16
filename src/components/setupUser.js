@@ -5,22 +5,22 @@ import Card from "./card"
 import RoleBadge from "./roleBadge"
 import RoomContext from "../contexts/room"
 import ModalContext from "../contexts/modal"
-import { authWithGoogle } from "../firebase/auth"
 import "../styles/setup.scss"
+import roleData from "../data/roles"
 import ceremonyHelp from "../images/help/ceremony.gif"
 import voidHelp from "../images/help/void.gif"
 import GoogleLogo from "../images/icons/symbols/google.svg"
 
 const SetupUser = ({ onSubmit }) => {
-  const { roleData, features } = useContext(RoomContext)
+  const { features } = useContext(RoomContext)
   const { nextStep, currentStep, nextStepOnEnter, model, setModel } = useContext(ModalContext)
   const [currentRole, setCurrentRole] = useState()
   const { t } = useTranslation()
-  const usernameRef = useRef()
+  const displayNameRef = useRef()
 
   useEffect(() => {
     if (currentStep.index === 1) {
-      setTimeout(() => usernameRef.current.focus(), 500)
+      setTimeout(() => displayNameRef.current.focus(), 500)
     }
   }, [currentStep.index])
 
@@ -37,9 +37,7 @@ const SetupUser = ({ onSubmit }) => {
           {features.premium && (
             <div className="setup-panel">
               <div className="setup-input-subpanel">
-                <button className="mvc-btn btn-secondary m-auto flex" onClick={() => (
-                  authWithGoogle().then(user => setModel(current => ({ ...current, ...user })))
-                )}>
+                <button className="mvc-btn btn-secondary m-auto flex" onClick={console.log}>
                   <GoogleLogo className="mvc-logo mr-2" />
                   <span>{t("setup.user.login.google")}</span>
                 </button>
@@ -50,18 +48,18 @@ const SetupUser = ({ onSubmit }) => {
         <div className={`setup-user-slide setup-slide ${currentStep.index === 1 ? 'active' : ''} setup-user-name`}>
           <div className="setup-panel">
             {model.uid && <div className="setup-input-subpanel">
-              <img className="setup-input-avatar" src={model.image} alt={model.username} />
+              <img className="setup-input-avatar" src={model.image} alt={model.displayName} />
             </div>}
             <div className="setup-input-subpanel mt-4">
-              {!model.uid && <h1 className="input-label">{t("setup.user.username")}</h1>}
+              {!model.uid && <h1 className="input-label">{t("setup.user.displayName")}</h1>}
               <input
                 autoComplete="off"
-                ref={usernameRef}
+                ref={displayNameRef}
                 className="mvc-inline-edit appearance-none bg-transparent border-none w-full text-gray-700 placeholder-gray-600 focus:placeholder-gray-500 font-bold text-2xl mr-3 py-2 leading-tight focus:outline-none"
-                name="username"
-                placeholder={t("setup.user.usernamePlaceholder")}
-                value={model.username}
-                onChange={({ target: { value } }) => setModel(user => ({ ...user, username: value }))}
+                name="displayName"
+                placeholder={t("setup.user.displayNamePlaceholder")}
+                value={model.displayName}
+                onChange={({ target: { value } }) => setModel(user => ({ ...user, displayName: value }))}
                 onKeyPress={currentStep.index === 1 ? nextStepOnEnter : null}
               />
             </div>
@@ -71,9 +69,9 @@ const SetupUser = ({ onSubmit }) => {
                 className="mvc-inline-edit appearance-none bg-transparent border-none w-full text-gray-700 placeholder-gray-600 focus:placeholder-gray-500 font-bold text-2xl mr-3 py-2 leading-tight focus:outline-none"
                 disabled={true}
                 name="email"
-                placeholder={t("setup.user.usernamePlaceholder")}
+                placeholder={t("setup.user.displayNamePlaceholder")}
                 value={model.email}
-                onChange={({ target: { value } }) => setModel(user => ({ ...user, username: value }))}
+                onChange={({ target: { value } }) => setModel(user => ({ ...user, displayName: value }))}
                 onKeyPress={currentStep.index === 1 ? nextStepOnEnter : null}
               />
             </div>}

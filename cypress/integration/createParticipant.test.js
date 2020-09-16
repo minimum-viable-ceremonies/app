@@ -4,7 +4,7 @@ describe('Create participant', () => {
       cy.visit('/room/test-room-uuid')
       cy.contains('What\'s your name?', {timeout: 10_000})
       cy.get('.controls .btn-primary').should('be.disabled')
-      cy.get('input[name=username]').type('Barbara Smith')
+      cy.get('input[name=displayName]').type('Barbara Smith')
       cy.get('.controls .btn-primary').should('not.be.disabled')
       cy.get('.controls .btn-primary').click()
 

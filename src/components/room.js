@@ -30,20 +30,18 @@ const Room = ({ uuid }) => {
         <Board />
         <Modal
           Content={SetupUser}
-          open={!context.currentUser}
-          initialModel={{
-            id: phrase({ exactly: 3, join: '-' }),
-            username: '',
-            roles: [],
-          }}
+          open={!Object.keys(context.participants).includes(context.currentUser.uid)}
+          initialModel={{ uid: context.currentUser.uid, displayName: '', roles: [] }}
           initialStep={context.features.premium ? 0 : 1}
-          submit={participant => context.modifyParticipant(participant.id, participant)}
+          submit={model => context.signIn().then(user => (
+            context.modifyParticipant(user.uid, { ...model, uid: user.uid })
+          ))}
           steps={[{
             // auth provider step
             canProceed: ({ uid }) => !!uid
           }, {
             next: "setup.controls.next",
-            canProceed: ({ username }) => !!username,
+            canProceed: ({ displayName }) => !!displayName,
           }, {
             next: "setup.controls.next",
             back: "setup.controls.back",

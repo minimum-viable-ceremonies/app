@@ -1,16 +1,15 @@
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
 import Select from "react-select"
 import { useTranslation } from "react-i18next"
 import data from "emoji-mart/data/apple.json";
 import Picker from 'emoji-mart/dist-es/components/picker/nimble-picker'
 
-import Context from "../contexts/room"
 import ThemeOption from "./themeOption"
 import "../styles/customCard.scss"
 import "emoji-mart/css/emoji-mart.css"
+import themeData from "../data/themes"
 
 const CustomCard = ({ model, setModel }) => {
-  const { themeData } = useContext(Context)
   const { t } = useTranslation()
   const [picker, setPicker] = useState(false)
 

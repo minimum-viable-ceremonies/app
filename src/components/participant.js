@@ -7,28 +7,29 @@ import Context from "../contexts/room"
 import ParticipantIcon from "./participantIcon"
 import "../styles/participant.scss"
 
-const Participant = ({ id, image, username, roles }) => {
+const Participant = participant => {
   const { t } = useTranslation()
+  const { uid, displayName, roles } = participant
   const { currentUser, setEditingUserId } = useContext(Context)
 
   return (
     <div className="participant">
       <div className="participant-content">
-        <ParticipantIcon id={id} image={image} username={username} roles={roles} />
-        <div className="participant-name">{username}</div>
+        <ParticipantIcon {...participant} />
+        <div className="participant-name">{displayName}</div>
         <div className="participant-actions">
-          {currentUser && currentUser.id === id && <Dropdown
+          {currentUser.uid === uid && <Dropdown
             klass="dark"
             theme="dark"
             icon="basic/more-horizontal"
             size={24}
             tooltip={t("participant.edit")}
-            onClick={() => setEditingUserId(id)}
+            onClick={() => setEditingUserId(uid)}
           />}
         </div>
       </div>
       <div className="participant-roles">
-        {Object.values(roles || {0: 'participant'}).map(role => (
+        {Object.values(roles || ['participant']).map(role => (
           <Dropdown
             key={role}
             klass="dark"

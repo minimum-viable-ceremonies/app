@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useContext } from "react"
+import React, { useRef, useMemo, useEffect, useState, useContext } from "react"
 import { useTranslation } from "react-i18next"
 
 import Card from "./card"
@@ -17,6 +17,8 @@ const SetupUser = ({ onSubmit }) => {
   const [currentRole, setCurrentRole] = useState()
   const { t } = useTranslation()
   const displayNameRef = useRef()
+  const anonymous = useMemo(() => model.provider === 'anonymous', [model.provider])
+  console.log(model, anonymous)
 
   useEffect(() => {
     if (currentStep.index === 1) {
@@ -33,8 +35,8 @@ const SetupUser = ({ onSubmit }) => {
   return (
     <div className="setup-user setup">
       <div className="setup-user-slides setup-slides" style={{ marginLeft: `-${100 * currentStep.index}%`}}>
-        <div className={`setup-user-slide setup-slide ${currentStep.index === 0 ? 'active' : ''} setup-user-uid`}>
-          {features.premium && (
+        <div className={`setup-user-slide setup-slide ${currentStep.index === 0 ? 'active' : ''} setup-user-provider`}>
+          {model.providers.includes('google') && (
             <div className="setup-panel">
               <div className="setup-input-subpanel">
                 <button className="mvc-btn btn-secondary m-auto flex" onClick={console.log}>
@@ -47,11 +49,11 @@ const SetupUser = ({ onSubmit }) => {
         </div>
         <div className={`setup-user-slide setup-slide ${currentStep.index === 1 ? 'active' : ''} setup-user-name`}>
           <div className="setup-panel">
-            {model.uid && <div className="setup-input-subpanel">
+            {!anonymous && <div className="setup-input-subpanel">
               <img className="setup-input-avatar" src={model.image} alt={model.displayName} />
             </div>}
             <div className="setup-input-subpanel mt-4">
-              {!model.uid && <h1 className="input-label">{t("setup.user.displayName")}</h1>}
+              {anonymous && <h1 className="input-label">{t("setup.user.displayName")}</h1>}
               <input
                 autoComplete="off"
                 ref={displayNameRef}
@@ -63,7 +65,7 @@ const SetupUser = ({ onSubmit }) => {
                 onKeyPress={currentStep.index === 1 ? nextStepOnEnter : null}
               />
             </div>
-            {model.uid && <div className="setup-input-subpanel mt-4">
+            {!anonymous && <div className="setup-input-subpanel mt-4">
               <input
                 autoComplete="off"
                 className="mvc-inline-edit appearance-none bg-transparent border-none w-full text-gray-700 placeholder-gray-600 focus:placeholder-gray-500 font-bold text-2xl mr-3 py-2 leading-tight focus:outline-none"

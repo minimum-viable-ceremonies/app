@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next"
 
 import Dropdown from "./dropdown"
 import ShareableLink from "./shareableLink"
+import Loading from "./loading"
 import Participant from "./participant"
 import ParticipantIcon from "./participantIcon"
 import Context from "../contexts/room"
@@ -16,10 +17,14 @@ const Sidebar = () => {
   return expanded ? (
     <div className="sidebar expanded">
       <div className="sidebar-header mvc-hover-state">
-        <div className="sidebar-title">
-          {organization.name && <div>{organization.name}</div>}
-          <div>{name}</div>
-        </div>
+        {name.length > 0 ? (
+          <div className="sidebar-title">
+            {organization.name && <div>{organization.name}</div>}
+            <div>{name}</div>
+          </div>
+        ) : (
+          <div className="sidebar-title--placeholder" />
+        )}
         <Dropdown
           klass="sidebar-collapse dark"
           icon="arrows/chevrons-left"

@@ -2,7 +2,7 @@
   "rules": {
     "rooms": {
       "$room_id": {
-        ".read": "auth != null",
+        ".read": "data.child('participants').hasChild(auth.uid)",
         ".write": "!data.exists()",
         "ceremonies": {
           "$ceremony_id": {

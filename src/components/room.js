@@ -22,6 +22,7 @@ const Room = ({ uuid }) => {
   const { trackPageView } = useMatomo()
 
   useEffect(() => { trackPageView() }, [trackPageView])
+  useEffect(() => { context.setup(uuid) }, [uuid])
 
   return (
     <Context.Provider value={context}>
@@ -31,11 +32,18 @@ const Room = ({ uuid }) => {
         <Modal
           Content={SetupUser}
           open={!Object.keys(context.participants).includes(context.currentUser.uid)}
-          initialModel={{ uid: context.currentUser.uid, displayName: '', roles: [] }}
+          initialModel={{
+            providers: context.providers,
+            provider: context.currentUser.provider || context.providers[0],
+            uid: context.currentUser.uid,
+            displayName: '',
+            roles: []
+          }}
           initialStep={context.features.premium ? 0 : 1}
-          submit={model => context.signIn().then(user => (
-            context.modifyParticipant(user.uid, { ...model, uid: user.uid })
-          ))}
+          submit={model =>
+            context.signIn(model.provider).then(user =>
+              context.modifyParticipant(user.uid, { ...model, uid: user.uid }).then(() =>
+                context.setupRoom()))}
           steps={[{
             // auth provider step
             canProceed: ({ uid }) => !!uid
@@ -56,7 +64,7 @@ const Room = ({ uuid }) => {
           open={context.editingRoom}
           initialModel={draft}
           close={context.setEditingRoomId}
-          submit={room => roomTable.create(room).then(() => context.setUuid(room.uuid))}
+          submit={room => roomTable.create(room).then(() => context.setup(room.uuid))}
           steps={[{
             next: "setup.controls.okGotIt",
           }, {

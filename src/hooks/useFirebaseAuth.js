@@ -3,7 +3,7 @@ import firebase from "gatsby-plugin-firebase"
 
 const useFirebaseAuth = () => {
   const auth = useMemo(() => firebase.auth(), [firebase])
-  const currentUser = auth.currentUser
+  const currentUser = useMemo(() => auth.currentUser || {}, [auth.currentUser])
   const providers = useMemo(() => ({
     google: new firebase.auth.GoogleAuthProvider()
   }), [firebase])

@@ -24,12 +24,12 @@ const useRoomModifiers = ({
   const editingCeremony = ceremonies[editingCeremonyId]
 
   const modifyRoom = (attrs, syncDb = true) => {
-    setName(attrs.name)
-    setWeekCount(attrs.weekCount)
+    attrs.name && setName(attrs.name)
+    attrs.weekCount && setWeekCount(attrs.weekCount)
 
     if (syncDb) {
-      roomTable.write(uuid, 'name', attrs.name)
-      roomTable.write(uuid, 'weekCount', attrs.weekCount)
+      attrs.name && roomTable.write(uuid, 'name', attrs.name)
+      attrs.weekCount && roomTable.write(uuid, 'weekCount', attrs.weekCount)
     }
   }
 

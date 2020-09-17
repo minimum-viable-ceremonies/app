@@ -31,12 +31,18 @@ const useRoomContext = (id, draft) => {
     setName, setWeekCount, setFeatures
   })
 
-  useEffect(() => {
-    if (draft || loading) { return }
+  const setup = uuid => {
     setReady(false)
     setLoading(true)
+    setUuid(uuid)
 
     modifiers.setupRoom().then(state => {
+      if (state.requiresLogin) {
+        setReady(true)
+        setLoading(false)
+        return
+      }
+
       setUuid(state.uuid)
       setName(state.name)
       setWeekCount(state.weekCount)
@@ -52,7 +58,7 @@ const useRoomContext = (id, draft) => {
         setReady(true)
       })
     })
-  }, [uuid])
+  }
 
   useEffect(() => {
     if (
@@ -79,15 +85,18 @@ const useRoomContext = (id, draft) => {
   useEffect(() => modifiers.teardownOrganization, [])
 
   const shareableLink = useMemo(() => `${document.location.origin}/room/${uuid}`, [uuid])
+  const providers = useMemo(() => (
+    features.premium ? ['google'] : ['anonymous']
+  ), [features.premium])
 
   return {
     ...auth,
     ...modifiers,
     ...refs,
-    uuid, setUuid,
-    draft, complete, ready,
+    setup,
+    uuid, draft, complete, ready,
     organization, name, weekCount, ceremonies, participants,
-    shareableLink,
+    shareableLink, providers,
     features,
     toast, showToast: (message, length = 2500) => {
       clearTimeout(toast.timeout)

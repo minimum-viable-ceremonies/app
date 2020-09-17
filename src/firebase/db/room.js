@@ -23,7 +23,7 @@ export default {
       ))
     ))
 
-    return load(`rooms/${uuid}`)
+    return load(`rooms/${uuid}`).catch(error => ({ error, requiresLogin: true }))
   },
 
   teardown: uuid => {

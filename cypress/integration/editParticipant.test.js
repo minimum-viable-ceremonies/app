@@ -1,7 +1,7 @@
 describe('Edit participant', () => {
   beforeEach(() => {
     cy.seedRoom('default').then(() => {
-      cy.setCookie('test-room-uuid', 'test-participant-uuid')
+      cy.login('test-participant-uuid')
       cy.visit('/room/test-room-uuid')
       cy.get('.participant-actions').click()
     })

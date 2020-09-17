@@ -4,14 +4,6 @@
       "$room_id": {
         ".read": "data.child('participants').hasChild(auth.uid)",
         ".write": "!data.exists()",
-        "ceremonies": {
-          "$ceremony_id": {
-            ".write": "data.parent().parent().child('participants').hasChild(auth.uid)"
-          }
-        },
-        "weekCount": {
-          ".write": "data.parent().child('participants').hasChild(auth.uid)"
-        },
         "participants": {
           "$participant_id": {
             ".write": "$participant_id == auth.uid || !data.exists()"

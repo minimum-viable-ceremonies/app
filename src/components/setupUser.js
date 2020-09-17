@@ -12,13 +12,12 @@ import voidHelp from "../images/help/void.gif"
 import GoogleLogo from "../images/icons/symbols/google.svg"
 
 const SetupUser = ({ onSubmit }) => {
-  const { features } = useContext(RoomContext)
+  const { signIn } = useContext(RoomContext)
   const { nextStep, currentStep, nextStepOnEnter, model, setModel } = useContext(ModalContext)
   const [currentRole, setCurrentRole] = useState()
   const { t } = useTranslation()
   const displayNameRef = useRef()
   const anonymous = useMemo(() => model.provider === 'anonymous', [model.provider])
-  console.log(model, anonymous)
 
   useEffect(() => {
     if (currentStep.index === 1) {
@@ -39,7 +38,7 @@ const SetupUser = ({ onSubmit }) => {
           {model.providers.includes('google') && (
             <div className="setup-panel">
               <div className="setup-input-subpanel">
-                <button className="mvc-btn btn-secondary m-auto flex" onClick={console.log}>
+                <button className="mvc-btn btn-secondary m-auto flex" onClick={signIn('google')}>
                   <GoogleLogo className="mvc-logo mr-2" />
                   <span>{t("setup.user.login.google")}</span>
                 </button>

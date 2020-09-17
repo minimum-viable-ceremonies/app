@@ -17,7 +17,7 @@ export default {
       ))
     ))
 
-    return load(`organizations/${uuid}`).then(r => console.log(r) || r).catch(console.log)
+    return load(`organizations/${uuid}`)
   },
 
   teardown: uuid => {

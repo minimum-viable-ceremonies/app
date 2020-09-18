@@ -20,7 +20,6 @@ const Room = ({ uuid }) => {
   const draft = useRoomContext(phrase({exactly: 3, join: '-'}), true)
 
   const { trackPageView } = useMatomo()
-  const providers = useMemo(() => context.features.providers || ['anonymous'], [context.features.providers])
 
   useEffect(() => { trackPageView() }, [trackPageView])
   useEffect(() => { context.setup(uuid) }, [uuid])
@@ -34,13 +33,13 @@ const Room = ({ uuid }) => {
           Content={SetupUser}
           open={!Object.keys(context.participants).includes(context.currentUser.uid)}
           initialModel={{
-            providers,
-            provider: context.currentUser.provider || providers[0],
+            providers: context.features.providers,
+            provider: context.currentUser.provider || context.features.providers[0] || 'anonymous',
             uid: context.currentUser.uid,
             displayName: '',
             roles: []
           }}
-          initialStep={context.features.providers === ['anonymous'] ? 1 : 0}
+          initialStep={context.features.providers.length > 0 ? 0 : 1}
           submit={model =>
             context.signIn(model.provider).then(({ user }) =>
               context.modifyParticipant(user.uid, { ...model, uid: user.uid }).then(() =>

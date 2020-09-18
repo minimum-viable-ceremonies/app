@@ -12,7 +12,7 @@ import voidHelp from "../images/help/void.gif"
 import GoogleLogo from "../images/icons/symbols/google.svg"
 
 const SetupUser = ({ onSubmit }) => {
-  const { signIn } = useContext(RoomContext)
+  const { signIn, providers } = useContext(RoomContext)
   const { nextStep, currentStep, nextStepOnEnter, model, setModel } = useContext(ModalContext)
   const [currentRole, setCurrentRole] = useState()
   const { t } = useTranslation()
@@ -35,16 +35,19 @@ const SetupUser = ({ onSubmit }) => {
     <div className="setup-user setup">
       <div className="setup-user-slides setup-slides" style={{ marginLeft: `-${100 * currentStep.index}%`}}>
         <div className={`setup-user-slide setup-slide ${currentStep.index === 0 ? 'active' : ''} setup-user-provider`}>
-          {model.providers.includes('google') && (
-            <div className="setup-panel">
+          {model.providers.filter(p => p !== 'anonymous').map(provider => (
+            <div key={provider} className="setup-panel">
               <div className="setup-input-subpanel">
-                <button className="mvc-btn btn-secondary m-auto flex" onClick={() => signIn('google')}>
+                <button className="mvc-btn btn-secondary m-auto flex" onClick={() => (
+                  signIn(provider).then(result =>
+                    setModel(current => ({ ...current, provider, ...providers[provider].map(result) }))
+                ))}>
                   <GoogleLogo className="mvc-logo mr-2" />
                   <span>{t("setup.user.login.google")}</span>
                 </button>
               </div>
             </div>
-          )}
+          ))}
         </div>
         <div className={`setup-user-slide setup-slide ${currentStep.index === 1 ? 'active' : ''} setup-user-name`}>
           <div className="setup-panel">

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useMemo } from "react"
 import phrase from "random-words"
 import { useMatomo } from "@datapunt/matomo-tracker-react"
 
@@ -20,6 +20,7 @@ const Room = ({ uuid }) => {
   const draft = useRoomContext(phrase({exactly: 3, join: '-'}), true)
 
   const { trackPageView } = useMatomo()
+  const providers = useMemo(() => context.features.providers || ['anonymous'], [context.features.providers])
 
   useEffect(() => { trackPageView() }, [trackPageView])
   useEffect(() => { context.setup(uuid) }, [uuid])
@@ -33,13 +34,13 @@ const Room = ({ uuid }) => {
           Content={SetupUser}
           open={!Object.keys(context.participants).includes(context.currentUser.uid)}
           initialModel={{
-            providers: context.providers,
-            provider: context.currentUser.provider || context.providers[0],
+            providers,
+            provider: context.currentUser.provider || providers[0],
             uid: context.currentUser.uid,
             displayName: '',
             roles: []
           }}
-          initialStep={context.features.premium ? 0 : 1}
+          initialStep={context.features.providers === ['anonymous'] ? 1 : 0}
           submit={model =>
             context.signIn(model.provider).then(({ user }) =>
               context.modifyParticipant(user.uid, { ...model, uid: user.uid }).then(() =>
@@ -99,11 +100,10 @@ const Room = ({ uuid }) => {
             width: "auto",
             height: "auto"
           }}
-          submit={ceremony => (
-            context.modifyCeremony(ceremony.id, ceremony).then(() => (
-              context.setEditingCeremonyId(ceremony.id)
-            ))
-          )}
+          submit={ceremony =>
+            context.modifyCeremony(ceremony.id, ceremony).then(() =>
+              context.setEditingCeremonyId(ceremony.id))
+          }
           singleControl={true}
           steps={[{
             next: "common.save",

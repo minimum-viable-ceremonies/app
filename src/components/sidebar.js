@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next"
 
 import Dropdown from "./dropdown"
 import ShareableLink from "./shareableLink"
-import Loading from "./loading"
 import Participant from "./participant"
 import ParticipantIcon from "./participantIcon"
 import Context from "../contexts/room"

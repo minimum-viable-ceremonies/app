@@ -23,7 +23,12 @@ export default {
       ))
     ))
 
-    return load(`rooms/${uuid}`).catch(error => ({ error, requiresLogin: true }))
+    return load(`rooms/${uuid}`).catch(error =>
+      load(`rooms/${uuid}/features/providers`).then(({ uuid, ...providers }) => ({
+        error,
+        requiresLogin: true,
+        features: { providers: Object.values(providers) }
+      })))
   },
 
   teardown: uuid => {

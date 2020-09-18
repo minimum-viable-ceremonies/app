@@ -35,6 +35,8 @@ const useRoomContext = (id, draft) => {
     setUuid(uuid)
 
     modifiers.setupRoom().then(state => {
+      setFeatures(current => ({ ...current, ...state.features }))
+
       if (state.requiresLogin) {
         setReady(true)
         return
@@ -45,7 +47,6 @@ const useRoomContext = (id, draft) => {
       setWeekCount(state.weekCount)
       setCeremonies(state.ceremonies || {})
       setParticipants(state.participants || {})
-      setFeatures(current => ({ ...current, ...state.features }))
 
       modifiers.setupOrganization(state.organizationUuid).then(state => {
         const { uuid, name, image } = state
@@ -75,15 +76,12 @@ const useRoomContext = (id, draft) => {
         destination: { droppableId: 'undecided', index: -0.5 }
       })
     ))
-  }, [weekCount])
+  }, [weekCount, ceremonies, modifiers])
 
-  useEffect(() => modifiers.teardownRoom, [])
-  useEffect(() => modifiers.teardownOrganization, [])
+  useEffect(() => modifiers.teardownRoom, [modifiers.teardownRoom])
+  useEffect(() => modifiers.teardownOrganization, [modifiers.teardownOrganization])
 
   const shareableLink = useMemo(() => `${document.location.origin}/room/${uuid}`, [uuid])
-  const providers = useMemo(() => (
-    features.premium ? ['google'] : ['anonymous']
-  ), [features.premium])
 
   return {
     ...auth,
@@ -92,7 +90,7 @@ const useRoomContext = (id, draft) => {
     setup,
     uuid, draft, complete, ready,
     organization, name, weekCount, ceremonies, participants,
-    shareableLink, providers,
+    shareableLink,
     features,
     toast, showToast: (message, length = 2500) => {
       clearTimeout(toast.timeout)

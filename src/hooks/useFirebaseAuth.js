@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import firebase from "gatsby-plugin-firebase"
 
 const useFirebaseAuth = () => {
-  const auth = useMemo(() => firebase.auth(), [])
+  const auth = useMemo(() => firebase.auth && firebase.auth(), [])
   const providers = useMemo(() => ({
     google: {
       signIn: () => auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()),
@@ -25,12 +25,12 @@ const useFirebaseAuth = () => {
 
     return providers[provider].signIn()
   }
-  const signOut = auth.signOut
-  const updateUser = auth.updateCurrentUser
+  const signOut = () => auth.signOut()
+  const updateUser = attrs => auth.updateCurrentUser(attrs)
 
   return {
     providers,
-    currentUser: auth.currentUser || {},
+    currentUser: (auth && auth.currentUser) || {},
     signIn, signOut,
     updateUser,
   }

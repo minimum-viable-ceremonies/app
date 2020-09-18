@@ -1,3 +1,10 @@
+const apiKey = process.env.CYPRESS
+  ? process.env.CYPRESS_API_KEY
+  : process.env.MVC_FIREBASE_API_KEY
+const domain = process.env.CYPRESS
+  ? process.env.CYPRESS_DOMAIN
+  : process.env.MVC_FIREBASE_DOMAIN
+
 module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -31,11 +38,11 @@ module.exports = {
       resolve: "gatsby-plugin-firebase",
       options: {
         credentials: {
-          apiKey: process.env.MVC_FIREBASE_API_KEY,
-          authDomain: `${process.env.MVC_FIREBASE_DOMAIN}.firebaseapp.com`,
-          databaseURL: `https://${process.env.MVC_FIREBASE_DOMAIN}.firebaseio.com`,
-          projectId: `${process.env.MVC_FIREBASE_DOMAIN}`,
-          storageBucket: `${process.env.MVC_FIREBASE_DOMAIN}.appspot.com`,
+          apiKey,
+          authDomain: `${domain}.firebaseapp.com`,
+          databaseURL: `https://${domain}.firebaseio.com`,
+          projectId: `${domain}`,
+          storageBucket: `${domain}.appspot.com`,
         },
       },
     },

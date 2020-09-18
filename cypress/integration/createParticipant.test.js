@@ -1,10 +1,8 @@
 describe('Create participant', () => {
-  beforeEach(() => {
-    cy.seedRoom('default').then(() => {
-      cy.logout()
-      cy.visit('/room/test-room-uuid')
-    })
-  })
+  beforeEach(() =>
+    cy.seedRoom('default').then(() =>
+      cy.logout().then(() =>
+        cy.visit('/room/test-room-uuid'))))
 
   it('Can create a participant', () => {
     cy.seedRoom('default').then(() => {

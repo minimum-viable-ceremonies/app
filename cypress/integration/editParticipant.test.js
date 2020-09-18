@@ -1,6 +1,7 @@
 describe('Edit participant', () => {
   beforeEach(() => {
     cy.seedRoom('default').then(() => {
+      cy.logout()
       cy.login('test-participant-uuid')
       cy.visit('/room/test-room-uuid')
       cy.get('.participant-actions').click()

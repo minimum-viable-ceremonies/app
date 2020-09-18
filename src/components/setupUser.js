@@ -38,7 +38,7 @@ const SetupUser = ({ onSubmit }) => {
           {model.providers.includes('google') && (
             <div className="setup-panel">
               <div className="setup-input-subpanel">
-                <button className="mvc-btn btn-secondary m-auto flex" onClick={signIn('google')}>
+                <button className="mvc-btn btn-secondary m-auto flex" onClick={() => signIn('google')}>
                   <GoogleLogo className="mvc-logo mr-2" />
                   <span>{t("setup.user.login.google")}</span>
                 </button>

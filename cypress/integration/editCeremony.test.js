@@ -1,11 +1,10 @@
 describe('Edit ceremony', () => {
-  beforeEach(() => {
-    cy.seedRoom('default').then(() => {
-      cy.login('test-participant-uuid')
-      cy.visit('/room/test-room-uuid')
-      cy.contains('Personal Check-in').click()
-    })
-  })
+  beforeEach(() =>
+    cy.seedRoom('default').then(() =>
+      cy.logout().then(() =>
+        cy.login('test-participant-uuid').then(() =>
+          cy.visit('/room/test-room-uuid').then(() =>
+            cy.contains('Personal Check-in').click())))))
 
   it('Can make a placement via the modal', () => {
     cy.get('.mvc-input__cadence').click().find('input').focus()

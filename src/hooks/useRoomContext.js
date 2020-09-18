@@ -12,7 +12,6 @@ const useRoomContext = (id, draft) => {
   const [name, setName] = useState("")
   const [organization, setOrganization] = useState({})
   const [ready, setReady] = useState(false)
-  const [loading, setLoading] = useState(false)
   const [complete, setComplete] = useState(false)
   const [toast, setToast] = useState({ visible: false, message: '' })
   const [weekCount, setWeekCount] = useState(1)
@@ -33,13 +32,11 @@ const useRoomContext = (id, draft) => {
 
   const setup = uuid => {
     setReady(false)
-    setLoading(true)
     setUuid(uuid)
 
     modifiers.setupRoom().then(state => {
       if (state.requiresLogin) {
         setReady(true)
-        setLoading(false)
         return
       }
 
@@ -54,7 +51,6 @@ const useRoomContext = (id, draft) => {
         const { uuid, name, image } = state
         setOrganization({ uuid, name, image })
         setFeatures(current => ({ ...current, ...state.features }))
-        setLoading(false)
         setReady(true)
       })
     })

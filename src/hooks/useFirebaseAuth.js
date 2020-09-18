@@ -9,7 +9,7 @@ const useFirebaseAuth = () => {
   }), [firebase])
 
   const signIn = provider => {
-    if (currentUser.uid) { return Promise.resolve(currentUser) }
+    if (currentUser.uid) { return Promise.resolve({ user: currentUser }) }
     auth.useDeviceLanguage()
     auth.setPersistence('local')
 

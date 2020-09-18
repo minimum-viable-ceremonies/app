@@ -1,10 +1,8 @@
 describe('Create ceremony', () => {
-  beforeEach(() => {
-    cy.seedRoom('default').then(() => {
-      cy.login('test-participant-uuid')
-      cy.visit('/room/test-room-uuid')
-    })
-  })
+  beforeEach(() =>
+    cy.seedRoom('default').then(() =>
+      cy.login('test-participant-uuid').then(() =>
+        cy.visit('/room/test-room-uuid'))))
 
   it('Can make a custom ceremony', () => {
     cy.contains('Add custom').click()

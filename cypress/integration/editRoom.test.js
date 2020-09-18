@@ -1,7 +1,6 @@
 describe('Edit room', () => {
   beforeEach(() => {
     cy.seedRoom('default').then(() => {
-      cy.logout()
       cy.login('test-participant-uuid')
       cy.visit('/room/test-room-uuid')
     })

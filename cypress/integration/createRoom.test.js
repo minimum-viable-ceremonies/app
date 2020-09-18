@@ -1,8 +1,10 @@
 describe('Create room', () => {
-  beforeEach(() =>
-    cy.seedRoom('default').then(() =>
-      cy.logout().then(() =>
-        cy.visit('/'))))
+  beforeEach(() => {
+    cy.seedRoom('default').then(() => {
+      cy.logout()
+      cy.visit('/')
+    })
+  })
 
   it('Can create a room', () => {
     cy.contains('Get started').click()

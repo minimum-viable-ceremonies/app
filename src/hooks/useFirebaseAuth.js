@@ -14,7 +14,7 @@ const useFirebaseAuth = () => {
       })
     },
     anonymous: {
-      signIn: auth.signInAnonymously,
+      signIn: () => auth.signInAnonymously(),
       map: result => result
     }
   }), [])

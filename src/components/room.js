@@ -41,7 +41,7 @@ const Room = ({ uuid }) => {
           }}
           initialStep={context.features.premium ? 0 : 1}
           submit={model =>
-            context.signIn(model.provider).then(user =>
+            context.signIn(model.provider).then(({ user }) =>
               context.modifyParticipant(user.uid, { ...model, uid: user.uid }).then(() =>
                 context.setupRoom()))}
           steps={[{

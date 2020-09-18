@@ -5,13 +5,12 @@ import ParticipantIcon from "./participantIcon"
 
 export default ({ data, innerProps, innerRef }) => {
   const { participants } = useContext(Context)
-  const { id, image, username, roles } = participants[data.value]
 
   return (
     <div ref={innerRef} {...innerProps}>
       <div className="flex items-center">
-        <ParticipantIcon id={id} image={image} username={username} roles={roles} />
-        <div className="participant-name">{username}</div>
+        <ParticipantIcon {...participants[data.value]} />
+        <div className="participant-name">{participants[data.value].displayName}</div>
       </div>
     </div>
   )

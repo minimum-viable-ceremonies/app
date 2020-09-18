@@ -2,12 +2,12 @@ import React from "react"
 
 import "../styles/participant.scss"
 
-const ParticipantIcon = ({ id, image, username, roles }) => (
-  <div className="participant-icon" title={`${username} (${roles.join(', ')})`}>
-    {image ? (
-      <img src={image} alt={`${username} (${roles.join(', ')})`} />
+const ParticipantIcon = ({ photoURL, displayName, roles }) => (
+  <div className="participant-icon" title={`${displayName} (${roles.join(', ')})`}>
+    {photoURL ? (
+      <img src={photoURL} alt={`${displayName} (${roles.join(', ')})`} />
     ) : (
-      <span>{username[0]}</span>
+      <span>{displayName[0]}</span>
     )}
   </div>
 )

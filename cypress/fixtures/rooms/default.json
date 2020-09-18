@@ -12,9 +12,9 @@
   },
   "participants": {
     "test-participant-uuid": {
-      "id": "test-participant-uuid",
+      "uid": "test-participant-uuid",
       "roles": ["actioner"],
-      "username": "Test participant"
+      "displayName": "Test participant"
     }
   }
 }

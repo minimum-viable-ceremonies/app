@@ -4,7 +4,7 @@ import "firebase/database"
 import { attachCustomCommands } from "cypress-firebase"
 
 firebase.initializeApp({
-  apiKey: Cypress.env('apiKey'),
+  apiKey: Cypress.env('API_KEY'),
   authDomain: `${Cypress.env('DOMAIN')}.firebaseapp.com`,
   databaseURL: `https://${Cypress.env('DOMAIN')}.firebaseio.com`,
   projectId: `${Cypress.env('DOMAIN')}`,

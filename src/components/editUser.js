@@ -5,9 +5,10 @@ import Card from "./card"
 import RoleBadge from "./roleBadge"
 import Context from "../contexts/room"
 import "../styles/editUser.scss"
+import roleData from "../data/roles"
 
 const EditUser = ({ onSubmit }) => {
-  const { editingUser, roleData, modifyParticipant } = useContext(Context)
+  const { editingUser, modifyParticipant } = useContext(Context)
   const { t } = useTranslation()
   const [currentRole, setCurrentRole] = useState()
 
@@ -27,10 +28,10 @@ const EditUser = ({ onSubmit }) => {
           <h3 className="mvc-subtitle">{t("participant.name")}</h3>
           <input
             className="mvc-inline-edit edit-user-field bg-transparent border-none w-full text-gray-700 placeholder-gray-600 focus:placeholder-gray-500 font-bold text-2xl leading-tight focus:outline-none"
-            name="username"
-            placeholder={t("setup.user.usernamePlaceholder")}
-            value={editingUser.username}
-            onChange={({ target: { value } }) => modifyParticipant(editingUser.id, { username: value })}
+            name="displayName"
+            placeholder={t("setup.user.displayNamePlaceholder")}
+            value={editingUser.displayName}
+            onChange={({ target: { value } }) => modifyParticipant(editingUser.uid, { displayName: value })}
           />
           <h3 className="mvc-subtitle">{t("participant.roles")}</h3>
           <div className="justify-start mvc-radio-options edit-user-field">
@@ -40,7 +41,7 @@ const EditUser = ({ onSubmit }) => {
                 role={role}
                 checked={roles.includes(role)}
                 onHover={setCurrentRole}
-                onClick={(role, checked) => modifyParticipant(editingUser.id, {
+                onClick={(role, checked) => modifyParticipant(editingUser.uid, {
                   roles: checked ? roles.concat(role) : roles.filter(r => r !== role)
                 })}
               />

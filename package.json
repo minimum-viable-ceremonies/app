@@ -62,10 +62,10 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "cypress:open": "CYPRESS_DOMAIN=$MVC_FIREBASE_DOMAIN CYPRESS_API_KEY=$MVC_TEST_FIREBASE_API_KEY cypress open",
-    "cypress:run": "CYPRESS_DOMAIN=$MVC_FIREBASE_DOMAIN CYPRESS_API_KEY=$MVC_TEST_FIREBASE_API_KEY cypress run",
-    "test": "MVC_FIREBASE_DOMAIN=$MVC_TEST_FIREBASE_DOMAIN MVC_FIREBASE_API_KEY=$MVC_TEST_FIREBASE_API_KEY start-server-and-test develop http://localhost:8000 cypress:open",
-    "test:ci": "start-server-and-test develop http://localhost:8000 cypress:run"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test": "CYPRESS=true start-server-and-test develop http://localhost:8000 cypress:open",
+    "test:ci": "CYPRESS=true start-server-and-test develop http://localhost:8000 cypress:run"
   },
   "repository": {
     "type": "git",

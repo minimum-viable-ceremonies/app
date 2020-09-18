@@ -459,8 +459,8 @@ setup:
   user:
     title: Welcome to {{name}}'s room!
     helptext: Talk through the ceremonies, and add them to a cadence. Ceremonies you don't want go into The Void. First we need to set you pick your role in the team.
-    username: What's your name?
-    usernamePlaceholder: Type your name here...
+    displayName: What's your name?
+    displayNamePlaceholder: Type your name here...
     role: Pick a role
     roleHelpText: What do you bring to the table? Select one or many.
     showRole: Hover over roles to preview

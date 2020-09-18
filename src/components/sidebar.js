@@ -16,10 +16,14 @@ const Sidebar = () => {
   return expanded ? (
     <div className="sidebar expanded">
       <div className="sidebar-header mvc-hover-state">
-        <div className="sidebar-title">
-          {organization.name && <div>{organization.name}</div>}
-          <div>{name}</div>
-        </div>
+        {name.length > 0 ? (
+          <div className="sidebar-title">
+            {organization.name && <div>{organization.name}</div>}
+            <div>{name}</div>
+          </div>
+        ) : (
+          <div className="sidebar-title--placeholder" />
+        )}
         <Dropdown
           klass="sidebar-collapse dark"
           icon="arrows/chevrons-left"
@@ -35,9 +39,9 @@ const Sidebar = () => {
       </div>
       <div className="sidebar-participants">
         <h3 className="mvc-subtitle">{t("sidebar.teamsAndRoles")}</h3>
-        {Object.values(participants).map(({ id, image, username, roles }, index) => (
-          <div key={username} className="mvc-hover-state">
-            <Participant id={id} image={image} username={username} roles={roles} />
+        {Object.values(participants).map(participant => (
+          <div key={participant.uid} className="mvc-hover-state">
+            <Participant {...participant} />
           </div>
         ))}
       </div>
@@ -66,12 +70,12 @@ const Sidebar = () => {
         <ShareableLink hideInput={true} value={shareableLink} direction="right" />
       </div>
       <div className="sidebar-collapsed-participants">
-        {Object.values(participants).map(({ id, image, username, roles }) => (
-          <div key={id} className="sidebar-collapsed-item mvc-hover-state">
+        {Object.values(participants).map(participant => (
+          <div key={participant.uid} className="sidebar-collapsed-item mvc-hover-state">
             <Dropdown
               klass="sidebar-collapsed-participant"
-              text={<ParticipantIcon key={id} image={image} id={id} username={username} roles={roles} />}
-              tooltip={`${username}: ${roles.join(', ')}`}
+              text={<ParticipantIcon {...participant} />}
+              tooltip={`${participant.displayName}: ${participant.roles.join(', ')}`}
             />
           </div>
         ))}

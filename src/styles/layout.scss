@@ -790,6 +790,18 @@ pre tt:after {
   }
 }
 
+.mvc-entrance {
+  transition: all 0.4s ease-in-out;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  opacity: 1;
+
+  &.entered {
+    opacity: 0;
+  }
+}
+
 .setup-roles {
   margin-top: 1rem;
 }

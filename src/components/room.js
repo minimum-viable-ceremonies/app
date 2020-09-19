@@ -23,7 +23,7 @@ const Room = ({ uuid }) => {
   const { trackPageView } = useMatomo()
 
   useEffect(() => { trackPageView() }, [trackPageView])
-  useEffect(() => { context.setup(uuid) }, [uuid])
+  useEffect(() => { context.setup(uuid) }, [])
 
   return (
     <Context.Provider value={context}>
@@ -57,7 +57,7 @@ const Room = ({ uuid }) => {
             perform: model =>
               context.signIn(model.provider).then(({ user }) =>
                 context.modifyParticipant(user.uid, { ...model, uid: user.uid }).then(() =>
-                  context.setupRoom()))
+                  context.setup(uuid, true)))
           }]}
         />
         <Modal

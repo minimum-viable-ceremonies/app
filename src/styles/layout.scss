@@ -755,6 +755,41 @@ pre tt:after {
   flex-wrap: wrap;
 }
 
+.mvc-multi-select {
+  &__menu-list {
+    & > div {
+      padding: 4px 0 !important;
+      cursor: pointer;
+      &:hover {
+        background: $grey-lightest;
+      }
+    }
+  }
+
+  &__option {
+    padding: 4px !important;
+    cursor: pointer;
+  }
+
+  &__multi-value {
+    background: $grey-lightest !important;
+    border-radius: 15px !important;
+    align-items: center;
+  }
+
+  &__multi-value__label {
+    padding: 4px 0 !important;
+  }
+
+  &__multi-value__remove {
+    padding: 2px !important;
+    margin: 0 8px !important;
+    border-radius: 100% !important;
+    max-height: 24px;
+    max-width: 24px;
+  }
+}
+
 .setup-roles {
   margin-top: 1rem;
 }

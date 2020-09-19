@@ -6,8 +6,11 @@ import Check from "../images/check-mark.svg"
 import Card from "./card"
 import CustomCard from "./customCard"
 import Icon from "./icon"
+import ParticipantOption from "./participantOption"
 import Context from "../contexts/room"
 import "../styles/setup.scss"
+import cadenceData from "../data/cadences"
+import hourData from "../data/hours"
 
 const withOption = (value, option) => {
   switch (option) {
@@ -28,7 +31,7 @@ const withOption = (value, option) => {
 
 const EditCeremony = ({ onSubmit }) => {
   const { t } = useTranslation()
-  const { weekCount, editingCeremony, modifyCeremony, cadenceData, hourData } = useContext(Context)
+  const { weekCount, editingCeremony, participants, modifyCeremony } = useContext(Context)
   const { id, placement, async, notes, startTime, endTime } = editingCeremony || {}
   const cadences = useMemo(() => (
     cadenceData
@@ -45,6 +48,12 @@ const EditCeremony = ({ onSubmit }) => {
   const endTimes = useMemo(() => (
     startTimes.filter(({ value }) => value > startTime).slice(0, 8)
   ), [startTimes, startTime])
+  const peopleOptions = useMemo(() => (
+    Object.values(participants).map(participant => ({
+      value: participant.uid,
+      label: participant.displayName,
+    }))
+  ), [participants])
 
   return (
     <div className="setup-ceremony max-h-full flex-grow">
@@ -59,7 +68,7 @@ const EditCeremony = ({ onSubmit }) => {
           )}
         </div>
         <div className="overflow-auto pr-4">
-          <div className="mvc-input">
+          <div className="mvc-input mvc-input__async">
             <div className="mvc-label flex flex-row items-center">
               <Icon icon="basic/globe" className="mr-2" size={14} />
               <span>{t("setup.ceremony.schedule")}</span>
@@ -83,7 +92,7 @@ const EditCeremony = ({ onSubmit }) => {
             </div>
             <div className="mvc-note ml-5">{t(`setup.ceremony.${async ? 'async' : 'sync'}Helptext`)}</div>
           </div>
-          <div className="mvc-input">
+          <div className="mvc-input mvc-input__cadence">
             <div className="mvc-label flex flex-row items-center">
               <Icon icon="time/calendar" className="mr-2" size={14} />
               <span>{t("setup.ceremony.cadence")}</span>
@@ -102,50 +111,79 @@ const EditCeremony = ({ onSubmit }) => {
               />
             </div>
           </div>
-          {!async && withOption(placement, 'withTime') && <div className="mvc-input">
+          <div className="mvc-input mvc-input__people">
+            <div className="mvc-label flex flex-row items-center">
+              <Icon icon="basic/user" className="mr-2" size={14} />
+              <span>{t("setup.ceremony.participants")}</span>
+            </div>
+            <div className="ml-5 flex flex-row items-center">
+              <Select
+                components={{
+                  MultiValueLabel: ParticipantOption,
+                  Option: ParticipantOption,
+                  IndicatorsContainer: () => null,
+                }}
+                classNamePrefix="mvc-multi-select"
+                options={peopleOptions}
+                isMulti={true}
+                value={(editingCeremony || {}).people}
+                onChange={people => modifyCeremony(id, { people: people || [] })}
+                styles={{ container: existing => ({
+                  ...existing,
+                  width: "100%",
+                  margin: "8px 0"
+                }) }}
+              />
+            </div>
+          </div>
+          {!async && withOption(placement, 'withTime') && <div className="mvc-input mvc-input__time">
             <div className="mvc-label flex flex-row items-center">
               <Icon icon="time/time" className="mr-2" size={14} />
               <span>{t("setup.ceremony.time")}</span>
             </div>
             <div className="flex flex-row items-center ml-5">
-              <Select
-                options={startTimes}
-                value={startTimes.find(({ value }) => value === startTime)}
-                onChange={({ value }) => (
-                  modifyCeremony(id, {
-                    startTime: value,
-                    endTime: value + (endTime ? (endTime - startTime) : 60)
-                  })
-                )}
-                styles={{ container: existing => ({
-                  ...existing, minWidth: "150px", margin: "8px 0"
-                }) }}
-              />
+              <div className="mvc-input__start-time">
+                <Select
+                  options={startTimes}
+                  value={startTimes.find(({ value }) => value === startTime)}
+                  onChange={({ value }) => (
+                    modifyCeremony(id, {
+                      startTime: value,
+                      endTime: value + (endTime ? (endTime - startTime) : 60)
+                    })
+                  )}
+                  styles={{ container: existing => ({
+                    ...existing, minWidth: "150px", margin: "8px 0"
+                  }) }}
+                />
+              </div>
               <div className="mvc-note" style={{margin: "0 12px"}}>{t("common.to")}</div>
-              <Select
-                isDisabled={!(startTime >= 0)}
-                options={endTimes}
-                value={startTimes.find(({ value }) => value === endTime)}
-                onChange={({ value }) => modifyCeremony(id, { endTime: value })}
-                styles={{ container: existing => ({
-                  ...existing, minWidth: "150px", margin: "8px 0"
-                }) }}
-              />
+              <div className="mvc-input__end-time">
+                <Select
+                  isDisabled={!(startTime >= 0)}
+                  options={endTimes}
+                  value={startTimes.find(({ value }) => value === endTime)}
+                  onChange={({ value }) => modifyCeremony(id, { endTime: value })}
+                  styles={{ container: existing => ({
+                    ...existing, minWidth: "150px", margin: "8px 0"
+                  }) }}
+                />
+              </div>
               <div className="ml-2 mvc-note">
                 {(startTime >= 0 && endTime >= 0) ? t(`hours.diff-${endTime - startTime}`) : '-'}
               </div>
             </div>
           </div>}
-          <div className="mvc-input">
+          <div className="mvc-input mvc-input__notes">
             <div className="mvc-label flex flex-row items-center">
               <Icon icon="basic/text-align-left" className="mr-2" size={14} />
-              <span>{t(`setup.ceremony.${async ? 'syncNotes' : 'asyncNotes'}`)}</span>
+              <span>{t(`setup.ceremony.${async ? 'asyncNotes' : 'syncNotes'}`)}</span>
             </div>
             <div className="ml-5">
               <textarea
                 className="mvc-textarea w-full"
                 name="notes"
-                placeholder={t(`setup.ceremony.${async ? 'syncNotesPlaceholder' : 'asyncNotesPlaceholder'}`)}
+                placeholder={t(`setup.ceremony.${async ? 'asyncNotesPlaceholder' : 'syncNotesPlaceholder'}`)}
                 value={notes}
                 onChange={({ target: { value } }) => modifyCeremony(id, { notes: value })}
               />

@@ -35,6 +35,8 @@
     "react-beautiful-dnd": "^13.0.0",
     "react-cookie": "^4.0.3",
     "react-dom": "^16.12.0",
+    "react-dom-confetti": "^0.2.0",
+    "react-freshchat": "minimum-viable-ceremonies/react-freshchat#master",
     "react-helmet": "^6.0.0",
     "react-i18next": "^11.4.0",
     "react-markdown": "^4.3.1",
@@ -62,8 +64,8 @@
     "clean": "gatsby clean",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test": "start-server-and-test develop http://localhost:8000 cypress:open",
-    "test:ci": "start-server-and-test develop http://localhost:8000 cypress:run"
+    "test": "CYPRESS=true start-server-and-test develop http://localhost:8000 cypress:open",
+    "test:ci": "CYPRESS=true start-server-and-test develop http://localhost:8000 cypress:run"
   },
   "repository": {
     "type": "git",

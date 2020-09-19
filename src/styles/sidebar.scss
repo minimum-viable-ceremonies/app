@@ -77,6 +77,13 @@
 .sidebar-title {
   font-weight: bold;
   margin-left: 4px;
+
+  &--placeholder {
+    height: 12px;
+    width: 100%;
+    background: $grey-light;
+    border-radius: 8px;
+  }
 }
 
 .sidebar-participants {

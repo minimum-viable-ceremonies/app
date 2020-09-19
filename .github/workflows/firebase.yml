@@ -18,9 +18,16 @@ jobs:
         contents: |
           MATOMO_URL=${{ secrets.MATOMO_URL }}
           MATOMO_SITE_ID=${{ secrets.MATOMO_SITE_ID }}
+          FRESHCHAT_TOKEN=${{ secrets.FRESHCHAT_TOKEN }}
+          FRESHCHAT_HOST=${{ secrets.FRESHCHAT_HOST }}
         write-mode: overwrite
     - run: npm install
     - run: MVC_FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }} MVC_FIREBASE_DOMAIN=${{ secrets.FIREBASE_DOMAIN }} npm run build
+    - uses: w9jds/firebase-action@master
+      with:
+        args: deploy --only database --project ${{ secrets.FIREBASE_DOMAIN }}
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
     - uses: w9jds/firebase-action@master
       with:
         args: deploy --only hosting:minimum-viable-ceremonies --project ${{ secrets.FIREBASE_DOMAIN }}

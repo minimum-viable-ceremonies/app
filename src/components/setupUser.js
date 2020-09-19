@@ -1,26 +1,27 @@
-import React, { useRef, useEffect, useState, useContext } from "react"
+import React, { useRef, useMemo, useEffect, useState, useContext } from "react"
 import { useTranslation } from "react-i18next"
 
 import Card from "./card"
 import RoleBadge from "./roleBadge"
 import RoomContext from "../contexts/room"
 import ModalContext from "../contexts/modal"
-import { authWithGoogle } from "../firebase/auth"
 import "../styles/setup.scss"
+import roleData from "../data/roles"
+import providerData from "../data/providers"
 import ceremonyHelp from "../images/help/ceremony.gif"
 import voidHelp from "../images/help/void.gif"
-import GoogleLogo from "../images/icons/symbols/google.svg"
 
 const SetupUser = ({ onSubmit }) => {
-  const { roleData, features } = useContext(RoomContext)
+  const { signIn } = useContext(RoomContext)
   const { nextStep, currentStep, nextStepOnEnter, model, setModel } = useContext(ModalContext)
   const [currentRole, setCurrentRole] = useState()
   const { t } = useTranslation()
-  const usernameRef = useRef()
+  const displayNameRef = useRef()
+  const anonymous = useMemo(() => model.provider === 'anonymous', [model.provider])
 
   useEffect(() => {
     if (currentStep.index === 1) {
-      setTimeout(() => usernameRef.current.focus(), 500)
+      setTimeout(() => displayNameRef.current.focus(), 500)
     }
   }, [currentStep.index])
 
@@ -33,47 +34,53 @@ const SetupUser = ({ onSubmit }) => {
   return (
     <div className="setup-user setup">
       <div className="setup-user-slides setup-slides" style={{ marginLeft: `-${100 * currentStep.index}%`}}>
-        <div className={`setup-user-slide setup-slide ${currentStep.index === 0 ? 'active' : ''} setup-user-uid`}>
-          {features.premium && (
-            <div className="setup-panel">
-              <div className="setup-input-subpanel">
-                <button className="mvc-btn btn-secondary m-auto flex" onClick={() => (
-                  authWithGoogle().then(user => setModel(current => ({ ...current, ...user })))
-                )}>
-                  <GoogleLogo className="mvc-logo mr-2" />
-                  <span>{t("setup.user.login.google")}</span>
-                </button>
-              </div>
-            </div>
-          )}
+        <div className={`setup-user-slide setup-slide ${currentStep.index === 0 ? 'active' : ''} setup-user-provider`}>
+          <div className="setup-panel">
+            {model.providers.filter(p => p !== 'anonymous').map(provider => {
+              const { Logo } = providerData[provider]
+
+              return (
+                <div key={provider} className="setup-input-subpanel">
+                  <button className="mvc-btn btn-secondary m-auto flex" onClick={() => (
+                    signIn(provider).then(({ user: { uid, email, displayName, photoURL } }) => setModel(current => ({
+                      ...current, provider, uid, email, displayName, photoURL
+                    }))
+                  ))}>
+                    <Logo className="mvc-logo mr-2" />
+                    <span>{t(`setup.user.login.${provider}`)}</span>
+                  </button>
+                </div>
+              )
+            })}
+          </div>
         </div>
         <div className={`setup-user-slide setup-slide ${currentStep.index === 1 ? 'active' : ''} setup-user-name`}>
           <div className="setup-panel">
-            {model.uid && <div className="setup-input-subpanel">
-              <img className="setup-input-avatar" src={model.image} alt={model.username} />
+            {!anonymous && <div className="setup-input-subpanel">
+              <img className="setup-input-avatar" src={model.photoURL} alt={model.displayName} />
             </div>}
             <div className="setup-input-subpanel mt-4">
-              {!model.uid && <h1 className="input-label">{t("setup.user.username")}</h1>}
+              {anonymous && <h1 className="input-label">{t("setup.user.displayName")}</h1>}
               <input
                 autoComplete="off"
-                ref={usernameRef}
+                ref={displayNameRef}
                 className="mvc-inline-edit appearance-none bg-transparent border-none w-full text-gray-700 placeholder-gray-600 focus:placeholder-gray-500 font-bold text-2xl mr-3 py-2 leading-tight focus:outline-none"
-                name="username"
-                placeholder={t("setup.user.usernamePlaceholder")}
-                value={model.username}
-                onChange={({ target: { value } }) => setModel(user => ({ ...user, username: value }))}
+                name="displayName"
+                placeholder={t("setup.user.displayNamePlaceholder")}
+                value={model.displayName}
+                onChange={({ target: { value } }) => setModel(user => ({ ...user, displayName: value }))}
                 onKeyPress={currentStep.index === 1 ? nextStepOnEnter : null}
               />
             </div>
-            {model.uid && <div className="setup-input-subpanel mt-4">
+            {!anonymous && <div className="setup-input-subpanel mt-4">
               <input
                 autoComplete="off"
                 className="mvc-inline-edit appearance-none bg-transparent border-none w-full text-gray-700 placeholder-gray-600 focus:placeholder-gray-500 font-bold text-2xl mr-3 py-2 leading-tight focus:outline-none"
                 disabled={true}
                 name="email"
-                placeholder={t("setup.user.usernamePlaceholder")}
+                placeholder={t("setup.user.displayNamePlaceholder")}
                 value={model.email}
-                onChange={({ target: { value } }) => setModel(user => ({ ...user, username: value }))}
+                onChange={({ target: { value } }) => setModel(user => ({ ...user, displayName: value }))}
                 onKeyPress={currentStep.index === 1 ? nextStepOnEnter : null}
               />
             </div>}

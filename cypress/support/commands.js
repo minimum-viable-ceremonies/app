@@ -4,11 +4,11 @@ import "firebase/database"
 import { attachCustomCommands } from "cypress-firebase"
 
 firebase.initializeApp({
-  apiKey: process.env.MVC_FIREBASE_API_KEY,
-  authDomain: `${process.env.MVC_FIREBASE_DOMAIN}.firebaseapp.com`,
-  databaseURL: `https://${process.env.MVC_FIREBASE_DOMAIN}.firebaseio.com`,
-  projectId: `${process.env.MVC_FIREBASE_DOMAIN}`,
-  storageBucket: `${process.env.MVC_FIREBASE_DOMAIN}.appspot.com`,
+  apiKey: Cypress.env('API_KEY'),
+  authDomain: `${Cypress.env('DOMAIN')}.firebaseapp.com`,
+  databaseURL: `https://${Cypress.env('DOMAIN')}.firebaseio.com`,
+  projectId: `${Cypress.env('DOMAIN')}`,
+  storageBucket: `${Cypress.env('API_KEY')}.appspot.com`,
 })
 
 attachCustomCommands({ Cypress, cy, firebase })
@@ -19,5 +19,11 @@ const seed = model => fixture => (
   ))
 )
 
+const fetch = model => uuid => (
+  cy.callRtdb('get', `${model}/${uuid}`)
+)
+
 Cypress.Commands.add('seedRoom', seed('rooms'))
 Cypress.Commands.add('seedOrganization', seed('organizations'))
+Cypress.Commands.add('fetchRoom', fetch('rooms'))
+Cypress.Commands.add('fetchOrganization', fetch('organizations'))

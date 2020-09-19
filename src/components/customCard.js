@@ -1,16 +1,15 @@
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
 import Select from "react-select"
 import { useTranslation } from "react-i18next"
 import data from "emoji-mart/data/apple.json";
 import Picker from 'emoji-mart/dist-es/components/picker/nimble-picker'
 
-import Context from "../contexts/room"
-import ThemeBadge from "./themeBadge"
+import ThemeOption from "./themeOption"
 import "../styles/customCard.scss"
 import "emoji-mart/css/emoji-mart.css"
+import themeData from "../data/themes"
 
 const CustomCard = ({ model, setModel }) => {
-  const { themeData } = useContext(Context)
   const { t } = useTranslation()
   const [picker, setPicker] = useState(false)
 
@@ -18,12 +17,6 @@ const CustomCard = ({ model, setModel }) => {
     value: theme,
     label: t(`themes.${theme}.name`)
   }))
-
-  const ThemeBadgeComponent = ({ data, innerProps, innerRef }) => (
-    <div ref={innerRef} {...innerProps}>
-      <ThemeBadge theme={data.value} />
-    </div>
-  )
 
   return (
     <div className="card custom-card flex-grow flex justify-center">
@@ -47,8 +40,8 @@ const CustomCard = ({ model, setModel }) => {
           <div className="card-theme">
             <Select
               components={{
-                SingleValue: ThemeBadgeComponent,
-                Option: ThemeBadgeComponent,
+                SingleValue: ThemeOption,
+                Option: ThemeOption,
                 IndicatorsContainer: () => null,
               }}
               className="custom-card-select mvc-inline-edit"

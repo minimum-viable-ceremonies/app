@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useMemo } from "react"
 import phrase from "random-words"
 import { useMatomo } from "@datapunt/matomo-tracker-react"
 
@@ -22,6 +22,7 @@ const Room = ({ uuid }) => {
   const { trackPageView } = useMatomo()
 
   useEffect(() => { trackPageView() }, [trackPageView])
+  useEffect(() => { context.setup(uuid) }, [uuid])
 
   return (
     <Context.Provider value={context}>
@@ -30,20 +31,25 @@ const Room = ({ uuid }) => {
         <Board />
         <Modal
           Content={SetupUser}
-          open={!context.currentUser}
+          open={!Object.keys(context.participants).includes(context.currentUser.uid)}
           initialModel={{
-            id: phrase({ exactly: 3, join: '-' }),
-            username: '',
-            roles: [],
+            providers: context.features.providers,
+            provider: context.currentUser.provider || context.features.providers[0] || 'anonymous',
+            uid: context.currentUser.uid,
+            displayName: '',
+            roles: []
           }}
-          initialStep={context.features.premium ? 0 : 1}
-          submit={participant => context.modifyParticipant(participant.id, participant)}
+          initialStep={context.features.providers.length > 0 ? 0 : 1}
+          submit={model =>
+            context.signIn(model.provider).then(({ user }) =>
+              context.modifyParticipant(user.uid, { ...model, uid: user.uid }).then(() =>
+                context.setupRoom()))}
           steps={[{
             // auth provider step
             canProceed: ({ uid }) => !!uid
           }, {
             next: "setup.controls.next",
-            canProceed: ({ username }) => !!username,
+            canProceed: ({ displayName }) => !!displayName,
           }, {
             next: "setup.controls.next",
             back: "setup.controls.back",
@@ -58,7 +64,7 @@ const Room = ({ uuid }) => {
           open={context.editingRoom}
           initialModel={draft}
           close={context.setEditingRoomId}
-          submit={room => roomTable.create(room).then(() => context.setUuid(room.uuid))}
+          submit={room => roomTable.create(room).then(() => context.setup(room.uuid))}
           steps={[{
             next: "setup.controls.okGotIt",
           }, {
@@ -93,11 +99,10 @@ const Room = ({ uuid }) => {
             width: "auto",
             height: "auto"
           }}
-          submit={ceremony => (
-            context.modifyCeremony(ceremony.id, ceremony).then(() => (
-              context.setEditingCeremonyId(ceremony.id)
-            ))
-          )}
+          submit={ceremony =>
+            context.modifyCeremony(ceremony.id, ceremony).then(() =>
+              context.setEditingCeremonyId(ceremony.id))
+          }
           singleControl={true}
           steps={[{
             next: "common.save",

@@ -1,23 +1,26 @@
 import React, { useContext } from "react"
 import { useTranslation } from 'react-i18next'
 import { DragDropContext } from "react-beautiful-dnd"
+import Confetti from "react-dom-confetti"
 
 import Cadence from "./cadence"
-import Confetti from "./confetti"
 import Dropdown from "./dropdown"
 import Sidebar from "./sidebar"
 import Toast from "./toast"
 import Context from "../contexts/room"
+import confettiData from "../data/confetti"
 import "../styles/board.scss"
 
 const Board = () => {
   const { t } = useTranslation()
-  const { boardRef, draft, place, weekCount, modifyRoom } = useContext(Context)
+  const { complete, boardRef, draft, place, weekCount, modifyRoom } = useContext(Context)
 
   return (
     <div className={`board flex flex-row ${draft ? "draft" : ""}`}>
       <Sidebar />
-      <Confetti />
+      <div style={{position: "absolute", left: "50%", top: "25%"}}>
+        <Confetti active={complete} config={confettiData} />
+      </div>
       <Toast />
       <DragDropContext onDragEnd={place}>
         <div ref={boardRef} className="flex flex-col board-content">

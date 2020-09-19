@@ -10,6 +10,9 @@
         "weekCount": {
           ".write": "data.parent().child('participants').hasChild(auth.uid)"
         },
+        "calendar": {
+          ".write": "data.parent().child('participants').hasChild(auth.uid)"
+        },
         "participants": {
           "$participant_id": {
             ".write": "$participant_id == auth.uid || !data.exists()"

@@ -1,7 +1,6 @@
 import React, { useContext, useState, useRef } from "react"
 
 import Icon from "./icon"
-import Loading from "./loading"
 import Context from "../contexts/room"
 import useScreenEnforcedRef from "../hooks/useScreenEnforcedRef"
 import "../styles/dropdown.scss"
@@ -18,7 +17,6 @@ const Dropdown = ({
   width,
   tooltip,
   dropdown,
-  loading,
   onClick
 }) => {
   const { boardRef } = useContext(Context)
@@ -44,11 +42,7 @@ const Dropdown = ({
           setOpen(false)
         }}
       >
-        {loading ? (
-          <div className="mr-1"><Loading size={size} /></div>
-        ) : (
-          icon && <Icon icon={icon} size={size} className={text ? "mr-2" : ""} />
-        )}
+        {icon && <Icon icon={icon} size={size} className={text ? "mr-2" : ""} />}
         {text && <span>{text}</span>}
       </div>
       {tooltip && <div ref={tooltipRef} style={width ? {width} : {whiteSpace: 'nowrap'}} className={`dropdown-tooltip ${position} ${theme}`}>

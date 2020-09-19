@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react"
+import React, { useEffect } from "react"
 import phrase from "random-words"
 import { useMatomo } from "@datapunt/matomo-tracker-react"
 
@@ -8,6 +8,7 @@ import Board from "./board"
 import Modal from "./modal"
 import SetupUser from "./setupUser"
 import EditUser from "./editUser"
+import SetupCalendar from "./setupCalendar"
 import SetupRoom from "./setupRoom"
 import SetupCeremony from "./setupCeremony"
 import EditCeremony from "./editCeremony"
@@ -40,10 +41,6 @@ const Room = ({ uuid }) => {
             roles: []
           }}
           initialStep={context.features.providers.length > 0 ? 0 : 1}
-          submit={model =>
-            context.signIn(model.provider).then(({ user }) =>
-              context.modifyParticipant(user.uid, { ...model, uid: user.uid }).then(() =>
-                context.setupRoom()))}
           steps={[{
             // auth provider step
             canProceed: ({ uid }) => !!uid
@@ -57,6 +54,10 @@ const Room = ({ uuid }) => {
           }, {
             next: "setup.controls.createUser",
             back: "setup.controls.back",
+            perform: model =>
+              context.signIn(model.provider).then(({ user }) =>
+                context.modifyParticipant(user.uid, { ...model, uid: user.uid }).then(() =>
+                  context.setupRoom()))
           }]}
         />
         <Modal
@@ -64,7 +65,6 @@ const Room = ({ uuid }) => {
           open={context.editingRoom}
           initialModel={draft}
           close={context.setEditingRoomId}
-          submit={room => roomTable.create(room).then(() => context.setup(room.uuid))}
           steps={[{
             next: "setup.controls.okGotIt",
           }, {
@@ -74,6 +74,7 @@ const Room = ({ uuid }) => {
           }, {
             next: "setup.controls.createRoom",
             back: "setup.controls.back",
+            perform: room => roomTable.create(room).then(() => context.setup(room.uuid))
           }]}
         />
         <Modal
@@ -99,16 +100,15 @@ const Room = ({ uuid }) => {
             width: "auto",
             height: "auto"
           }}
-          submit={ceremony =>
-            context.modifyCeremony(ceremony.id, ceremony).then(() =>
-              context.setEditingCeremonyId(ceremony.id))
-          }
           singleControl={true}
           steps={[{
             next: "common.save",
             canProceed: model => (
               model.title && model.emoji && model.theme
-            )
+            ),
+            perform: ceremony =>
+              context.modifyCeremony(ceremony.id, ceremony).then(() =>
+                context.setEditingCeremonyId(ceremony.id))
           }]}
         />
         <Modal
@@ -120,6 +120,25 @@ const Room = ({ uuid }) => {
           Content={EditUser}
           open={context.editingUser}
           close={context.setEditingUserId}
+        />
+        <Modal
+          Content={SetupCalendar}
+          open={context.editingCalendar}
+          close={context.setEditingCalendarId}
+          initialStep={context.calendar.ical ? 1 : 0}
+          initialModel={context.calendar}
+          steps={[{
+            next: `common.${context.calendar.ical ? "reexport" : "export"}`,
+            perform: model =>
+              fetch(`${process.env.FUNCTIONS_HOST}/calendar-upload`, {
+                method: 'PUT',
+                body: JSON.stringify({ uuid, calendar: model }),
+                headers: { 'Content-Type': 'application/json' }
+              })
+          }, {
+            back: "common.reexport",
+            next: "common.download"
+          }]}
         />
       </> : <Loading />}
     </Context.Provider>

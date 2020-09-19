@@ -7,12 +7,12 @@ import RoomContext from "../contexts/room"
 import ModalContext from "../contexts/modal"
 import "../styles/setup.scss"
 import roleData from "../data/roles"
+import providerData from "../data/providers"
 import ceremonyHelp from "../images/help/ceremony.gif"
 import voidHelp from "../images/help/void.gif"
-import GoogleLogo from "../images/icons/symbols/google.svg"
 
 const SetupUser = ({ onSubmit }) => {
-  const { signIn, providers } = useContext(RoomContext)
+  const { signIn } = useContext(RoomContext)
   const { nextStep, currentStep, nextStepOnEnter, model, setModel } = useContext(ModalContext)
   const [currentRole, setCurrentRole] = useState()
   const { t } = useTranslation()
@@ -35,24 +35,30 @@ const SetupUser = ({ onSubmit }) => {
     <div className="setup-user setup">
       <div className="setup-user-slides setup-slides" style={{ marginLeft: `-${100 * currentStep.index}%`}}>
         <div className={`setup-user-slide setup-slide ${currentStep.index === 0 ? 'active' : ''} setup-user-provider`}>
-          {model.providers.filter(p => p !== 'anonymous').map(provider => (
-            <div key={provider} className="setup-panel">
-              <div className="setup-input-subpanel">
-                <button className="mvc-btn btn-secondary m-auto flex" onClick={() => (
-                  signIn(provider).then(result =>
-                    setModel(current => ({ ...current, provider, ...providers[provider].map(result) }))
-                ))}>
-                  <GoogleLogo className="mvc-logo mr-2" />
-                  <span>{t("setup.user.login.google")}</span>
-                </button>
-              </div>
-            </div>
-          ))}
+          <div className="setup-panel">
+            {model.providers.filter(p => p !== 'anonymous').map(provider => {
+              console.log(provider)
+              const { map, Logo } = providerData[provider]
+
+              return (
+                <div key={provider} className="setup-input-subpanel">
+                  <button className="mvc-btn btn-secondary m-auto flex" onClick={() => (
+                    signIn(provider).then(({ user: { uid, email, displayName, photoURL } }) => setModel(current => ({
+                      ...current, provider, uid, email, displayName, photoURL
+                    }))
+                  ))}>
+                    <Logo className="mvc-logo mr-2" />
+                    <span>{t(`setup.user.login.${provider}`)}</span>
+                  </button>
+                </div>
+              )
+            })}
+          </div>
         </div>
         <div className={`setup-user-slide setup-slide ${currentStep.index === 1 ? 'active' : ''} setup-user-name`}>
           <div className="setup-panel">
             {!anonymous && <div className="setup-input-subpanel">
-              <img className="setup-input-avatar" src={model.image} alt={model.displayName} />
+              <img className="setup-input-avatar" src={model.photoURL} alt={model.displayName} />
             </div>}
             <div className="setup-input-subpanel mt-4">
               {anonymous && <h1 className="input-label">{t("setup.user.displayName")}</h1>}

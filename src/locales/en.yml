@@ -468,7 +468,8 @@ setup:
     ceremonyHelptext: Move ceremonies to a cadence or sprint
     voidHelptext: Move unwanted ceremonies into the void
     login:
-      google: Login with google
+      google: Login with Google
+      microsoft: Login with Microsoft
 shareableLink:
   share: Share room
   copy: Click to copy shareable link

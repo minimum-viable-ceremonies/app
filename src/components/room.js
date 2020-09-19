@@ -127,6 +127,14 @@ const Room = ({ uuid }) => {
           close={context.setEditingCalendarId}
           initialStep={context.calendar.ical ? 1 : 0}
           initialModel={context.calendar}
+          style={{
+            height: "auto",
+            width: "auto",
+            top: "auto",
+            bottom: "auto",
+            left: "auto",
+            right: "auto"
+          }}
           steps={[{
             next: `common.${context.calendar.ical ? "reexport" : "export"}`,
             perform: model =>
@@ -137,7 +145,14 @@ const Room = ({ uuid }) => {
               })
           }, {
             back: "common.reexport",
-            next: "common.download"
+            next: "common.download",
+            perform: model => {
+              const blob = new Blob([model.ical], { type : 'text/calendar' })
+            	let a = document.createElement('a')
+            	a.href = window.URL.createObjectURL(blob)
+            	a.download = model.filename
+            	return Promise.resolve(a.click())
+            }
           }]}
         />
       </> : <Loading />}

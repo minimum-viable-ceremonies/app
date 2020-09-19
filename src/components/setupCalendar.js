@@ -13,10 +13,10 @@ const SetupCalendar = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="setup-calendar setup">
+    <div className="setup-calendar flex-grow">
       <div className="setup-calendar-slides setup-slides" style={{marginLeft: `-${100 * currentStep.index}%`}}>
         <div className={`setup-calendar-slide ${currentStep.index === 0 ? 'active' : ''} setup-slide`}>
-          <div className="setup-panel text-center mx-auto">
+          <div className="setup-panel">
             <div className="setup-subpanel">
               <h3 className="mvc-subtitle">{t("calendar.name")}</h3>
               <input
@@ -38,15 +38,15 @@ const SetupCalendar = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className={`setup-calendar-slide ${currentStep.index === 1 ? 'active' : ''} setup-slide`}>
-        <div className="setup-panel text-center mx-auto flex flex-center">
-          <div className="setup-subpanel">
-            <button className="flex flex-col flex-center items-center">
-              <Icon icon="file/file" size={36} />
-              <label>{calendar.filename}</label>
-            </button>
-            <div className="mvc-note">{t(`calendar.lastExported`, { lastExported: moment(calendar.exportedAt).fromNow() })}</div>
+        <div className={`setup-calendar-slide ${currentStep.index === 1 ? 'active' : ''} setup-slide`}>
+          <div className="setup-panel text-center mx-auto flex flex-center">
+            <div className="setup-subpanel">
+              <button className="flex flex-col flex-center items-center mx-auto">
+                <Icon icon="file/file" size={36} />
+                <label>{calendar.filename}</label>
+              </button>
+              <div className="mvc-note">{t(`calendar.lastExported`, { lastExported: moment(calendar.exportedAt).fromNow() })}</div>
+            </div>
           </div>
         </div>
       </div>

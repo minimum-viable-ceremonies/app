@@ -125,7 +125,6 @@ const SetupUser = ({ onSubmit }) => {
                 <div className="text-center mx-auto mb-3">
                   {t("setup.user.ceremonyHelptext")}
                 </div>
-
               </div>
               <div className="flex flex-col instruction">
                 <img src={voidHelp} alt={t("setup.user.voidHelptext")} />

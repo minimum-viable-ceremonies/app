@@ -4,8 +4,7 @@ import MicrosoftLogo from "../images/icons/symbols/hash.svg" // todo get proper 
 
 export default {
   anonymous: {
-    signIn: () => firebase.auth().signInAnonymously(),
-    map: user => user
+    signIn: () => firebase.auth().signInAnonymously()
   },
   google: {
     Logo: GoogleLogo,

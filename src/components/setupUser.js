@@ -37,8 +37,7 @@ const SetupUser = ({ onSubmit }) => {
         <div className={`setup-user-slide setup-slide ${currentStep.index === 0 ? 'active' : ''} setup-user-provider`}>
           <div className="setup-panel">
             {model.providers.filter(p => p !== 'anonymous').map(provider => {
-              console.log(provider)
-              const { map, Logo } = providerData[provider]
+              const { Logo } = providerData[provider]
 
               return (
                 <div key={provider} className="setup-input-subpanel">

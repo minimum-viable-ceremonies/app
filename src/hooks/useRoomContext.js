@@ -78,8 +78,8 @@ const useRoomContext = (id, draft) => {
     ))
   }, [weekCount, ceremonies, modifiers])
 
-  useEffect(() => modifiers.teardownRoom, [modifiers.teardownRoom])
-  useEffect(() => modifiers.teardownOrganization, [modifiers.teardownOrganization])
+  useEffect(() => () => modifiers.teardownRoom, [modifiers.teardownRoom])
+  useEffect(() => () => modifiers.teardownOrganization, [modifiers.teardownOrganization])
 
   const shareableLink = useMemo(() => `${document.location.origin}/room/${uuid}`, [uuid])
 

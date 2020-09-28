@@ -3,11 +3,9 @@ import { set, sync, unsync, load, debouncedWrite } from "./common"
 
 export default {
   create: ({ uuid, name, weekCount, ceremonies, participants }) => (
-    fetch(`${process.env.FUNCTIONS_HOST}/room-create`, {
-      method: 'POST',
-      body: JSON.stringify({ uuid, name, template: 'default' }),
-      headers: { 'Content-Type': 'application/json' }
-    }).then(() => navigate(`room/${uuid}`))
+    set(`rooms/${uuid}`, { uuid, name, weekCount, ceremonies, participants }).then(() => (
+      navigate(`room/${uuid}`)
+    ))
   ),
 
   setup: ({ uuid, modifyRoom, modifyFeature, modifyParticipant, modifyCeremony }) => {

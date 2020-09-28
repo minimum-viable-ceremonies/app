@@ -17,7 +17,9 @@ const useRoomContext = (id, draft) => {
   const [weekCount, setWeekCount] = useState(1)
   const [participants, setParticipants] = useState({})
   const [features, setFeatures] = useState({ providers: [] })
-  const [ceremonies, setCeremonies] = useState({})
+  const [ceremonies, setCeremonies] = useState(ceremonyData.reduce(
+    (result, id, index) => ({ ...result, [id]: { id, index, placement: 'undecided', async: true } })
+  , {}))
 
   const auth = useFirebaseAuth()
   const refs = useRoomRefs()

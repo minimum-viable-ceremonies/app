@@ -5,7 +5,6 @@ import useRoomModifiers from "./useRoomModifiers"
 import useRoomRefs from "./useRoomRefs"
 
 import { document } from "browser-monads"
-import ceremonyData from "../data/ceremonies"
 
 const useRoomContext = (id, draft) => {
   const [uuid, setUuid] = useState(id)
@@ -17,9 +16,7 @@ const useRoomContext = (id, draft) => {
   const [weekCount, setWeekCount] = useState(1)
   const [participants, setParticipants] = useState({})
   const [features, setFeatures] = useState({ providers: [] })
-  const [ceremonies, setCeremonies] = useState(ceremonyData.reduce(
-    (result, id, index) => ({ ...result, [id]: { id, index, placement: 'undecided', async: true } })
-  , {}))
+  const [ceremonies, setCeremonies] = useState({})
 
   const auth = useFirebaseAuth()
   const refs = useRoomRefs()

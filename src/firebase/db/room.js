@@ -3,9 +3,12 @@ import { set, sync, unsync, load, debouncedWrite } from "./common"
 
 export default {
   create: ({ uuid, name, weekCount, ceremonies, participants }) => (
-    set(`rooms/${uuid}`, { uuid, name, weekCount, ceremonies, participants }).then(() => (
-      navigate(`room/${uuid}`)
-    ))
+    fetch(`${process.env.FUNCTIONS_HOST}/mvc-create`, {
+      method: 'POST',
+      body: JSON.stringify({ uuid, name, template: 'default' }),
+    }, {
+      headers: { 'Content-Type': 'application/json' }
+    }).then(({ ok }) => ok && navigate(`room/${uuid}`))
   ),
 
   setup: ({ uuid, modifyRoom, modifyFeature, modifyParticipant, modifyCeremony }) => {

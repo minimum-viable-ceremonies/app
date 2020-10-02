@@ -5,6 +5,7 @@ import organizationTable from "../firebase/db/organization"
 
 const useRoomModifiers = ({
   uuid,
+  calendar, setCalendar,
   ceremonies, setCeremonies,
   participants, setParticipants,
   setName, setWeekCount, setFeatures
@@ -22,6 +23,9 @@ const useRoomModifiers = ({
 
   const [editingCeremonyId, setEditingCeremonyId] = useState()
   const editingCeremony = ceremonies[editingCeremonyId]
+
+  const [editingCalendarId, setEditingCalendarId] = useState()
+  const editingCalendar = editingCalendarId
 
   const modifyRoom = (attrs, syncDb = true) => {
     attrs.name && setName(attrs.name)
@@ -45,6 +49,11 @@ const useRoomModifiers = ({
     const updated = { ...ceremonies[id], ...attrs, people }
     setCeremonies(current => ({ ...current, [id]: updated }))
     return syncDb && roomTable.write(uuid, `ceremonies/${updated.id}`, updated)
+  }
+
+  const modifyCalendar = (attrs, syncDb = true) => {
+    setCalendar(attrs)
+    return syncDb && roomTable.write(uuid, `calendar`, attrs)
   }
 
   const modifyFeature = (key, value) => {
@@ -87,7 +96,7 @@ const useRoomModifiers = ({
   }
 
   const setupRoom = () =>
-    roomTable.setup({ uuid, modifyRoom, modifyFeature, modifyParticipant, modifyCeremony })
+    roomTable.setup({ uuid, modifyRoom, modifyFeature, modifyParticipant, modifyCalendar, modifyCeremony })
 
   const setupOrganization = orgUuid =>
     setOrgUuid(orgUuid) || organizationTable.setup({ uuid: orgUuid, modifyFeature })
@@ -102,6 +111,7 @@ const useRoomModifiers = ({
     editingRoom, setEditingRoomId, modifyRoom,
     editingUser, setEditingUserId, modifyParticipant,
     editingCeremony, setEditingCeremonyId, modifyCeremony,
+    editingCalendar, setEditingCalendarId, modifyCalendar,
     creatingCeremony, setCreatingCeremonyId,
     modifyFeature,
     setupRoom, teardownRoom,

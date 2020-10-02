@@ -11,10 +11,11 @@ export default {
     }).then(({ ok }) => ok && navigate(`room/${uuid}`))
   ),
 
-  setup: ({ uuid, modifyRoom, modifyFeature, modifyParticipant, modifyCeremony }) => {
+  setup: ({ uuid, modifyRoom, modifyFeature, modifyParticipant, modifyCeremony, modifyCalendar }) => {
     sync(`rooms/${uuid}/name`,         snapshot => modifyRoom({ name: snapshot.toJSON() }, false))
     sync(`rooms/${uuid}/weekCount`,    snapshot => modifyRoom({ weekCount: snapshot.toJSON() }, false))
-    sync(`rooms/${uuid}/features`,     snapshot => modifyFeature(snapshot.toJSON()))
+    sync(`rooms/${uuid}/features`,     snapshot => modifyFeature(snapshot.toJSON(), false))
+    sync(`rooms/${uuid}/calendar`,     snapshot => modifyCalendar(snapshot.toJSON(), false))
     sync(`rooms/${uuid}/participants`, snapshot => (
       Object.values(snapshot.toJSON() || []).map(participant => (
         modifyParticipant(participant.uid, participant, false)
@@ -38,6 +39,7 @@ export default {
     unsync(`rooms/${uuid}/name`)
     unsync(`rooms/${uuid}/weekCount`)
     unsync(`rooms/${uuid}/features`)
+    unsync(`rooms/${uuid}/calendar`)
     unsync(`rooms/${uuid}/participants`)
     unsync(`rooms/${uuid}/ceremonies`)
   },

@@ -21,7 +21,6 @@ const Intro = () => {
         Content={SetupRoom}
         open={true}
         initialModel={draft}
-        submit={roomTable.create}
         steps={[{
           next: "setup.controls.okGotIt",
           back: null,
@@ -32,6 +31,7 @@ const Intro = () => {
         }, {
           next: "setup.controls.createRoom",
           back: "setup.controls.back",
+          perform: roomTable.create,
         }]}
       />
       <Board />

@@ -354,10 +354,19 @@ ceremonies:
       Improving old code can be a difficult thing to prioritize, but if not handled correctly, it can bring the entire organization to a halt.
 
       Some teams dedicate a certain amount of time in their cadence to completing tasks that make existing code more maintainable. How does your team plan to minimize or reduce technical debt?
+calendar:
+  name: Name
+  namePlaceholder: e.g. Growth squad calendar
+  timezone: Time zone
+  timezonePlaceholder: e.g. Pacific/Auckland
+  lastExported: Last exported {{lastExported}}
 common:
   to: to
   copy: Copy
   save: Save
+  download: Download
+  export: Export
+  reexport: Re-export
   clickEdit: Click to edit
 intro:
   welcome: Welcome to Minimum Viable Ceremonies!
@@ -479,6 +488,10 @@ sidebar:
   expand: Expand the sidebar
   shareableLink: Shareable link
   teamsAndRoles: Team and roles
+  export: Export to calendar
+  exportHelptext: Export this room to your team's calendar
+  exportProcessing: Exporting...
+  exportFinished: Export complete!
   setupRoom: New room
   setupRoomTooltip: Create a new room
 themes:

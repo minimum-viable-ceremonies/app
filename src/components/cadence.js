@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react"
+import React, { useState, useContext } from "react"
 import { useTranslation } from "react-i18next"
 import { Draggable, Droppable } from "react-beautiful-dnd"
 
@@ -9,14 +9,8 @@ import "../styles/cadence.scss"
 import Void from "../images/void.svg"
 
 const Cadence = ({ id, index, basis, klass }) => {
-  const { entering, placedOn, setCreatingCeremonyId } = useContext(Context)
+  const { placedOn, setCreatingCeremonyId } = useContext(Context)
   const { t } = useTranslation()
-  const [entered, setEntered] = useState(entering)
-  useEffect(() => {
-    if (!entered) { return }
-
-    setTimeout(() => setEntered(false), 50 * index)
-  }, [])
 
   return (
     <Droppable droppableId={id}>
@@ -24,7 +18,7 @@ const Cadence = ({ id, index, basis, klass }) => {
         <div
           ref={innerRef}
           style={{flexBasis: `${100 / basis}%`}}
-          className={`cadence mvc-entrance ${entered ? 'entered' : ''} flex flex-col flex-grow ${id} ${isDraggingOver ? 'highlight' : ''}`}
+          className={`cadence flex flex-col flex-grow ${id} ${isDraggingOver ? 'highlight' : ''}`}
           {...droppableProps}
         >
           {!['undecided'].includes(id) &&

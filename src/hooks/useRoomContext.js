@@ -11,7 +11,6 @@ const useRoomContext = (id, draft) => {
   const [name, setName] = useState("")
   const [organization, setOrganization] = useState({})
   const [ready, setReady] = useState(false)
-  const [entering, setEntering] = useState(false)
   const [complete, setComplete] = useState(false)
   const [toast, setToast] = useState({ visible: false, message: '' })
   const [weekCount, setWeekCount] = useState(1)
@@ -34,7 +33,7 @@ const useRoomContext = (id, draft) => {
     setName, setWeekCount, setFeatures
   })
 
-  const setup = (uuid, animate) => {
+  const setup = (uuid) => {
     setReady(false)
     setUuid(uuid)
 
@@ -52,11 +51,6 @@ const useRoomContext = (id, draft) => {
       setCeremonies(state.ceremonies || {})
       setParticipants(state.participants || {})
       setCalendar(state.calendar || {})
-
-      if (animate) {
-        setEntering(true)
-        setTimeout(() => setEntering(false), 100)
-      }
 
       modifiers.setupOrganization(state.organizationUuid).then(state => {
         const { uuid, name, image } = state
@@ -99,7 +93,7 @@ const useRoomContext = (id, draft) => {
     ...modifiers,
     ...refs,
     setup,
-    uuid, draft, complete, ready, entering,
+    uuid, draft, complete, ready,
     organization, name, weekCount, ceremonies, calendar, participants,
     shareableLink,
     features,

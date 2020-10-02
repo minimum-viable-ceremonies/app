@@ -6,13 +6,13 @@ import Context from "../contexts/room"
 
 const Ceremony = ({ id, index }) => {
   const { t } = useTranslation()
-  const { entering, setEditingCeremonyId, ceremonies } = useContext(Context)
-  const [entered, setEntered] = useState(entering)
+  const { ready, setEditingCeremonyId, ceremonies } = useContext(Context)
+  const [entered, setEntered] = useState(false)
   useEffect(() => {
-    if (!entering || ceremonies[id].placement !== 'undecided') { return }
+    if (!ready || entered) { return }
 
-    setTimeout(() => setEntered(false), 500 + (50 * index))
-  }, [entering])
+    setTimeout(() => setEntered(true), 50 * index)
+  }, [ready])
 
   return (
     <div className={`ceremony mvc-entrance ${entered ? 'entered' : ''}`} onClick={() => setEditingCeremonyId(id)}>

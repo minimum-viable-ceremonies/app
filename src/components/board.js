@@ -31,7 +31,7 @@ const Board = () => {
           <div className="flex flex-row justify-around">
             <div style={{flexBasis: "20%"}} className="flex flex-col">
               <div className="mvc-subtitle">{t("board.ceremonies")}</div>
-              <Cadence index={0} className="flex-grow" id="undecided" />
+              <Cadence className="flex-grow" id="undecided" />
             </div>
             <div style={{flexBasis: "80%"}} className="flex flex-col">
               <div className="flex flex-row">
@@ -39,31 +39,31 @@ const Board = () => {
                   <div className="mvc-subtitle">{t("board.cadences")}</div>
                   <div className="flex flex-col flex-grow">
                     <div className="flex flex-row" style={{flexBasis: "50%"}}>
-                      <Cadence index={1} basis={3} id="daily" />
-                      <Cadence index={2} basis={3} id="weekly" />
-                      <Cadence index={3} basis={3} id="monthly" />
+                      <Cadence basis={3} id="daily" />
+                      <Cadence basis={3} id="weekly" />
+                      <Cadence basis={3} id="monthly" />
                     </div>
                     <div className="flex flex-row" style={{flexBasis: "50%"}}>
-                      <Cadence index={4} basis={3} id="quarterly" />
-                      <Cadence index={5} basis={3} id="halfyearly" />
-                      <Cadence index={6} basis={3} id="yearly" />
+                      <Cadence basis={3} id="quarterly" />
+                      <Cadence basis={3} id="halfyearly" />
+                      <Cadence basis={3} id="yearly" />
                     </div>
                   </div>
                 </div>
                 <div style={{flexBasis: "40%"}} className="flex flex-col">
                   <div className="mvc-subtitle">{t("board.void")}</div>
-                  <Cadence index={7} id="void" void={true} />
+                  <Cadence id="void" void={true} />
                 </div>
               </div>
               <div className="flex flex-col">
                 {[...Array(parseInt(weekCount))].map((_, index) => <div key={index}>
                   <div className="mvc-subtitle">{t("board.sprint", { index: index+1 })}</div>
                   <div className="flex flex-row justify-around">
-                    <Cadence index={0 + (weekCount * 5)} basis={5} id={`monday-${index+1}`} />
-                    <Cadence index={1 + (weekCount * 5)} basis={5} id={`tuesday-${index+1}`} />
-                    <Cadence index={2 + (weekCount * 5)} basis={5} id={`wednesday-${index+1}`} />
-                    <Cadence index={3 + (weekCount * 5)} basis={5} id={`thursday-${index+1}`} />
-                    <Cadence index={4 + (weekCount * 5)} basis={5} id={`friday-${index+1}`} />
+                    <Cadence basis={5} id={`monday-${index+1}`} />
+                    <Cadence basis={5} id={`tuesday-${index+1}`} />
+                    <Cadence basis={5} id={`wednesday-${index+1}`} />
+                    <Cadence basis={5} id={`thursday-${index+1}`} />
+                    <Cadence basis={5} id={`friday-${index+1}`} />
                   </div>
                 </div>)}
                 <div>

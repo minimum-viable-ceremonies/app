@@ -66,7 +66,7 @@ const Room = ({ uuid }) => {
           perform: model =>
             context.signIn(model.provider).then(({ user }) =>
               context.modifyParticipant(user.uid, { ...model, uid: user.uid }).then(() =>
-                context.setup(uuid, true)))
+                context.setup(uuid)))
         }]}
       />
       <Modal

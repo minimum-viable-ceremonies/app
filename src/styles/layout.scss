@@ -793,12 +793,12 @@ pre tt:after {
 .mvc-entrance {
   transition: all 0.4s ease-in-out;
   position: relative;
-  bottom: 0;
-  left: 0;
-  opacity: 1;
+  opacity: 0;
 
   &.entered {
-    opacity: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 1;
   }
 }
 

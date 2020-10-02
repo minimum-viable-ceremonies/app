@@ -23,7 +23,7 @@ const Room = ({ uuid }) => {
   const { trackPageView } = useMatomo()
 
   useEffect(() => { trackPageView() }, [trackPageView])
-  useEffect(() => { context.setup(uuid) }, [])
+  useEffect(() => { context.setup(uuid) }, [uuid])
 
   return (
     <Context.Provider value={context}>

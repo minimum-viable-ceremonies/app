@@ -20,6 +20,7 @@ jobs:
           MATOMO_SITE_ID=${{ secrets.MATOMO_SITE_ID }}
           FRESHCHAT_TOKEN=${{ secrets.FRESHCHAT_TOKEN }}
           FRESHCHAT_HOST=${{ secrets.FRESHCHAT_HOST }}
+          FUNCTIONS_HOST=${{ secrets.FUNCTIONS_HOST }}
         write-mode: overwrite
     - run: npm install
     - run: MVC_FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }} MVC_FIREBASE_DOMAIN=${{ secrets.FIREBASE_DOMAIN }} npm run build

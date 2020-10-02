@@ -24,7 +24,7 @@ const useRoomContext = (id, draft) => {
   const [features, setFeatures] = useState({ providers: [] })
   const [ceremonies, setCeremonies] = useState({})
 
-  const auth = useFirebaseAuth()
+  const auth = useFirebaseAuth({ setReady })
   const refs = useRoomRefs()
   const modifiers = useRoomModifiers({
     uuid,
@@ -70,6 +70,7 @@ const useRoomContext = (id, draft) => {
   useEffect(() => {
     if (
       !complete &&
+      ceremonies.length > 0 &&
       Object.values(ceremonies).filter(c => c.placement === 'undecided').length === 0
     ) { setComplete(true) }
   }, [ceremonies, complete])

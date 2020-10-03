@@ -16,7 +16,7 @@ const Controls = ({ single }) => {
       {!single && <div className="controls-divider" />}
       {next && <button disabled={!canProceed(model)} className={`mvc-btn btn-primary ${single ? 'flex-grow' : ''}`} onClick={nextStep}>
         {submitting && <Loading size={25} />}
-        <span style={{ visibility: submitting ? 'hidden' : 'auto' }}>{t(next)}</span>
+        <span style={{ visibility: submitting ? 'hidden' : 'visible' }}>{t(next)}</span>
       </button>}
     </div>
   )

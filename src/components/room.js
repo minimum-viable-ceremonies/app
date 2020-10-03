@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react"
+import React, { useEffect } from "react"
 import phrase from "random-words"
 import { useMatomo } from "@datapunt/matomo-tracker-react"
 
@@ -27,101 +27,105 @@ const Room = ({ uuid }) => {
   return (
     <Context.Provider value={context}>
       <SEO page="room" params={{room: context.name}} />
-      {context.ready ? <>
-        <Board />
-        <Modal
-          Content={SetupUser}
-          open={!Object.keys(context.participants).includes(context.currentUser.uid)}
-          initialModel={{
-            providers: context.features.providers,
-            provider: context.currentUser.provider || context.features.providers[0] || 'anonymous',
-            uid: context.currentUser.uid,
-            displayName: '',
-            roles: []
-          }}
-          initialStep={context.features.providers.length > 0 ? 0 : 1}
-          submit={model =>
-            context.signIn(model.provider).then(({ user }) =>
-              context.modifyParticipant(user.uid, { ...model, uid: user.uid }).then(() =>
-                context.setupRoom()))}
-          steps={[{
-            // auth provider step
-            canProceed: ({ uid }) => !!uid
-          }, {
-            next: "setup.controls.next",
-            canProceed: ({ displayName }) => !!displayName,
-          }, {
-            next: "setup.controls.next",
-            back: "setup.controls.back",
-            canProceed: ({ roles = [] }) => !!roles.length
-          }, {
-            next: "setup.controls.createUser",
-            back: "setup.controls.back",
-          }]}
-        />
-        <Modal
-          Content={SetupRoom}
-          open={context.editingRoom}
-          initialModel={draft}
-          close={context.setEditingRoomId}
-          submit={room => roomTable.create(room).then(() => context.setup(room.uuid))}
-          steps={[{
-            next: "setup.controls.okGotIt",
-          }, {
-            next: "setup.controls.next",
-            back: "setup.controls.back",
-            canProceed: ({ name = "" }) => name.length > 3,
-          }, {
-            next: "setup.controls.createRoom",
-            back: "setup.controls.back",
-          }]}
-        />
-        <Modal
-          Content={SetupCeremony}
-          open={context.creatingCeremony}
-          initialModel={{
-            id: phrase({exactly: 3, join: '-'}),
-            theme: "coordination",
-            emoji: "🙂",
-            title: "",
-            subheading: "",
-            description: "",
-            placement: "undecided",
-            async: true,
-            custom: true,
-          }}
-          close={context.setCreatingCeremonyId}
-          styles={{
-            top: "auto",
-            left: "auto",
-            right: "auto",
-            bottom: "auto",
-            width: "auto",
-            height: "auto"
-          }}
-          submit={ceremony =>
-            context.modifyCeremony(ceremony.id, ceremony).then(() =>
-              context.setEditingCeremonyId(ceremony.id))
-          }
-          singleControl={true}
-          steps={[{
-            next: "common.save",
-            canProceed: model => (
-              model.title && model.emoji && model.theme
-            )
-          }]}
-        />
-        <Modal
-          Content={EditCeremony}
-          open={context.editingCeremony}
-          close={context.setEditingCeremonyId}
-        />
-        <Modal
-          Content={EditUser}
-          open={context.editingUser}
-          close={context.setEditingUserId}
-        />
-      </> : <Loading />}
+      <Board />
+      <Modal
+        Content={Loading}
+        open={!context.ready}
+        steps={[]}
+        styles={{background: 'transparent', border: 0, boxShadow: 0}}
+      />
+      <Modal
+        Content={SetupUser}
+        open={context.ready && !Object.keys(context.participants).includes(context.currentUser.uid)}
+        initialModel={{
+          providers: context.features.providers,
+          provider: context.currentUser.provider || context.features.providers[0] || 'anonymous',
+          uid: context.currentUser.uid,
+          displayName: '',
+          roles: []
+        }}
+        initialStep={context.features.providers.length > 0 ? 0 : 1}
+        submit={model =>
+          context.signIn(model.provider).then(({ user }) =>
+            context.modifyParticipant(user.uid, { ...model, uid: user.uid }).then(() =>
+              context.setup(context.uuid)))}
+        steps={[{
+          // auth provider step
+          canProceed: ({ uid }) => !!uid
+        }, {
+          next: "setup.controls.next",
+          canProceed: ({ displayName }) => !!displayName,
+        }, {
+          next: "setup.controls.next",
+          back: "setup.controls.back",
+          canProceed: ({ roles = [] }) => !!roles.length
+        }, {
+          next: "setup.controls.createUser",
+          back: "setup.controls.back",
+        }]}
+      />
+      <Modal
+        Content={SetupRoom}
+        open={context.editingRoom}
+        initialModel={draft}
+        close={context.setEditingRoomId}
+        submit={room => roomTable.create(room).then(() => context.setup(room.uuid))}
+        steps={[{
+          next: "setup.controls.okGotIt",
+        }, {
+          next: "setup.controls.next",
+          back: "setup.controls.back",
+          canProceed: ({ name = "" }) => name.length > 3,
+        }, {
+          next: "setup.controls.createRoom",
+          back: "setup.controls.back",
+        }]}
+      />
+      <Modal
+        Content={SetupCeremony}
+        open={context.creatingCeremony}
+        initialModel={{
+          id: phrase({exactly: 3, join: '-'}),
+          theme: "coordination",
+          emoji: "🙂",
+          title: "",
+          subheading: "",
+          description: "",
+          placement: "undecided",
+          async: true,
+          custom: true,
+        }}
+        close={context.setCreatingCeremonyId}
+        styles={{
+          top: "auto",
+          left: "auto",
+          right: "auto",
+          bottom: "auto",
+          width: "auto",
+          height: "auto"
+        }}
+        submit={ceremony =>
+          context.modifyCeremony(ceremony.id, ceremony).then(() =>
+            context.setEditingCeremonyId(ceremony.id))
+        }
+        singleControl={true}
+        steps={[{
+          next: "common.save",
+          canProceed: model => (
+            model.title && model.emoji && model.theme
+          )
+        }]}
+      />
+      <Modal
+        Content={EditCeremony}
+        open={context.editingCeremony}
+        close={context.setEditingCeremonyId}
+      />
+      <Modal
+        Content={EditUser}
+        open={context.editingUser}
+        close={context.setEditingUserId}
+      />
     </Context.Provider>
   )
 }

@@ -8,7 +8,7 @@ import Dropdown from "./dropdown"
 import "../styles/cadence.scss"
 import Void from "../images/void.svg"
 
-const Cadence = ({ id, basis, klass }) => {
+const Cadence = ({ id, index, basis, klass }) => {
   const { placedOn, setCreatingCeremonyId } = useContext(Context)
   const { t } = useTranslation()
 
@@ -35,7 +35,7 @@ const Cadence = ({ id, basis, klass }) => {
                   {...draggableProps}
                   {...dragHandleProps}
                 >
-                  <Ceremony id={id} />
+                  <Ceremony id={id} index={index} />
                 </div>
               )}
             </Draggable>

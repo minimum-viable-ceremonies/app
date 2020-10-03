@@ -2,9 +2,10 @@ import { useMemo } from "react"
 import firebase from "gatsby-plugin-firebase"
 import providerData from "../data/providers"
 
-const useFirebaseAuth = () => {
+const useFirebaseAuth = ({ setReady }) => {
   const auth = useMemo(() => firebase.auth && firebase.auth(), [])
   const signIn = provider => {
+    setReady(false)
     if (auth.currentUser) { return Promise.resolve({ user: auth.currentUser }) }
     auth.useDeviceLanguage()
     auth.setPersistence('local')

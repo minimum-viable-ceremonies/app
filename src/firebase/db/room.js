@@ -21,7 +21,7 @@ export default {
       ))
     ))
     sync(`rooms/${uuid}/ceremonies`,   snapshot => (
-      Object.values(snapshot.toJSON()).map(ceremony => (
+      Object.values(snapshot.toJSON() || []).map(ceremony => (
         modifyCeremony(ceremony.id, ceremony, false)
       ))
     ))

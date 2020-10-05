@@ -45,16 +45,6 @@ const Sidebar = () => {
           </div>
         ))}
       </div>
-      <div className="sidebar-option mvc-hover-state">
-        <Dropdown
-          klass="light"
-          icon="basic/plus"
-          size={16}
-          text={t("sidebar.setupRoom")}
-          tooltip={t("sidebar.setupRoomTooltip")}
-          onClick={() => setEditingRoomId(true)}
-        />
-      </div>
     </div>
   ) : (
     <div className="sidebar collapsed">
@@ -79,16 +69,6 @@ const Sidebar = () => {
             />
           </div>
         ))}
-      </div>
-      <div className="sidebar-collapsed-item mvc-hover-state">
-        <div className="sidebar-collapsed-setup-room">
-          <Dropdown
-            icon="basic/plus"
-            size={16}
-            tooltip={t("sidebar.setupRoomTooltip")}
-            onClick={() => setEditingRoomId(true)}
-          />
-        </div>
       </div>
     </div>
   )

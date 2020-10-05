@@ -59,7 +59,7 @@ const useRoomContext = (id, draft) => {
       !complete &&
       ceremonies.length > 0 &&
       Object.values(ceremonies).filter(c => c.placement === 'undecided').length === 0
-    ) { setComplete(true) }
+    ) { modifiers.finish() }
   }, [ceremonies, complete])
 
   useEffect(() => {

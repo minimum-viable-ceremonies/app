@@ -2,6 +2,10 @@
 board:
   title: Minimum Viable Ceremonies
   subtitle: Go through all ceremonies with the team and either add them to a cadence, a sprint, or the void.
+  finished: 🏁 Finish
+  finishedHelptext: Click here to finish up your meeting!
+  share: 🎁 Share
+  shareHelptext: Share your ceremonies with your team (or the world!)
   ceremonies: Ceremonies
   cadences: Cadences
   void: Discard

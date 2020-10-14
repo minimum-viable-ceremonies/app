@@ -30,13 +30,13 @@ const Room = ({ uuid }) => {
       <Board />
       <Modal
         Content={Loading}
-        open={!context.ready}
+        open={context.loading}
         steps={[]}
         styles={{background: 'transparent', border: 0, boxShadow: 0}}
       />
       <Modal
         Content={SetupUser}
-        open={context.ready && !Object.keys(context.participants).includes(context.currentUser.uid)}
+        open={!context.loading && !Object.keys(context.participants).includes(context.currentUser.uid)}
         initialModel={{
           providers: context.features.providers,
           provider: context.currentUser.provider || context.features.providers[0] || 'anonymous',

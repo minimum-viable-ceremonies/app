@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Draggable, Droppable } from "react-beautiful-dnd"
 
@@ -8,9 +8,21 @@ import Dropdown from "./dropdown"
 import "../styles/cadence.scss"
 import Void from "../images/void.svg"
 
-const Cadence = ({ id, index, basis, klass }) => {
-  const { placedOn, setCreatingCeremonyId } = useContext(Context)
+const Cadence = ({ id, index, basis, klass, animate }) => {
+  const { ready, placedOn, setCreatingCeremonyId, activeCadence, setActiveCadenceId } = useContext(Context)
   const { t } = useTranslation()
+  const entering = useMemo(() => ready && (activeCadence === id), [ready, activeCadence, id])
+  const [enterCount, setEnterCount] = useState(0)
+
+  useEffect(() => {
+    if (!entering) { return }
+
+    const counter = setInterval(() => setEnterCount(c => c+1), 50)
+    if (enterCount >= placedOn(id).length) {
+      clearInterval(counter)
+      setActiveCadenceId(null)
+    }
+  }, [entering])
 
   return (
     <Droppable droppableId={id}>
@@ -26,7 +38,7 @@ const Cadence = ({ id, index, basis, klass }) => {
               {t(`cadences.${id}.name`)}
             </div>
           }
-          {placedOn(id).sort((a,b) => a.index > b.index ? 1 : -1).map(({ id, index }) => (
+          {ready && placedOn(id).sort((a,b) => a.index > b.index ? 1 : -1).map(({ id, index }) => (
             <Draggable draggableId={id} index={index} key={id}>
               {({ innerRef, draggableProps, dragHandleProps }) => (
                 <div
@@ -35,7 +47,7 @@ const Cadence = ({ id, index, basis, klass }) => {
                   {...draggableProps}
                   {...dragHandleProps}
                 >
-                  <Ceremony id={id} index={index} />
+                  <Ceremony id={id} entering={entering} entered={index < enterCount} />
                 </div>
               )}
             </Draggable>

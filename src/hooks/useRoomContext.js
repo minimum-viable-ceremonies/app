@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react"
 
-import useFirebaseAuth from "./useFirebaseAuth"
+import useAuth from "./useAuth"
+import useTransition from "./useTransition"
 import useRoomModifiers from "./useRoomModifiers"
 import useRoomRefs from "./useRoomRefs"
 
@@ -18,41 +19,34 @@ const useRoomContext = (id, draft) => {
   const [features, setFeatures] = useState({ providers: [] })
   const [ceremonies, setCeremonies] = useState({})
 
-  const auth = useFirebaseAuth({ setReady })
+  const { loading, transition } = useTransition(true)
   const refs = useRoomRefs()
-  const modifiers = useRoomModifiers({
+  const auth = useAuth(transition)
+  const modifiers = useRoomModifiers(transition, {
     uuid,
     ceremonies, setCeremonies,
     participants, setParticipants,
     setName, setWeekCount, setFeatures
   })
 
-  const setup = uuid => {
-    setReady(false)
-    setUuid(uuid)
+  const setup = transition(uuid => (
+    setUuid(uuid) || modifiers.setupRoom().then(roomState => (
+      modifiers.setupOrganization(roomState.organizationUuid).then(orgState => {
+        setFeatures(current => ({ ...current, ...orgState.features, ...roomState.features }))
+        modifiers.setActiveCadenceId('undecided')
 
-    modifiers.setupRoom().then(state => {
-      setFeatures(current => ({ ...current, ...state.features }))
+        if (roomState.requiresLogin) { return Promise.resolve(true) }
 
-      if (state.requiresLogin) {
-        setReady(true)
-        return
-      }
-
-      setUuid(state.uuid)
-      setName(state.name)
-      setWeekCount(state.weekCount)
-      setCeremonies(state.ceremonies || {})
-      setParticipants(state.participants || {})
-
-      modifiers.setupOrganization(state.organizationUuid).then(state => {
-        const { uuid, name, image } = state
-        setOrganization({ uuid, name, image })
-        setFeatures(current => ({ ...current, ...state.features }))
+        setUuid(roomState.uuid)
+        setName(roomState.name)
+        setWeekCount(roomState.weekCount)
+        setCeremonies(roomState.ceremonies || {})
+        setParticipants(roomState.participants || {})
+        setOrganization({ uuid: orgState.uuid, name: orgState.name, image: orgState.image })
         setReady(true)
       })
-    })
-  }
+    ))
+  ))
 
   useEffect(() => {
     if (
@@ -86,7 +80,7 @@ const useRoomContext = (id, draft) => {
     ...modifiers,
     ...refs,
     setup,
-    uuid, draft, complete, ready,
+    uuid, draft, complete, ready, loading,
     organization, name, weekCount, ceremonies, participants,
     shareableLink,
     features,

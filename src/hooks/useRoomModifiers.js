@@ -2,6 +2,7 @@ import { useState, useMemo } from "react"
 
 import roomTable from "../firebase/db/room"
 import organizationTable from "../firebase/db/organization"
+import { rearrange, transfer, bulkTransfer } from "../operations/ceremonies"
 
 const useRoomModifiers = (transition, {
   uuid,
@@ -62,35 +63,21 @@ const useRoomModifiers = (transition, {
       (source.droppableId === destination.droppableId && source.index === destination.index)
     ) { return }
 
-    const filter = ceremony => ceremony.id !== draggableId
-    const sort   = (a,b) => b.index < a.index ? 1 : -1
-    const reduce = (result, ceremony) => ({ ...result, [ceremony.id]: ceremony })
-    const map    = (ceremony, index) => ({ ...ceremony, index })
-
     const updated = source.droppableId === destination.droppableId
-      ? placedOn(source.droppableId)
-          .filter(filter)
-          .concat({ ...ceremonies[draggableId], index: destination.index + (destination.index > source.index ? 0.5 : -0.5) })
-          .sort(sort)
-          .map(map)
-          .reduce(reduce, {})
-      : [
-        ...placedOn(source.droppableId)
-          .filter(filter)
-          .sort(sort)
-          .map(map),
-        ...placedOn(destination.droppableId)
-          .concat({ ...ceremonies[draggableId], placement: destination.droppableId, index: destination.index })
-          .sort(sort)
-          .map(map),
-      ].reduce(reduce, {})
+      ? rearrange(ceremonies, draggableId, destination.index)
+      : transfer(ceremonies, draggableId, destination.droppableId, destination.index)
 
     roomTable.write(uuid, 'ceremonies', { ...ceremonies, ...updated })
     setCeremonies(current => ({ ...current, ...updated }))
   }
 
-  const finish = transition(() =>
-    Promise.resolve(true))
+  const finish = () => {
+    setActiveCadenceId('void')
+    const updated = bulkTransfer(ceremonies, 'undecided', 'void')
+
+    roomTable.write(uuid, 'ceremonies', { ...ceremonies, ...updated })
+    setCeremonies(current => ({ ...current, ...updated }))
+  }
 
   const setupRoom = () =>
     roomTable.setup({ uuid, modifyRoom, modifyFeature, modifyParticipant, modifyCeremony })

@@ -40,12 +40,16 @@ const Cadence = ({ id, index, basis, klass, animate }) => {
           }
           {ready && placedOn(id).sort((a,b) => a.index > b.index ? 1 : -1).map(({ id, index }) => (
             <Draggable draggableId={id} index={index} key={id}>
-              {({ innerRef, draggableProps, dragHandleProps }) => (
+              {({ innerRef, draggableProps, dragHandleProps }, { isDragging }) => (
                 <div
                   className="ceremony-draggable"
                   ref={innerRef}
                   {...draggableProps}
                   {...dragHandleProps}
+                  style={{
+                    ...draggableProps.style,
+                    width: isDragging ? '150px' : 'auto'
+                  }}
                 >
                   <Ceremony id={id} entering={entering} entered={index < enterCount} />
                 </div>

@@ -6,6 +6,7 @@ import { rearrange, transfer, bulkTransfer } from "../operations/ceremonies"
 
 const useRoomModifiers = (transition, {
   uuid,
+  celebrating, setCelebrating,
   ceremonies, setCeremonies,
   participants, setParticipants,
   setName, setWeekCount, setFeatures
@@ -26,6 +27,9 @@ const useRoomModifiers = (transition, {
 
   const [activeCadenceId, setActiveCadenceId] = useState()
   const activeCadence = activeCadenceId
+
+  const [sharingRoomId, setSharingRoomId] = useState()
+  const sharingRoom = sharingRoomId
 
   const modifyRoom = (attrs, syncDb = true) => {
     attrs.name && setName(attrs.name)
@@ -56,6 +60,19 @@ const useRoomModifiers = (transition, {
     setFeatures(current => ({ ...current, updated }))
   }
 
+  const resolvePlacement = updated => {
+    const result = { ...ceremonies, ...updated }
+
+    roomTable.write(uuid, 'ceremonies', result)
+    setCeremonies(result)
+    setCelebrating(celebrating || (
+      Object.values(ceremonies).some(c => c.placement === 'undecided') &&
+      !Object.values(result).some(c => c.placement === 'undecided')
+    ))
+
+    return result
+  }
+
   const placedOn = cadence => Object.values(ceremonies).filter(c => c.placement === cadence)
   const place = ({ draggableId, source, destination }) => {
     if (
@@ -63,20 +80,15 @@ const useRoomModifiers = (transition, {
       (source.droppableId === destination.droppableId && source.index === destination.index)
     ) { return }
 
-    const updated = source.droppableId === destination.droppableId
+    resolvePlacement(source.droppableId === destination.droppableId
       ? rearrange(ceremonies, draggableId, destination.index)
       : transfer(ceremonies, draggableId, destination.droppableId, destination.index)
-
-    roomTable.write(uuid, 'ceremonies', { ...ceremonies, ...updated })
-    setCeremonies(current => ({ ...current, ...updated }))
+    )
   }
 
-  const finish = () => {
-    setActiveCadenceId('void')
-    const updated = bulkTransfer(ceremonies, 'undecided', 'void')
-
-    roomTable.write(uuid, 'ceremonies', { ...ceremonies, ...updated })
-    setCeremonies(current => ({ ...current, ...updated }))
+  const bulkPlace = (from, to, index = 1000) => {
+    setActiveCadenceId(to)
+    resolvePlacement(bulkTransfer(ceremonies, from, to, index))
   }
 
   const setupRoom = () =>
@@ -97,10 +109,11 @@ const useRoomModifiers = (transition, {
     editingCeremony, setEditingCeremonyId, modifyCeremony,
     creatingCeremony, setCreatingCeremonyId,
     activeCadence, setActiveCadenceId,
+    sharingRoom, setSharingRoomId,
     modifyFeature,
     setupRoom, teardownRoom,
     setupOrganization, teardownOrganization,
-    place, placedOn, finish
+    place, bulkPlace, placedOn
   }
 }
 

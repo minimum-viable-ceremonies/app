@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react"
+import React, { useContext, useMemo, useState, useEffect } from "react"
 import { useTranslation } from 'react-i18next'
 import { DragDropContext } from "react-beautiful-dnd"
 import Confetti from "react-dom-confetti"
@@ -8,38 +8,43 @@ import Dropdown from "./dropdown"
 import Sidebar from "./sidebar"
 import Toast from "./toast"
 import Context from "../contexts/room"
-import { successData, failureData } from "../data/confetti"
+import { explosionData } from "../data/confetti"
 import "../styles/board.scss"
 
 const Board = () => {
   const { t } = useTranslation()
-  const { complete, share, finish, boardRef, draft, place, weekCount, modifyRoom } = useContext(Context)
+  const {
+    celebrating, setCelebrating,
+    ceremonies,
+    boardRef,
+    draft,
+    place,
+    weekCount,
+    modifyRoom,
+    placedOn,
+    bulkPlace,
+    setSharingRoomId,
+  } = useContext(Context)
   const [explosions, setExplosions] = useState(0)
-  const [shareable, setShareable] = useState(complete)
+  const shareable = useMemo(() => placedOn('undecided').length === 0, [ceremonies])
 
   useEffect(() => {
-    if (!complete) { return }
+    if (!celebrating) { return }
 
-    [100, 600, 1500, 5000].forEach(delay => setTimeout(() => setExplosions(c => c+1), delay))
-    setTimeout(() => setShareable(true), 3000)
-  }, [complete])
+    explosionData.map(({ delay }) => setTimeout(() => setExplosions(e => e+1), delay))
+    setTimeout(() => setSharingRoomId(true), 4000)
+    setCelebrating(false)
+  }, [celebrating])
 
   return (
     <div className={`board flex flex-row ${draft ? "draft" : ""}`}>
       <Sidebar />
       <div className="board-confetti">
-        <div style={{position: "absolute", left: "50%", top: "25%"}}>
-          <Confetti active={explosions > 0} config={successData} />
-        </div>
-        <div style={{position: "absolute", left: "25%", top: "75%"}}>
-          <Confetti active={explosions > 1} config={successData} />
-        </div>
-        <div style={{position: "absolute", left: "40%", top: "30%"}}>
-          <Confetti active={explosions > 2} config={successData} />
-        </div>
-        <div style={{position: "absolute", left: "80%", top: "30%"}}>
-          <Confetti active={explosions > 3} config={failureData} />
-        </div>
+        {explosionData.map(({ style, config }, index) => (
+          <div key={index} style={{ ...style, position: "absolute" }}>
+            <Confetti active={explosions > index} config={config} />
+          </div>
+        ))}
       </div>
       <Toast />
       <DragDropContext onDragEnd={place}>
@@ -55,7 +60,7 @@ const Board = () => {
                 size={14}
                 position="left"
                 disabled={!shareable && explosions > 0}
-                onClick={shareable ? share : finish}
+                onClick={() => shareable ? setSharingRoomId(true) : bulkPlace('undecided', 'void')}
                 text={t(`board.${shareable ? 'share' : 'finished'}`)}
                 tooltip={t(`board.${shareable ? 'share' : 'finished'}Helptext`)}
               />

@@ -1,4 +1,4 @@
-export const successData = {
+const successData = {
   angle: 90,
   spread: 360,
   startVelocity: 20,
@@ -12,7 +12,7 @@ export const successData = {
   colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
 }
 
-export const failureData = {
+const failureData = {
   angle: 90,
   spread: 70,
   startVelocity: 30,
@@ -25,3 +25,21 @@ export const failureData = {
   perspective: "600px",
   colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
 }
+
+export const explosionData = [{
+  delay: 100,
+  style: { left: "50%", top: "25%" },
+  config: successData
+}, {
+  delay: 600,
+  style: { left: "25%", top: "75%" },
+  config: successData
+}, {
+  delay: 1500,
+  style: { left: "40%", top: "30%" },
+  config: successData
+}, {
+  delay: 3000,
+  style: { left: "80%", top: "30%" },
+  config: failureData
+}]

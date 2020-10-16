@@ -6,13 +6,14 @@ import useRoomModifiers from "./useRoomModifiers"
 import useRoomRefs from "./useRoomRefs"
 
 import { document } from "browser-monads"
+import { bulkTransfer } from "../operations/ceremonies"
 
 const useRoomContext = (id, draft) => {
   const [uuid, setUuid] = useState(id)
   const [name, setName] = useState("")
   const [organization, setOrganization] = useState({})
   const [ready, setReady] = useState(false)
-  const [complete, setComplete] = useState(false)
+  const [celebrating, setCelebrating] = useState(false)
   const [toast, setToast] = useState({ visible: false, message: '' })
   const [weekCount, setWeekCount] = useState(1)
   const [participants, setParticipants] = useState({})
@@ -24,6 +25,7 @@ const useRoomContext = (id, draft) => {
   const auth = useAuth(transition)
   const modifiers = useRoomModifiers(transition, {
     uuid,
+    celebrating, setCelebrating,
     ceremonies, setCeremonies,
     participants, setParticipants,
     setName, setWeekCount, setFeatures
@@ -49,29 +51,17 @@ const useRoomContext = (id, draft) => {
   ))
 
   useEffect(() => {
-    if (
-      !ready ||
-      complete ||
-      !Object.values(ceremonies).length ||
-      modifiers.placedOn('undecided').length > 0
-    ) { return }
-
-    setComplete(true)
-  }, [ceremonies, complete])
-
-  useEffect(() => {
     if (weekCount !== 1) { return }
 
-    Object.values(ceremonies).filter(({ placement }) => (
-      ['monday-2', 'tuesday-2', 'wednesday-2', 'thursday-2', 'friday-2'].includes(placement)
-    )).map(({ id, placement, index }) => (
-      modifiers.place({
-        draggableId: id,
-        source: { droppableId: placement, index },
-        destination: { droppableId: 'undecided', index: -0.5 }
-      })
-    ))
-  }, [weekCount, ceremonies, modifiers])
+    [
+      'monday-2',
+      'tuesday-2',
+      'wednesday-2',
+      'thursday-2',
+      'friday-2'
+    ].filter(cadence => modifiers.placedOn(cadence).length > 0)
+     .forEach(cadence => modifiers.bulkPlace(cadence, 'undecided', 0))
+  }, [weekCount])
 
   useEffect(() => () => modifiers.teardownRoom, [modifiers.teardownRoom])
   useEffect(() => () => modifiers.teardownOrganization, [modifiers.teardownOrganization])
@@ -83,7 +73,8 @@ const useRoomContext = (id, draft) => {
     ...modifiers,
     ...refs,
     setup,
-    uuid, draft, complete, ready, loading,
+    celebrating, setCelebrating,
+    uuid, draft, ready, loading,
     organization, name, weekCount, ceremonies, participants,
     shareableLink,
     features,

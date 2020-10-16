@@ -11,6 +11,7 @@ import EditUser from "./editUser"
 import SetupRoom from "./setupRoom"
 import SetupCeremony from "./setupCeremony"
 import EditCeremony from "./editCeremony"
+import ShareRoom from "./shareRoom"
 import Context from "../contexts/room"
 import useRoomContext from "../hooks/useRoomContext"
 import roomTable from "../firebase/db/room"
@@ -125,6 +126,11 @@ const Room = ({ uuid }) => {
         Content={EditUser}
         open={context.editingUser}
         close={context.setEditingUserId}
+      />
+      <Modal
+        Content={ShareRoom}
+        open={context.sharingRoom}
+        close={context.setSharingRoomId}
       />
     </Context.Provider>
   )

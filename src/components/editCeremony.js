@@ -40,10 +40,10 @@ const EditCeremony = ({ onSubmit }) => {
         : t(`cadences.${value}.miniName`)
       })
     )
-  ), [cadenceData, t, weekCount])
+  ), [t, weekCount])
   const startTimes = useMemo(() => (
     hourData.map(value => ({ value, label: t(`hours.${value}`) }))
-  ), [hourData, t])
+  ), [t])
   const endTimes = useMemo(() => (
     startTimes.filter(({ value }) => value > startTime).slice(0, 8)
   ), [startTimes, startTime])
@@ -69,7 +69,7 @@ const EditCeremony = ({ onSubmit }) => {
         <div className="overflow-auto pr-4">
           <div className="mvc-input mvc-input__async">
             <div className="mvc-label flex flex-row items-center">
-              <span className="mr-1">🌏</span>
+              <span className="mr-1" role="img" aria-label={t(`setup.ceremony.schedule`)}>🌏</span>
               <span>{t("setup.ceremony.schedule")}</span>
             </div>
             <div className="ml-5 flex flex-row items-center">
@@ -93,7 +93,7 @@ const EditCeremony = ({ onSubmit }) => {
           </div>
           <div className="mvc-input mvc-input__cadence">
             <div className="mvc-label flex flex-row items-center">
-              <span className="mr-1">📅</span>
+              <span className="mr-1" role="img" aria-label={t(`setup.ceremony.cadence`)}>📅</span>
               <span>{t("setup.ceremony.cadence")}</span>
             </div>
             <div className="ml-5 flex flex-row items-center">
@@ -112,7 +112,7 @@ const EditCeremony = ({ onSubmit }) => {
           </div>
           <div className="mvc-input mvc-input__people">
             <div className="mvc-label flex flex-row items-center">
-              <span className="mr-1">👤</span>
+              <span className="mr-1" role="img" aria-label={t(`setup.ceremony.participants`)}>👤</span>
               <span>{t("setup.ceremony.participants")}</span>
             </div>
             <div className="ml-5 flex flex-row items-center">
@@ -137,7 +137,7 @@ const EditCeremony = ({ onSubmit }) => {
           </div>
           {!async && withOption(placement, 'withTime') && <div className="mvc-input mvc-input__time">
             <div className="mvc-label flex flex-row items-center">
-              <span className="mr-1">🕒</span>
+              <span className="mr-1" role="img" aria-label={t(`setup.ceremony.time`)}>🕒</span>
               <span>{t("setup.ceremony.time")}</span>
             </div>
             <div className="flex flex-row items-center ml-5">
@@ -175,7 +175,7 @@ const EditCeremony = ({ onSubmit }) => {
           </div>}
           <div className="mvc-input mvc-input__notes">
             <div className="mvc-label flex flex-row items-center">
-              <span className="mr-1">✍️</span>
+              <span className="mr-1" role="img" aria-label={t(`setup.ceremony.${async ? 'asyncNotes' : 'syncNotes'}`)}>✍️</span>
               <span>{t(`setup.ceremony.${async ? 'asyncNotes' : 'syncNotes'}`)}</span>
             </div>
             <div className="ml-5">

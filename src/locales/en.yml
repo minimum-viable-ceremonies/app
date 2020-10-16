@@ -7,9 +7,9 @@ board:
   void: Discard
   voidPlaceholder: Nothing to see here! Except the void of course.
   sprint: Sprint week {{index}}
-  addSprint: Add sprint week
+  addSprint: ➕ Add sprint week
   addSprintHelptext: Add another week to your sprint
-  removeSprint: Remove sprint week
+  removeSprint: 🗑️ Remove sprint week
   removeSprintHelptext: Remove the second week from your sprint
 cadences:
   undecided:
@@ -423,7 +423,7 @@ roles:
       As a participant, you don't have any special facilitation role to play. So simply show up, and ensure that you're engaged and willing to share your opinions with the team.
 setup:
   ceremony:
-    create: Add custom
+    create: ➕Add custom
     createHelptext: Create a custom ceremony
     cadence: How often should this ceremony happen?
     participants: Who should attend?
@@ -471,7 +471,7 @@ setup:
       google: Login with Google
       microsoft: Login with Microsoft
 shareableLink:
-  share: Share room
+  share: 🔗 Share room
   copy: Click to copy shareable link
   copied: Copied to clipboard!
 sidebar:

@@ -27,19 +27,19 @@ const failureData = {
 }
 
 export const explosionData = [{
-  delay: 100,
+  delay: 300,
   style: { left: "50%", top: "25%" },
   config: successData
 }, {
-  delay: 600,
+  delay: 800,
   style: { left: "25%", top: "75%" },
   config: successData
 }, {
-  delay: 1500,
+  delay: 1300,
   style: { left: "40%", top: "30%" },
   config: successData
 }, {
-  delay: 3000,
+  delay: 4000,
   style: { left: "80%", top: "30%" },
   config: failureData
 }]

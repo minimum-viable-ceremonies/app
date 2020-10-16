@@ -32,7 +32,7 @@ const Board = () => {
     if (!celebrating) { return }
 
     explosionData.map(({ delay }) => setTimeout(() => setExplosions(e => e+1), delay))
-    setTimeout(() => setSharingRoomId(true), 4000)
+    setTimeout(() => setSharingRoomId(true), 5000)
     setCelebrating(false)
   }, [celebrating])
 

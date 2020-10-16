@@ -63,14 +63,11 @@ const useRoomModifiers = (transition, {
   const resolvePlacement = updated => {
     const result = { ...ceremonies, ...updated }
 
-    roomTable.write(uuid, 'ceremonies', result)
     setCeremonies(result)
-    setCelebrating(celebrating || (
+    return roomTable.write(uuid, 'ceremonies', result).then(() => setCelebrating(celebrating || (
       Object.values(ceremonies).some(c => c.placement === 'undecided') &&
       !Object.values(result).some(c => c.placement === 'undecided')
-    ))
-
-    return result
+    )))
   }
 
   const placedOn = cadence => Object.values(ceremonies).filter(c => c.placement === cadence)
@@ -80,7 +77,7 @@ const useRoomModifiers = (transition, {
       (source.droppableId === destination.droppableId && source.index === destination.index)
     ) { return }
 
-    resolvePlacement(source.droppableId === destination.droppableId
+    return resolvePlacement(source.droppableId === destination.droppableId
       ? rearrange(ceremonies, draggableId, destination.index)
       : transfer(ceremonies, draggableId, destination.droppableId, destination.index)
     )
@@ -88,7 +85,7 @@ const useRoomModifiers = (transition, {
 
   const bulkPlace = (from, to, index = 1000) => {
     setActiveCadenceId(to)
-    resolvePlacement(bulkTransfer(ceremonies, from, to, index))
+    return resolvePlacement(bulkTransfer(ceremonies, from, to, index))
   }
 
   const setupRoom = () =>

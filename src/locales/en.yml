@@ -474,6 +474,8 @@ setup:
     login:
       google: Login with Google
       microsoft: Login with Microsoft
+shareRoom:
+  title: You did it!
 shareableLink:
   share: Share room
   copy: Click to copy shareable link

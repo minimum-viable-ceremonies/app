@@ -35,7 +35,7 @@ const Modal = ({
       }}>
         <div className="flex flex-col h-full justify-center">
           {!steps && <div className="flex items-start">
-            <button className="close-modal" onClick={close}>{t("setup.controls.back")}</button>
+            <button className="close-modal" onClick={() => close()}>{t("setup.controls.back")}</button>
           </div>}
           <Content />
           {steps && <Controls single={singleControl} />}

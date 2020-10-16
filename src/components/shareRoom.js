@@ -8,8 +8,9 @@ const ShareRoom = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="share-board flex-grow">
-      <h1>{t(`share.title`)}</h1>
+    <div className="share-room flex-grow flex flex-col items-center justify-center">
+      <h1 className="mb-12">{t(`shareRoom.title`)}</h1>
+      <div style={{fontSize: "90px"}} className="share-room-emoji">🥳</div>
     </div>
   )
 }

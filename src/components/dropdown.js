@@ -10,7 +10,6 @@ const Dropdown = ({
   theme = 'dark',
   styles = {},
   delay = 0,
-  icon,
   size,
   text,
   width,

@@ -423,7 +423,7 @@ roles:
       As a participant, you don't have any special facilitation role to play. So simply show up, and ensure that you're engaged and willing to share your opinions with the team.
 setup:
   ceremony:
-    create: ➕Add custom
+    create: ➕ Add custom
     createHelptext: Create a custom ceremony
     cadence: How often should this ceremony happen?
     participants: Who should attend?

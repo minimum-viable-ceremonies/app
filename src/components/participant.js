@@ -21,6 +21,7 @@ const Participant = participant => {
           {currentUser.uid === uid && <Dropdown
             klass="dark"
             theme="dark"
+            text="•••"
             icon="basic/more-horizontal"
             size={24}
             tooltip={t("participant.edit")}

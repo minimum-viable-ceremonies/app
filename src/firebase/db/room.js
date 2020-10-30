@@ -1,5 +1,5 @@
 import { navigate } from "gatsby"
-import { set, sync, unsync, load, debouncedWrite } from "./common"
+import { sync, unsync, load, debouncedWrite } from "./common"
 
 export default {
   create: ({ uuid, name, weekCount, ceremonies, participants }) => (

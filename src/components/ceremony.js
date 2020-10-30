@@ -12,7 +12,7 @@ const Ceremony = ({ id, index }) => {
     if (!ready || entered) { return }
 
     setTimeout(() => setEntered(true), 50 * index)
-  }, [ready])
+  }, [ready, entered, index])
 
   return (
     <div className={`ceremony mvc-entrance ${entered ? 'entered' : ''}`} onClick={() => setEditingCeremonyId(id)}>

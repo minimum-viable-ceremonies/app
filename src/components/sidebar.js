@@ -26,7 +26,7 @@ const Sidebar = () => {
         )}
         <Dropdown
           klass="sidebar-collapse dark"
-          icon="arrows/chevrons-left"
+          text="↙"
           tooltip={t("sidebar.collapse")}
           onClick={() => setExpanded(false)}
         />
@@ -61,13 +61,13 @@ const Sidebar = () => {
       <div className="sidebar-collapsed-item mvc-hover-state">
         <Dropdown
           className="sidebar-expand"
-          icon="arrows/chevrons-right"
+          text="↗"
           tooltip={t("sidebar.expand")}
           onClick={() => setExpanded(true)}
         />
       </div>
       <div className="sidebar-collapsed-item mvc-hover-state">
-        <ShareableLink hideInput={true} value={shareableLink} direction="right" />
+        <ShareableLink hideInput={true} value={shareableLink} text="🔗" direction="right" />
       </div>
       <div className="sidebar-collapsed-participants">
         {Object.values(participants).map(participant => (

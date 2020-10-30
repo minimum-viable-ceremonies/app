@@ -19,7 +19,6 @@ const ShareableLink = ({ text, value, position, hideInput, size = 16 }) => {
         value={value}
       />
       <Dropdown
-        icon="basic/link"
         position={position}
         klass="light"
         text={text}

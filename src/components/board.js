@@ -69,7 +69,6 @@ const Board = () => {
                 <div>
                   <Dropdown
                     klass="ml-1 mt-2 board-add-sprint"
-                    icon={`basic/${weekCount === 1 ? 'plus': 'trash'}`}
                     size={14}
                     position="bottom"
                     text={t(`board.${weekCount === 1 ? 'addSprint' : 'removeSprint'}`)}

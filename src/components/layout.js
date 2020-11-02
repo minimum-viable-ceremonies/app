@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 import FreshChat from "react-freshchat"
 import { MatomoProvider, createInstance } from "@datapunt/matomo-tracker-react"
 
@@ -14,7 +14,9 @@ const Layout = ({ children }) => (
       token={process.env.FRESHCHAT_TOKEN}
       siteId={process.env.FIREBASE_DOMAIN}
     />}
-    <main>{children}</main>
+    <Suspense>
+      <main>{children}</main>
+    </Suspense>
   </MatomoProvider>
 )
 

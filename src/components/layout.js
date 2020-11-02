@@ -14,7 +14,7 @@ const Layout = ({ children }) => (
       token={process.env.FRESHCHAT_TOKEN}
       siteId={process.env.FIREBASE_DOMAIN}
     />}
-    <Suspense>
+    <Suspense fallback="">
       <main>{children}</main>
     </Suspense>
   </MatomoProvider>

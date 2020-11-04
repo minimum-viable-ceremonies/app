@@ -24,6 +24,7 @@ jobs:
         env:
           CYPRESS_DOMAIN: ${{ secrets.FIREBASE_TEST_DOMAIN }}
           CYPRESS_API_KEY: ${{ secrets.FIREBASE_TEST_API_KEY }}
+          FUNCTIONS_HOST: ${{ secrets.FUNCTIONS_HOST }}
       - uses: actions/upload-artifact@v1
         if: failure()
         with:

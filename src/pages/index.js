@@ -4,7 +4,8 @@ import Layout from "../components/layout"
 import Intro from "../components/intro"
 import SEO from "../components/seo"
 
-import "../data/locales"
+import initTranslations from "../locales/react"
+initTranslations('app')
 
 const IndexPage = () => (
   <Layout>

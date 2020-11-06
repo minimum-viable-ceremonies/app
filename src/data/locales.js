@@ -6,7 +6,7 @@ locales
   .init({
     fallbackLng: 'en',
     resources: {
-      en: { translations: require('../locales/en.yml') }
+      en: { translations: require('../locales/app/en.yml') }
     },
     ns: ['translations'],
     defaultNS: 'translations',

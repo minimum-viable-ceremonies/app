@@ -1,0 +1,618 @@
+---
+board:
+  title: Minimum Viable Ceremonies
+  subtitle: Go through all ceremonies with the team and either add them to a cadence, a sprint, or the void.
+  ceremonies: Ceremonies
+  cadences: Cadences
+  void: Discard
+  voidPlaceholder: Nothing to see here! Except the void of course.
+  sprint: Sprint week {{index}}
+  addSprint: ➕ Add sprint week
+  addSprintHelptext: Add another week to your sprint
+  removeSprint: 🗑️ Remove sprint week
+  removeSprintHelptext: Remove the second week from your sprint
+cadences:
+  undecided:
+    name: Ceremonies
+    miniName: Undecided
+    description: Ceremonies which haven't been processed yet
+  daily:
+    name: Daily
+    miniName: Daily
+    description: Erry dang day
+  weekly:
+    name: Weekly
+    miniName: Weekly
+    description: Once per week
+  monthly:
+    name: Monthly
+    miniName: Monthly
+    description: Once per month
+  quarterly:
+    name: Quarterly
+    miniName: Quarterly
+    description: Once every three months
+  halfyearly:
+    name: Half-yearly
+    miniName: Half-yearly
+    description: Once every six months
+  yearly:
+    name: Yearly
+    miniName: Yearly
+    description: Once per year
+  void:
+    name: The Void
+    miniName: Only as needed
+    description: Put it in the void!
+  monday-1:
+    name: Monday
+    miniName: Sprint 1 - Monday
+    oneWeekMiniName: Mondays
+    description: First monday of the sprint
+  tuesday-1:
+    name: Tuesday
+    miniName: Sprint 1 - Tuesday
+    oneWeekMiniName: Tuesdays
+    description: First tuesday of the sprint
+  wednesday-1:
+    name: Wednesday
+    miniName: Sprint 1 - Wednesday
+    oneWeekMiniName: Wednesdays
+    description: First wednesday of the sprint
+  thursday-1:
+    name: Thursday
+    miniName: Sprint 1 - Thursday
+    oneWeekMiniName: Thursdays
+    description: First thursday of the sprint
+  friday-1:
+    name: Friday
+    miniName: Sprint 1 - Friday
+    oneWeekMiniName: Fridays
+    description: First friday of the sprint
+  monday-2:
+    name: Monday
+    miniName: Sprint 2 - Monday
+    description: First monday of the sprint
+  tuesday-2:
+    name: Tuesday
+    miniName: Sprint 2 - Tuesday
+    description: First tuesday of the sprint
+  wednesday-2:
+    name: Wednesday
+    miniName: Sprint 2 - Wednesday
+    description: First wednesday of the sprint
+  thursday-2:
+    name: Thursday
+    miniName: Sprint 2 - Thursday
+    description: First thursday of the sprint
+  friday-2:
+    name: Friday
+    miniName: Sprint 2 - Friday
+    description: First friday of the sprint
+ceremonies:
+  checkin:
+    name: Personal Check-in
+    icon: '🔗'
+    theme: culture
+    sub-heading: What's up with you right now?
+    description: |
+      Often used to begin another ceremony, Personal Check-ins are a way to increase empathy and understanding between team members.
+
+      For example, if someone says, "I had trouble sleeping last night." They may need more time to think and solve problems that day.
+      Personal check-ins shouldn't be longer than a few minutes per person. Possible prompts may include, "What's on top?" or "Would you like to check-in?"
+  cleanup:
+    name: Clean-up
+    icon: '🛁'
+    theme: delivery
+    sub-heading: Get rid of those stale tickets
+    description: |
+      A backlog should be representative of work that a team is going to get done in the near to medium term.
+
+      Is there work in your backlog that your team is just not going to do? Use this ceremony to go through the backlog and close any tickets that are stale or that the team agrees are such low priority they are unlikely to get done.
+  demo:
+    name: Demo
+    icon: '🎉'
+    theme: coordination
+    sub-heading: Celebrate how awesome your team is
+    description: |
+      A Demo is an opportunity for people to share what they have accomplished recently with the team. It gives people a chance to receive acknowledgement for their work and to share learnings.
+
+      Each person can share a small presentation, a video clip of what they've been working on, or just give a status update.
+  designReview:
+    name: Design Review
+    icon: '🖍'
+    theme: delivery
+    sub-heading: Get designs ready for dev
+    description: |
+      Design Reviews bring developers, managers, and other team members together have to review the in-progress designs before they go into the build pipeline. Designs are often checked for technical considerations like component libraries, technical debt, completeness of design, or application architecture.
+
+      Typically, a designer presents a solution to a problem to be built and gathers feedback from other technical members of the team. Design reviews tend to happen when solutions are fully formed into a high-fidelity mockup.
+  documentation:
+    name: Documentation
+    icon: '📒'
+    theme: delivery
+    sub-heading: Keeping the wiki, documentation, and designs up to date and accessible to all
+    description: |
+      Documentation has a reputation for being difficult and manual to maintain. It may require an extra effort to make sure it stays current. How does your team check the current state of the documentation and take steps to keep it up-to-date?
+      Typical agenda items may include:
+
+      • review the current documentation
+
+      • identify what is out-of-date, or
+
+      • assign any changes to be made to the relevant team member.
+  estimation:
+    name: Estimation
+    icon: '🤑'
+    theme: delivery
+    sub-heading: How long will this take?
+    description: |
+      Estimation is a ceremony where team members put timeframes or a sizing on backlog tickets. Some teams like to use estimates to help project how much work a team can do in a given period of time and to assist in prioritization.
+
+      In lieu of Estimation, some teams focus instead on creating consistently sized tickets and minimizing work in progress.
+  growth:
+    name: Professional Growth
+    icon: '💪'
+    theme: innovation
+    sub-heading: Always be learning
+    description: |
+      In order for team members to improve their skills, they need dedicated learning time.
+
+      This may look like:
+
+      • conferences or training courses,
+
+      • open-source contributions,
+
+      • mentorship and coaching, or
+
+      • dedicated learning time (e.g. 10% time).
+
+      Professional growth may look different to different team members. How does your team make sure that every person has the opportunity to grow in their career?
+  hackathon:
+    name: Hackathon
+    icon: '🍕'
+    theme: innovation
+    sub-heading: It's work. With pizza!
+    description: |
+      The people who build the product have excellent ideas for ways to improve it.  Giving team members time to explore those ideas can result in:
+
+      • a quick-win feature,
+
+      • a prototype for a future direction that hasn't been considered yet, or
+
+      • an excellent learning opportunity.
+
+      Hackathons can range from 1 day to 2 weeks. Short Hackathons are good for gathering ideas, longer Hackathons are more likely to produce functionality.
+  horizon:
+    name: Horizon Planning
+    icon: '🔮'
+    theme: coordination
+    sub-heading: What does the future look like?
+    description: |
+      Horizon Planning is a ceremony to discuss and agree upon the long-term section of your roadmap. Horizon Planning includes defining the overarching strategy and long-term goals of the organization.
+
+      Horizon Planning can be a part of your Roadmap Update or Team Retreat ceremony, or it can be a standalone ceremony.
+  insight:
+    name: Insight Sharing
+    icon: '💡'
+    theme: coordination
+    sub-heading: Expose people to customer insights
+    description: |
+      If your organization does user research, it's important to have a mechanism to share the research with the team so that people have a clear understanding of the customer.
+
+      Ways to share research include:
+      • have team members sit in on or take notes for research sessions,
+
+      • hold ceremonies to share important pieces of research with the team, or
+
+      • create a research library, and notify people when new research is published.
+  planning:
+    name: Sprint Planning
+    icon: '👓'
+    theme: coordination
+    sub-heading: Figure out what to do next
+    description: |
+      Retrospectives are a facilitated conversation between the members of your team to reflect on the past sprint's work and identify risks. Everyone should have the chance to name what's gone well, what's been hard, and what changes could be made to optimize delivery, communication, or happiness going forward. Typical agenda items may include:
+
+      • Good, Bad, Delta - What went well? What didn't go well? What changes should we make? or
+
+      • Sailboat - What is moving us forward, the wind in our sails? What is holding us back, our anchors? What are our current risks, the rocks that we see ahead?
+  process:
+    name: Process Definition
+    icon: '🙃'
+    theme: coordination
+    sub-heading: This! Do this again. Also, tell your friends
+    description: |
+      It's worth revisiting the ceremonies and cadences that have been agreed upon to make sure that they are truly the minimum viable set of ceremonies for your team. Regularly re-assessing your processes is the best way to become a high performing team.
+  retreat:
+    name: Team Retreat
+    icon: '🏝'
+    theme: culture
+    sub-heading: Bond as a team away from the office
+    description: |
+      A Team Retreat is an all-day or multi-day, off-site activity which creates the space for the team to connect and strategize.
+
+      Agenda items may include:
+
+      • Horizon planning - layout a 5-year roadmap, and signpost expected long-term business accomplishments,
+
+      • Assumptions Mapping - make a list of strategic assumptions and come up with a plan to adjust the strategy or validate them, or
+
+      • Team Building - activities to help the team get to know each other better.
+  retrospective:
+    name: Retrospective
+    icon: '🤔'
+    theme: coordination
+    sub-heading: Get better at being a team
+    description: |
+      Retrospectives are a facilitated conversation between the members of your team to reflect on the past sprint's work and identify risks. Everyone should have the chance to name what's gone well, what's been hard, and what changes could be made to optimize delivery, communication, or happiness going forward.
+
+      Typical agenda items may include:
+
+      • Good, Bad, Delta - What went well? What didn't go well? What changes should we make? or
+
+      • Sailboat - What is moving us forward, the wind in our sails? What is holding us back, our anchors? What are our current risks, the rocks that we see ahead?
+  review:
+    name: Code Review
+    icon: '🤖'
+    theme: delivery
+    sub-heading: Review other peoples code
+    description: |
+      Code Review is a great way to share knowledge across the team about code that's going into the repo, as well as reducing technical debt and defects.
+
+      Code Review's ceremonies can happen online on an as-needed basis or can get scheduled into a cadence, where developers perform review tasks that have collected into a Code Review backlog.
+  roadmap:
+    name: Roadmap Update
+    icon: '⏳'
+    theme: delivery
+    sub-heading: Review and update the roadmap
+    description: |
+      Product roadmaps should reflect the near to long-term strategy and should be updated regularly to reflect present work-streams. A roadmap is a prioritised list of problems that need to be solved or outcomes expected to be achieved.
+
+      Roadmap Update ceremonies have two parts:
+
+      1. Gathering feedback to update the roadmap, and
+
+      2. Communicating changes to stakeholders.
+  social:
+    name: Social Activity
+    icon: '🥑'
+    theme: culture
+    sub-heading: The 'play hard' part of 'work hard, play hard'
+    description: |
+      To be happy at work, you need to like the people you work with, and the best way to like people is to spend time with them socially.
+
+      Social activities should either take place on company time or at company expense. It's important to invest in your culture!
+
+      Activities may look like:
+
+      • going out for lunch or grabbing a drink,
+
+      • playing video games or board games, or
+
+      • other activities like bowling, karaoke, or axe throwing.
+  solution:
+    name: Solution Design
+    icon: '🎨'
+    theme: delivery
+    sub-heading: Pick the best solution for a problem
+    description: |
+      Features generally go through a process of prioritisation, solution design, and then implementation. Teams use this ceremony to suggest and refine solutions to problems defined on the roadmap to come up with the highest impact and lowest effort ways to solve the problem.
+  spec:
+    name: Specification Writing
+    icon: '👾'
+    theme: delivery
+    sub-heading: Turning features into tickets
+    description: |
+      Specification Writing is how you communicate functionality to transition it into code. Specs can be written as automated tests, business rules, user stories, or tasks. Specs should be written in a way that can explain to all parties what's being built and what work needs to be done.
+  standdown:
+    name: Stand-down
+    icon: '🌙'
+    theme: coordination
+    sub-heading: What did you work on?
+    description: |
+      The opposite of stand-up, a Stand-down is for reporting on the goals at the end of a work period, while everything is still fresh in your mind.
+  standup:
+    name: Stand-up
+    icon: '👋'
+    theme: coordination
+    sub-heading: What are you going to work on?
+    description: |
+      Stand-ups are used to give status updates about current work-in-progress.
+
+      Team members can answer these questions:
+
+      • What have you worked on since the last stand-up?
+
+      • What do you plan to work on next?
+
+      • Do you have any work that can't be progressed forwards and why?
+  sync:
+    name: Cross-Team Sync
+    icon: '🎡'
+    theme: coordination
+    sub-heading: Collaborate with other teams in your organization
+    description: |
+      For organizations that have more than one team, inter-team communication reduces the risk of conflicting priorities.
+
+      Cross-team Syncs are great for:
+
+      • preventing siloed communication,
+
+      • rolling-out new ideas or processes, and
+
+      • creating a shared context.
+
+      Have a conversation to think about what scenarios should trigger the need for a Cross-team Sync."
+  techdebt:
+    name: Tech-debt Removal
+    icon: '🚧'
+    theme: delivery
+    sub-heading: Make existing code better
+    description: |
+      Improving old code can be a difficult thing to prioritize, but if not handled correctly, it can bring the entire organization to a halt.
+
+      Some teams dedicate a certain amount of time in their cadence to completing tasks that make existing code more maintainable. How does your team plan to minimize or reduce technical debt?
+common:
+  to: to
+  copy: Copy
+  save: Save
+  clickEdit: Click to edit
+intro:
+  welcome: Welcome to Minimum Viable Ceremonies!
+  setupRoom: Start a new room
+participant:
+  edit: Edit info
+  name: Name
+  roles: Roles
+roles:
+  actioner:
+    name: Actioner
+    icon: '💪'
+    sub-heading: Identify outcomes and follow up on next steps
+    description: |
+      When you hear a suggestion about a next-step, or an action that needs to happen, make sure that it gets written down.
+      At the end of playing Minimum Viable Ceremonies, make sure that all actions are captured and assigned to a person. You can follow up later to see how everyone is progressing with their action.
+  cheerleader:
+    name: Cheerleader
+    icon: '🎉'
+    sub-heading: Gold stars for everyone!
+    description: |
+      You bring enthusiasm and excitement to the team. Your positive attitude can keep people engaged and happy to be here.
+      Also, you can work with your team to set a reward for the end, such as, everyone could go get ice cream, go out for a beverage, or take a walk in the sun.
+  conductor:
+    name: Conductor
+    icon: '🚄'
+    sub-heading: Set the agenda and step the team through it
+    description: |
+      Take a look at the instructions and pick a strategy for how you want to play Minimum Viable Ceremonies.
+      As the Conductor, you will be the person stepping through the ceremonies, reading them to the team, and getting agreement on actions.
+  guardian:
+    name: Guardian
+    icon: '🛡️'
+    sub-heading: Make sure everyone has a chance to speak up
+    description: |
+      Your role is to watch for clues which indicate that people have something to say, such as body language, deep breaths or sighs, interruptions, and silence.
+      When you identify one of these moments, you can encourage the person to speak by saying something like, “I noticed that... Do you have anything that you’d like to add?”
+  historian:
+    name: Historian
+    icon: '📚'
+    sub-heading: Get things written down
+    description: |
+      These notes should be shared with the team after playing Minimum Viable Ceremonies.
+  timekeeper:
+    name: Timekeeper
+    icon: '⏰'
+    sub-heading: Keep everyone on-track
+    description: |
+      Your role is to track the time and make sure that your team completes all agenda items in the agreed-upon amount of time.
+      Minimum Viable Ceremonies can be played in less than an hour depending on your strategy. There are a lot of ceremonies to go through, so keep discussion short and make sure that everyone leaves the room on time.
+  wildcard:
+    name: Wildcard
+    icon: '🃏'
+    sub-heading: Say what everyone is thinking, but no one will say
+    description: |
+      As the wildcard, your role is to say the thing that needs saying, particularly if you think others are too polite to say it.
+      This role gives you a free pass to be slightly confrontational or play Devil’s Advocate. But remember to always be diplomatic, because you’ll still have to work with these people later.
+  participant:
+    name: Participant
+    icon: '🧠'
+    sub-heading: Contribute your ideas
+    description: |
+      As a participant, you don't have any special facilitation role to play. So simply show up, and ensure that you're engaged and willing to share your opinions with the team.
+setup:
+  ceremony:
+    create: ➕ Add custom
+    createHelptext: Create a custom ceremony
+    cadence: How often should this ceremony happen?
+    participants: Who should attend?
+    schedule: Is there an in-person meeting?
+    time: What time of day?
+    sync: Yes (Synchronous)
+    syncHelptext: This ceremony will be scheduled at a point in time.
+    syncNotes: Notes
+    syncNotesPlaceholder: E.g. meeting agenda, organizer name, etc.
+    async: No (Asynchronous)
+    asyncHelptext: This ceremony will be managed through an online process.
+    asyncNotes: How will this ceremony be managed?
+    asyncNotesPlaceholder: E.g. leave a message in Slack by 10:00am
+    titlePlaceholder: (Enter title)
+    subheadingPlaceholder: (Enter subheading)
+    descriptionPlaceholder: (Enter description)
+  controls:
+    okGotIt: Get started
+    next: Next →
+    back: '← Back'
+    createRoom: Create room
+    createUser: Enter room
+  room:
+    title: Let's get started! Bring your team together.
+    helptext: Play Minimal Viable Ceremonies with your team, either in person or on a video call.  Once you set up your room, we'll give you a sharable link for you to invite others to join the room.
+    name: What do you want to call your room?
+    nameLabel: Team Name
+    namePlaceholder: Type team name here...
+    ready: We're about to create your room  🎉
+    copyLink: Copy this link to share it with your team
+    copyLinkHelptext: Here's your shareable link
+    copyLinkButton: Copy shareable link
+  user:
+    title: Welcome to {{name}}'s room!
+    helptext: Talk through the ceremonies, and add them to a cadence. Ceremonies you don't want go into The Void. First we need to set you pick your role in the team.
+    displayName: What's your name?
+    displayNamePlaceholder: Type your name here...
+    role: Pick a role
+    roleHelpText: What do you bring to the table? Select one or many.
+    showRole: Hover over roles to preview
+    ready: You're all set up! Here's what you need to know 🥳
+    ceremonyHelptext: Move ceremonies to a cadence or sprint
+    voidHelptext: Move unwanted ceremonies into the void
+    login:
+      google: Login with Google
+      microsoft: Login with Microsoft
+shareableLink:
+  share: 🔗 Share room
+  copy: Click to copy shareable link
+  copied: Copied to clipboard!
+sidebar:
+  collapse: Collapse the sidebar
+  expand: Expand the sidebar
+  shareableLink: Shareable link
+  teamsAndRoles: Team and roles
+  setupRoom: New room
+  setupRoomTooltip: Create a new room
+themes:
+  coordination:
+    name: Coordination
+    description: This ceremony helps us work together as a team
+  culture:
+    name: Culture
+    description: This ceremony lets us get to know each other better
+  delivery:
+    name: Delivery
+    description: This ceremony helps us deliver our objectives
+  innovation:
+    name: Innovation
+    description: This ceremony helps us explore new ideas
+timepicker:
+  am: AM
+  pm: PM
+hours:
+  diff-15: 15 minutes
+  diff-30: 30 minutes
+  diff-45: 45 minutes
+  diff-60: 1 hour
+  diff-75: 1 hour, 15 minutes
+  diff-90: 1 hour, 30 minutes
+  diff-105: 1 hour, 45 minutes
+  diff-120: 2 hours
+  0: 12:00 AM
+  15: 12:15 AM
+  30: 12:30 AM
+  45: 12:45 AM
+  60: 1:00 AM
+  75: 1:15 AM
+  90: 1:30 AM
+  105: 1:45 AM
+  120: 2:00 AM
+  135: 2:15 AM
+  150: 2:30 AM
+  165: 2:45 AM
+  180: 3:00 AM
+  195: 3:15 AM
+  210: 3:30 AM
+  225: 3:45 AM
+  240: 4:00 AM
+  255: 4:15 AM
+  270: 4:30 AM
+  285: 4:45 AM
+  300: 5:00 AM
+  315: 5:15 AM
+  330: 5:30 AM
+  345: 5:45 AM
+  360: 6:00 AM
+  375: 6:15 AM
+  390: 6:30 AM
+  405: 6:45 AM
+  420: 7:00 AM
+  435: 7:15 AM
+  450: 7:30 AM
+  465: 7:45 AM
+  480: 8:00 AM
+  495: 8:15 AM
+  510: 8:30 AM
+  525: 8:45 AM
+  540: 9:00 AM
+  555: 9:15 AM
+  570: 9:30 AM
+  585: 9:45 AM
+  600: 10:00 AM
+  615: 10:15 AM
+  630: 10:30 AM
+  645: 10:45 AM
+  660: 11:00 AM
+  675: 11:15 AM
+  690: 11:30 AM
+  705: 11:45 AM
+  720: 12:00 PM
+  735: 12:15 PM
+  750: 12:30 PM
+  765: 12:45 PM
+  780: 1:00 PM
+  795: 1:15 PM
+  810: 1:30 PM
+  825: 1:45 PM
+  840: 2:00 PM
+  855: 2:15 PM
+  870: 2:30 PM
+  885: 2:45 PM
+  900: 3:00 PM
+  915: 3:15 PM
+  930: 3:30 PM
+  945: 3:45 PM
+  960: 4:00 PM
+  975: 4:15 PM
+  990: 4:30 PM
+  1005: 4:45 PM
+  1020: 5:00 PM
+  1035: 5:15 PM
+  1050: 5:30 PM
+  1065: 5:45 PM
+  1080: 6:00 PM
+  1095: 6:15 PM
+  1110: 6:30 PM
+  1125: 6:45 PM
+  1140: 7:00 PM
+  1155: 7:15 PM
+  1170: 7:30 PM
+  1185: 7:45 PM
+  1200: 8:00 PM
+  1215: 8:15 PM
+  1230: 8:30 PM
+  1245: 8:45 PM
+  1260: 9:00 PM
+  1275: 9:15 PM
+  1290: 9:30 PM
+  1305: 9:45 PM
+  1320: 10:00 PM
+  1335: 10:15 PM
+  1350: 10:30 PM
+  1365: 10:45 PM
+  1380: 11:00 PM
+  1395: 11:15 PM
+  1410: 11:30 PM
+  1425: 11:45 PM
+metadata:
+  site:
+    title: Minimum Viable Ceremonies
+    url: https://minimal.cards/
+  home:
+    title: Free Process Planning Tool for Agile Teams
+    description: Stop hating meetings. Build a lean, agile process that works perfectly for your team. It's free!
+  room:
+    title:
+      - room
+    description: Build a Minimum Viable Ceremony for your team.
+  404:
+    title: 404 not found
+    description: Soz friend you are lost :/

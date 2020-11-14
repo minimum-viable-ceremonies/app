@@ -70,7 +70,6 @@ const Cadence = ({ id, index, basis, klass, animate }) => {
               klass="mt-1 cadence-add"
               size={14}
               position="right"
-              icon="basic/plus"
               text={t("setup.ceremony.create")}
               tooltip={t("setup.ceremony.createHelptext")}
               onClick={() => setCreatingCeremonyId(true)}

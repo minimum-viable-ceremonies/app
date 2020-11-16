@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react"
+import { useState } from "react"
 
 import roomTable from "../firebase/db/room"
 import organizationTable from "../firebase/db/organization"
@@ -28,8 +28,7 @@ const useRoomModifiers = (transition, {
   const [activeCadenceId, setActiveCadenceId] = useState()
   const activeCadence = activeCadenceId
 
-  const [sharingRoomId, setSharingRoomId] = useState()
-  const sharingRoom = sharingRoomId
+  const [share, setShare] = useState()
 
   const modifyRoom = (attrs, syncDb = true) => {
     attrs.name && setName(attrs.name)
@@ -112,7 +111,7 @@ const useRoomModifiers = (transition, {
     editingCeremony, setEditingCeremonyId, modifyCeremony,
     creatingCeremony, setCreatingCeremonyId,
     activeCadence, setActiveCadenceId,
-    sharingRoom, setSharingRoomId,
+    share, setShare,
     modifyFeature,
     setupRoom, teardownRoom,
     setupOrganization, teardownOrganization,

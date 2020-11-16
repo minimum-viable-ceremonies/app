@@ -474,6 +474,19 @@ shareableLink:
   share: 🔗 Share room
   copy: Click to copy shareable link
   copied: Copied to clipboard!
+shareRoom:
+  title: Share and save your results
+  description: Share a summary of the board. This includes an overview of the ceremonies that are scheduled in a sprint or cadence.
+shareCard:
+  email:
+    icon: '✨'
+    title: Share via email
+    description: Add email address to share.
+    submit: Add Recipients
+  slack:
+    title: Share on Slack
+    description: Share to a Slack channel
+    submit: Connect Slack
 sidebar:
   collapse: Collapse the sidebar
   expand: Expand the sidebar

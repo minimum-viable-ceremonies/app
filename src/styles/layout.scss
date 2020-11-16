@@ -693,6 +693,21 @@ pre tt:after {
   }
 }
 
+.btn-arrow {
+  &:after {
+    content: "→";
+    position: relative;
+    left: 0;
+    color: white;
+    padding-left: 4px;
+    transition: all 300ms ease 0s;
+
+  }
+  &:hover {
+    &:after { left: 4px; }
+  }
+}
+
 .btn-secondary {
   background: $warm-grey-000;
   color: $grey-darker;

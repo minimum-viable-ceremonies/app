@@ -1,16 +1,21 @@
-import React, { useContext } from "react"
+import React from "react"
 import { useTranslation } from "react-i18next"
 
-import Context from "../contexts/room"
+import ShareCard from "./shareCard"
 
 const ShareRoom = () => {
-  const {} = useContext(Context)
   const { t } = useTranslation()
 
   return (
-    <div className="share-room flex-grow flex flex-col items-center justify-center">
-      <h1 className="mb-12">{t(`shareRoom.title`)}</h1>
-      <div style={{fontSize: "90px"}} className="share-room-emoji">🥳</div>
+    <div className="flex-grow">
+      <div className="text-center mt-8 mr-24 ml-24 share-room">
+        <h2 className="mb-4">{t(`shareRoom.title`)}</h2>
+        <p className="mb-12">{t(`shareRoom.description`)}</p>
+        <div className="flex flex-row">
+          <ShareCard method="email" />
+          <ShareCard method="slack" />
+        </div>
+      </div>
     </div>
   )
 }

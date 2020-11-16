@@ -23,7 +23,7 @@ const Board = () => {
     modifyRoom,
     placedOn,
     bulkPlace,
-    setSharingRoomId,
+    setShare,
   } = useContext(Context)
   const [explosions, setExplosions] = useState(0)
   const shareable = useMemo(() => placedOn('undecided').length === 0, [ceremonies])
@@ -32,7 +32,7 @@ const Board = () => {
     if (!celebrating) { return }
 
     explosionData.map(({ delay }) => setTimeout(() => setExplosions(e => e+1), delay))
-    setTimeout(() => setSharingRoomId(true), 5000)
+    setTimeout(() => setShare('room'), 5000)
     setCelebrating(false)
   }, [celebrating])
 
@@ -60,7 +60,7 @@ const Board = () => {
                 size={14}
                 position="left"
                 disabled={!shareable && explosions > 0}
-                onClick={() => shareable ? setSharingRoomId(true) : bulkPlace('undecided', 'void')}
+                onClick={() => shareable ? setShare('room') : bulkPlace('undecided', 'void')}
                 text={t(`board.${shareable ? 'share' : 'finished'}`)}
                 tooltip={t(`board.${shareable ? 'share' : 'finished'}Helptext`)}
               />

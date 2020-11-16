@@ -1,0 +1,19 @@
+@import 'colors';
+
+.share-card {
+  box-shadow: 0 0 4px $box-shadow;
+  padding: 32px;
+  margin-right: 32px;
+
+  &-emoji {
+    font-size: 36px;
+    margin-top: 8px;
+    margin-right: 16px;
+  }
+
+  &-logo svg {
+    width: 84px;
+    margin: -20px 0 0 -16px;
+    height: auto;
+  }
+}

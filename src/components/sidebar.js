@@ -9,7 +9,7 @@ import Context from "../contexts/room"
 import "../styles/sidebar.scss"
 
 const Sidebar = () => {
-  const { shareableLink, name, organization, participants, setEditingRoomId } = useContext(Context)
+  const { shareableLink, name, organization, participants } = useContext(Context)
   const [expanded, setExpanded] = useState(true)
   const { t } = useTranslation()
 

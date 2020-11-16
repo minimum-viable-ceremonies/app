@@ -7,12 +7,6 @@ import Context from "../contexts/room"
 const Ceremony = ({ id, entering, entered }) => {
   const { t } = useTranslation()
   const { ready, setEditingCeremonyId, ceremonies } = useContext(Context)
-  const [entered, setEntered] = useState(ready)
-  useEffect(() => {
-    if (!ready || entered) { return }
-
-    setTimeout(() => setEntered(true), 50 * index)
-  }, [ready, entered, index])
 
   return (
     <div className={`ceremony ${entering ? 'entering' : ''} ${entered ? 'entered' : ''}`} onClick={() => setEditingCeremonyId(id)}>

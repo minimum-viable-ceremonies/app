@@ -12,9 +12,12 @@ import SetupRoom from "./setupRoom"
 import SetupCeremony from "./setupCeremony"
 import EditCeremony from "./editCeremony"
 import ShareRoom from "./shareRoom"
+import ShareEmail from "./shareEmail"
+import ShareSlack from "./shareSlack"
 import Context from "../contexts/room"
 import useRoomContext from "../hooks/useRoomContext"
-import roomTable from "../firebase/db/room"
+import { createRoom } from "../operations/room"
+import { share } from "../operations/share"
 
 const Room = ({ uuid }) => {
   const context = useRoomContext(uuid)
@@ -70,7 +73,7 @@ const Room = ({ uuid }) => {
         open={context.editingRoom}
         initialModel={draft}
         close={context.setEditingRoomId}
-        submit={room => roomTable.create(room).then(() => context.setup(room.uuid))}
+        submit={room => createRoom(room).then(() => context.setup(room.uuid))}
         steps={[{
           next: "setup.controls.okGotIt",
         }, {
@@ -129,8 +132,34 @@ const Room = ({ uuid }) => {
       />
       <Modal
         Content={ShareRoom}
-        open={context.sharingRoom}
-        close={context.setSharingRoomId}
+        open={context.share === 'room'}
+        close={context.setShare}
+      />
+      <Modal
+        Content={ShareEmail}
+        open={context.share === 'email'}
+        close={context.setShare}
+        steps={[{
+          next: "setup.controls.next",
+        }, {
+          next: "common.share",
+          back: "setup.controls.back"
+        }]}
+        initialModel={{ method: 'email' }}
+        submit={model => share(model).then(context.setShare)}
+      />
+      <Modal
+        Content={ShareSlack}
+        open={context.share === 'slack'}
+        close={context.setShare}
+        steps={[{
+          next: "setup.controls.next",
+        }, {
+          next: "common.share",
+          back: "setup.controls.back"
+        }]}
+        initialModel={{ method: 'slack' }}
+        submit={model => share(model).then(context.setShare)}
       />
     </Context.Provider>
   )

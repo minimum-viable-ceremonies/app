@@ -11,6 +11,10 @@ board:
   addSprintHelptext: Add another week to your sprint
   removeSprint: 🗑️ Remove sprint week
   removeSprintHelptext: Remove the second week from your sprint
+  share: Share 🎁
+  shareHelptext: Share your results with your team
+  finish: Finish 🏁
+  finishHelptext: Complete this session
 cadences:
   undecided:
     name: Ceremonies
@@ -358,6 +362,7 @@ common:
   to: to
   copy: Copy
   save: Save
+  share: Share results
   clickEdit: Click to edit
 intro:
   welcome: Welcome to Minimum Viable Ceremonies!
@@ -483,10 +488,12 @@ shareCard:
     title: Share via email
     description: Add email address to share.
     submit: Add Recipients
+    helptext: Add a list of recipients to receive your results
   slack:
     title: Share on Slack
     description: Share to a Slack channel
     submit: Connect Slack
+    helptext: Select a channel to share your results to
 sidebar:
   collapse: Collapse the sidebar
   expand: Expand the sidebar

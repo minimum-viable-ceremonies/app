@@ -6,7 +6,6 @@ import useRoomModifiers from "./useRoomModifiers"
 import useRoomRefs from "./useRoomRefs"
 
 import { document } from "browser-monads"
-import { bulkTransfer } from "../operations/ceremonies"
 
 const useRoomContext = (id, draft) => {
   const [uuid, setUuid] = useState(id)
@@ -68,13 +67,6 @@ const useRoomContext = (id, draft) => {
 
   const shareableLink = useMemo(() => `${document.location.origin}/room/${uuid}`, [uuid])
 
-  const shareTo = method => {
-    switch(method) {
-      case 'email': console.log('email!')
-      case 'slack': console.log('slack!')
-    }
-  }
-
   return {
     ...auth,
     ...modifiers,
@@ -84,7 +76,6 @@ const useRoomContext = (id, draft) => {
     uuid, draft, ready, loading,
     organization, name, weekCount, ceremonies, participants,
     shareableLink,
-    shareTo,
     features,
     toast, showToast: (message, length = 2500) => {
       clearTimeout(toast.timeout)

@@ -139,26 +139,40 @@ const Room = ({ uuid }) => {
         Content={ShareEmail}
         open={context.share === 'email'}
         close={context.setShare}
+        styles={{
+          top: "auto",
+          left: "auto",
+          right: "auto",
+          bottom: "auto",
+          width: "auto",
+          height: "auto"
+        }}
+        initialModel={{ uuid: context.uuid, method: 'email', recipients: [] }}
         steps={[{
-          next: "setup.controls.next",
-        }, {
           next: "common.share",
-          back: "setup.controls.back"
+          canProceed: model => model.recipients.length > 0
         }]}
-        initialModel={{ method: 'email' }}
+        singleControl={true}
         submit={model => share(model).then(context.setShare)}
       />
       <Modal
         Content={ShareSlack}
         open={context.share === 'slack'}
         close={context.setShare}
+        styles={{
+          top: "auto",
+          left: "auto",
+          right: "auto",
+          bottom: "auto",
+          width: "auto",
+          height: "auto"
+        }}
         steps={[{
-          next: "setup.controls.next",
-        }, {
           next: "common.share",
-          back: "setup.controls.back"
+          canProceed: model => model.channel
         }]}
-        initialModel={{ method: 'slack' }}
+        initialModel={{ uuid: context.uuid, method: 'slack' }}
+        singleControl={true}
         submit={model => share(model).then(context.setShare)}
       />
     </Context.Provider>

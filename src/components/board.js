@@ -61,8 +61,8 @@ const Board = () => {
                 position="left"
                 disabled={!shareable && explosions > 0}
                 onClick={() => shareable ? setShare('room') : bulkPlace('undecided', 'void')}
-                text={t(`board.${shareable ? 'share' : 'finished'}`)}
-                tooltip={t(`board.${shareable ? 'share' : 'finished'}Helptext`)}
+                text={t(`board.${shareable ? 'share' : 'finish'}`)}
+                tooltip={t(`board.${shareable ? 'share' : 'finish'}Helptext`)}
               />
             </div>
           </div>

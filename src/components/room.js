@@ -11,9 +11,13 @@ import EditUser from "./editUser"
 import SetupRoom from "./setupRoom"
 import SetupCeremony from "./setupCeremony"
 import EditCeremony from "./editCeremony"
+import ShareRoom from "./shareRoom"
+import ShareEmail from "./shareEmail"
+import ShareSlack from "./shareSlack"
 import Context from "../contexts/room"
 import useRoomContext from "../hooks/useRoomContext"
-import roomTable from "../firebase/db/room"
+import { createRoom } from "../operations/room"
+import { share } from "../operations/share"
 
 const Room = ({ uuid }) => {
   const context = useRoomContext(uuid)
@@ -30,13 +34,13 @@ const Room = ({ uuid }) => {
       <Board />
       <Modal
         Content={Loading}
-        open={!context.ready}
+        open={context.loading}
         steps={[]}
         styles={{background: 'transparent', border: 0, boxShadow: 0}}
       />
       <Modal
         Content={SetupUser}
-        open={context.ready && !Object.keys(context.participants).includes(context.currentUser.uid)}
+        open={!context.loading && !Object.keys(context.participants).includes(context.currentUser.uid)}
         initialModel={{
           providers: context.features.providers,
           provider: context.currentUser.provider || context.features.providers[0] || 'anonymous',
@@ -69,7 +73,7 @@ const Room = ({ uuid }) => {
         open={context.editingRoom}
         initialModel={draft}
         close={context.setEditingRoomId}
-        submit={room => roomTable.create(room).then(() => context.setup(room.uuid))}
+        submit={room => createRoom(room).then(() => context.setup(room.uuid))}
         steps={[{
           next: "setup.controls.okGotIt",
         }, {
@@ -125,6 +129,59 @@ const Room = ({ uuid }) => {
         Content={EditUser}
         open={context.editingUser}
         close={context.setEditingUserId}
+      />
+      <Modal
+        Content={ShareRoom}
+        open={context.share === 'room'}
+        close={context.setShare}
+      />
+      <Modal
+        Content={ShareEmail}
+        open={context.share === 'sendgrid'}
+        close={context.setShare}
+        styles={{
+          top: "auto",
+          left: "auto",
+          right: "auto",
+          bottom: "auto",
+          width: "auto",
+          height: "auto"
+        }}
+        initialModel={{ uuid: context.uuid, method: 'sendgrid', recipients: [{
+          name: 'James K', email: 'james.kiesel@gmail.com',
+        }] }}
+        steps={[{
+          next: "common.share",
+          canProceed: model => model.recipients.length > 0
+        }]}
+        singleControl={true}
+        submit={model => share(model).then(() => {
+          context.setShare(false)
+          context.showToast(`sendgrid.success`, { count: model.recipients.length })
+        })}
+      />
+      <Modal
+        Content={ShareSlack}
+        open={context.share === 'slack'}
+        close={context.setShare}
+        styles={{
+          top: "auto",
+          left: "auto",
+          right: "auto",
+          bottom: "auto",
+          width: "auto",
+          height: "auto"
+        }}
+        steps={[{
+          next: "common.share",
+          canProceed: model => model.channel
+        }]}
+        initialModel={{ uuid: context.uuid, method: 'slack' }}
+        singleControl={true}
+        submit={model => share(model).then(() => {
+          context.setShare(false)
+          context.showToast(`slack.success`)
+        })}
       />
     </Context.Provider>
   )

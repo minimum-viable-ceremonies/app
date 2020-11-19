@@ -693,6 +693,21 @@ pre tt:after {
   }
 }
 
+.btn-arrow {
+  &:after {
+    content: "→";
+    position: relative;
+    left: 0;
+    color: white;
+    padding-left: 4px;
+    transition: all 300ms ease 0s;
+
+  }
+  &:hover {
+    &:after { left: 4px; }
+  }
+}
+
 .btn-secondary {
   background: $warm-grey-000;
   color: $grey-darker;
@@ -787,18 +802,6 @@ pre tt:after {
     border-radius: 100% !important;
     max-height: 24px;
     max-width: 24px;
-  }
-}
-
-.mvc-entrance {
-  transition: all 0.4s ease-in-out;
-  position: relative;
-  opacity: 0;
-
-  &.entered {
-    bottom: 0;
-    left: 0;
-    opacity: 1;
   }
 }
 
@@ -897,7 +900,7 @@ pre tt:after {
 
   &__Content {
     top: 8vh !important;
-    height: 80vh !important;
+    max-height: 80vh !important;
     transition: 0.2s ease-in-out;
     border-radius: 4px;
 

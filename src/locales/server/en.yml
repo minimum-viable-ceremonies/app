@@ -1,0 +1,32 @@
+---
+slack:
+  help:
+    message: Type `/mvc [room name] in order to share a link to start your planning process meeting 🙃
+  success:
+    message: "@{{user_name}} started a process planning room!"
+    button: Get started 🙃
+  errors:
+    400: "Sorry, something went wrong: {{errors}}"
+    401: Missing query attribute 'code'
+    403: Couldn't verify that this request is from Slack!
+    422: Please name your room! Simply pass a name to the mvc slash command like `/mvc `
+common:
+  messages:
+    200: ok
+  errors:
+    name: Name is required
+    uuid: Uuuid is required
+    400: bad request
+templates:
+  share:
+    mvc: Minimum Viable Ceremonies
+    title: Congratulations! You made an agile process!
+    greeting: Congrats on completing your MVC session! 🎉
+    encouragement: Now that you've got your process sorted, all that's left is getting on with it.
+    team: This process was completed with {{teamName}} on {{date}}
+    results: Your results
+    noNotes: (No agenda set!)
+    async: Async
+    unsubscribe: Unsubscribe
+    unsubscribePreferences: Unsubscribe preferences
+    backToRoom: Back to room

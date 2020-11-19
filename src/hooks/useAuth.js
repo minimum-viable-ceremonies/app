@@ -1,25 +1,21 @@
-import { useMemo } from "react"
+import { useMemo } from 'react'
 import firebase from "gatsby-plugin-firebase"
 import providerData from "../data/providers"
 
-const useFirebaseAuth = ({ setReady }) => {
+export default transition => {
   const auth = useMemo(() => firebase.auth && firebase.auth(), [])
-  const signIn = provider => {
-    setReady(false)
+  const signIn = transition(provider => {
     if (auth.currentUser) { return Promise.resolve({ user: auth.currentUser }) }
     auth.useDeviceLanguage()
     auth.setPersistence('local')
 
     return providerData[provider].signIn()
-  }
+  })
   const signOut = () => auth.signOut()
   const updateUser = attrs => auth.updateCurrentUser(attrs)
 
   return {
-    currentUser: (auth && auth.currentUser) || {},
     signIn, signOut,
-    updateUser,
+    updateUser, currentUser: auth.currentUser || {}
   }
 }
-
-export default useFirebaseAuth

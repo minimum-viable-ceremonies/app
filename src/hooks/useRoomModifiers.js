@@ -2,9 +2,11 @@ import { useState } from "react"
 
 import roomTable from "../firebase/db/room"
 import organizationTable from "../firebase/db/organization"
+import { rearrange, transfer, bulkTransfer } from "../operations/ceremonies"
 
-const useRoomModifiers = ({
+const useRoomModifiers = (transition, {
   uuid,
+  celebrating, setCelebrating,
   ceremonies, setCeremonies,
   participants, setParticipants,
   setName, setWeekCount, setFeatures
@@ -22,6 +24,11 @@ const useRoomModifiers = ({
 
   const [editingCeremonyId, setEditingCeremonyId] = useState()
   const editingCeremony = ceremonies[editingCeremonyId]
+
+  const [activeCadenceId, setActiveCadenceId] = useState()
+  const activeCadence = activeCadenceId
+
+  const [share, setShare] = useState()
 
   const modifyRoom = (attrs, syncDb = true) => {
     attrs.name && setName(attrs.name)
@@ -52,6 +59,22 @@ const useRoomModifiers = ({
     setFeatures(current => ({ ...current, updated }))
   }
 
+  const resolvePlacement = updated => {
+    const result = { ...ceremonies, ...updated }
+    const startCelebrating = !celebrating &&
+      Object.values(ceremonies).some(c => c.placement === 'undecided') &&
+      !Object.values(result).some(c => c.placement === 'undecided')
+
+    setCeremonies(result)
+
+    if (startCelebrating) {
+      setCelebrating(true)
+      setTimeout(() => roomTable.write(uuid, 'ceremonies', result), 25)
+    } else {
+      roomTable.write(uuid, 'ceremonies', result)
+    }
+  }
+
   const placedOn = cadence => Object.values(ceremonies).filter(c => c.placement === cadence)
   const place = ({ draggableId, source, destination }) => {
     if (
@@ -59,31 +82,15 @@ const useRoomModifiers = ({
       (source.droppableId === destination.droppableId && source.index === destination.index)
     ) { return }
 
-    const filter = ceremony => ceremony.id !== draggableId
-    const sort   = (a,b) => b.index < a.index ? 1 : -1
-    const reduce = (result, ceremony) => ({ ...result, [ceremony.id]: ceremony })
-    const map    = (ceremony, index) => ({ ...ceremony, index })
+    resolvePlacement(source.droppableId === destination.droppableId
+      ? rearrange(ceremonies, draggableId, destination.index)
+      : transfer(ceremonies, draggableId, destination.droppableId, destination.index)
+    )
+  }
 
-    const updated = source.droppableId === destination.droppableId
-      ? placedOn(source.droppableId)
-          .filter(filter)
-          .concat({ ...ceremonies[draggableId], index: destination.index + (destination.index > source.index ? 0.5 : -0.5) })
-          .sort(sort)
-          .map(map)
-          .reduce(reduce, {})
-      : [
-        ...placedOn(source.droppableId)
-          .filter(filter)
-          .sort(sort)
-          .map(map),
-        ...placedOn(destination.droppableId)
-          .concat({ ...ceremonies[draggableId], placement: destination.droppableId, index: destination.index })
-          .sort(sort)
-          .map(map),
-      ].reduce(reduce, {})
-
-    roomTable.write(uuid, 'ceremonies', { ...ceremonies, ...updated })
-    setCeremonies(current => ({ ...current, ...updated }))
+  const bulkPlace = (from, to, index = 1000) => {
+    setActiveCadenceId(to)
+    resolvePlacement(bulkTransfer(ceremonies, from, to, index))
   }
 
   const setupRoom = () =>
@@ -103,10 +110,12 @@ const useRoomModifiers = ({
     editingUser, setEditingUserId, modifyParticipant,
     editingCeremony, setEditingCeremonyId, modifyCeremony,
     creatingCeremony, setCreatingCeremonyId,
+    activeCadence, setActiveCadenceId,
+    share, setShare,
     modifyFeature,
     setupRoom, teardownRoom,
     setupOrganization, teardownOrganization,
-    place, placedOn
+    place, bulkPlace, placedOn
   }
 }
 

@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react"
 
-import useFirebaseAuth from "./useFirebaseAuth"
+import useAuth from "./useAuth"
+import useTransition from "./useTransition"
 import useRoomModifiers from "./useRoomModifiers"
 import useRoomRefs from "./useRoomRefs"
 
@@ -11,70 +12,55 @@ const useRoomContext = (id, draft) => {
   const [name, setName] = useState("")
   const [organization, setOrganization] = useState({})
   const [ready, setReady] = useState(false)
-  const [complete, setComplete] = useState(false)
+  const [celebrating, setCelebrating] = useState(false)
   const [toast, setToast] = useState({ visible: false, message: '' })
   const [weekCount, setWeekCount] = useState(1)
   const [participants, setParticipants] = useState({})
   const [features, setFeatures] = useState({ providers: [] })
   const [ceremonies, setCeremonies] = useState({})
 
-  const auth = useFirebaseAuth({ setReady })
+  const { loading, transition } = useTransition(true)
   const refs = useRoomRefs()
-  const modifiers = useRoomModifiers({
+  const auth = useAuth(transition)
+  const modifiers = useRoomModifiers(transition, {
     uuid,
+    celebrating, setCelebrating,
     ceremonies, setCeremonies,
     participants, setParticipants,
     setName, setWeekCount, setFeatures
   })
 
-  const setup = uuid => {
-    setReady(false)
-    setUuid(uuid)
+  const setup = transition(uuid => (
+    setUuid(uuid) || modifiers.setupRoom().then(roomState => (
+      modifiers.setupOrganization(roomState.organizationUuid).then(orgState => {
+        setFeatures(current => ({ ...current, ...orgState.features, ...roomState.features }))
+        modifiers.setActiveCadenceId('undecided')
 
-    modifiers.setupRoom().then(state => {
-      setFeatures(current => ({ ...current, ...state.features }))
+        if (roomState.requiresLogin) { return Promise.resolve(true) }
 
-      if (state.requiresLogin) {
-        setReady(true)
-        return
-      }
-
-      setUuid(state.uuid)
-      setName(state.name)
-      setWeekCount(state.weekCount)
-      setCeremonies(state.ceremonies || {})
-      setParticipants(state.participants || {})
-
-      modifiers.setupOrganization(state.organizationUuid).then(state => {
-        const { uuid, name, image } = state
-        setOrganization({ uuid, name, image })
-        setFeatures(current => ({ ...current, ...state.features }))
+        setUuid(roomState.uuid)
+        setName(roomState.name)
+        setWeekCount(roomState.weekCount)
+        setCeremonies(roomState.ceremonies || {})
+        setParticipants(roomState.participants || {})
+        setOrganization({ uuid: orgState.uuid, name: orgState.name, image: orgState.image })
         setReady(true)
       })
-    })
-  }
-
-  useEffect(() => {
-    if (
-      !complete &&
-      ceremonies.length > 0 &&
-      Object.values(ceremonies).filter(c => c.placement === 'undecided').length === 0
-    ) { setComplete(true) }
-  }, [ceremonies, complete])
+    ))
+  ))
 
   useEffect(() => {
     if (weekCount !== 1) { return }
 
-    Object.values(ceremonies).filter(({ placement }) => (
-      ['monday-2', 'tuesday-2', 'wednesday-2', 'thursday-2', 'friday-2'].includes(placement)
-    )).map(({ id, placement, index }) => (
-      modifiers.place({
-        draggableId: id,
-        source: { droppableId: placement, index },
-        destination: { droppableId: 'undecided', index: -0.5 }
-      })
-    ))
-  }, [weekCount, ceremonies, modifiers])
+    [
+      'monday-2',
+      'tuesday-2',
+      'wednesday-2',
+      'thursday-2',
+      'friday-2'
+    ].filter(cadence => modifiers.placedOn(cadence).length > 0)
+     .forEach(cadence => modifiers.bulkPlace(cadence, 'undecided', 0))
+  }, [weekCount])
 
   useEffect(() => () => modifiers.teardownRoom, [modifiers.teardownRoom])
   useEffect(() => () => modifiers.teardownOrganization, [modifiers.teardownOrganization])
@@ -86,13 +72,14 @@ const useRoomContext = (id, draft) => {
     ...modifiers,
     ...refs,
     setup,
-    uuid, draft, complete, ready,
+    celebrating, setCelebrating,
+    uuid, draft, ready, loading,
     organization, name, weekCount, ceremonies, participants,
     shareableLink,
     features,
-    toast, showToast: (message, length = 2500) => {
+    toast, showToast: (message, options = {}, length = 3000) => {
       clearTimeout(toast.timeout)
-      setToast({ message, visible: true, timeout: (
+      setToast({ message, options, visible: true, timeout: (
         setTimeout(() => setToast(toast => ({ ...toast, visible: false })), length)
       ) })
     }

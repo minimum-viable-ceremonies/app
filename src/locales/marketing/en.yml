@@ -1,0 +1,200 @@
+---
+common:
+  makeRoom: Make a room
+  roomUrl: https://mvc.minimal.cards
+  go: Go
+  updated: Updated on {{timestamp}}
+  tryAgain: Try again
+header:
+  features: Features
+  learning: Learn
+  pricing: Pricing
+hero:
+  title: Free agile process planning tool
+  subtitle: For teams to build a Minimum Viable Ceremony process
+what:
+  title: Simple & Effective
+  subtitle: The easiest way to find the optimal agile process to suit any team.
+who:
+  title: For all teams
+  subtitle: Every team is unique. Minimum Viable Ceremonies helps all types of teams pick the most efficient process to increase impact and reduce waste.
+  new: Newly Formed Teams
+  changing: New or Changing Members
+  strong: Strong & Steady Teams
+testimonials:
+  one:
+    text: This is so great. We loved using MVC for figuring how we want to run agile in our teams
+    name: Joe Blogs
+    title: https://wark.com
+    avatar: https://image.com/image.jpg
+  two:
+    text: This is so great. We loved using MVC for figuring how we want to run agile in our teams
+    name: Joe Blogs
+    title: https://wark.com
+    avatar: https://image.com/image.jpg
+  three:
+    text: This is so great. We loved using MVC for figuring how we want to run agile in our teams
+    name: Joe Blogs
+    title: https://wark.com
+    avatar: https://image.com/image.jpg
+  four:
+    text: This is so great. We loved using MVC for figuring how we want to run agile in our teams
+    name: Joe Blogs
+    title: https://wark.com
+    avatar: https://image.com/image.jpg
+how:
+  title: Build a Minimum Viable Ceremony
+  subtitle: Start with our list of optimized, battle-tested, and proven ceremonies. Or make your own.
+  description: "Build a Minimum Viable Ceremony that has at least one ceremony across these 4 themes:"
+  themes:
+    -
+      title: Coordination
+      description: Description for coordination
+    -
+      title: Delivery
+      description: Description for delivery
+    -
+      title: Innovation
+      description: Description for innovation
+    -
+      title: Culture
+      description: Description for culture
+  cards:
+    -
+      name: Ready to get started?
+    -
+      name: Team retreat
+      icon: '🏝'
+      theme: culture
+      sub-heading: Bond as a team away from the office
+      description: |
+        A Team Retreat is an all-day or multi-day, off-site activity which creates the space for the team to connect and strategize.
+
+        Agenda items may include:
+          -  Horizon planning
+          - Assumptions Mapping
+          - Team Building
+    -
+      name: Demo
+      icon: '🎉'
+      theme: coordination
+      sub-heading: Celebrate how awesome your team is
+      description: |
+        A Demo is an opportunity for people to share what they have accomplished recently with the team. It gives people a chance to receive acknowledgement for their work and to share learnings.
+
+        Each person can share a small presentation, a video clip of what they've been working on, or just give a status update.
+    -
+      name: Design review
+      icon: '🖍'
+      theme: delivery
+      sub-heading: Get designs ready for dev
+      description: |
+        Design Reviews bring developers, managers, and other team members together have to review the in-progress designs before they go into the build pipeline.
+
+        Designs are often checked for technical considerations like component libraries, technical debt, completeness of design, or application architecture.
+    -
+      name: Hackathon
+      icon: '🍕'
+      theme: innovation
+      sub-heading: It's work. With pizza!
+      description: |
+        The people who build the product have excellent ideas for ways to improve it.  Giving team members time to explore those ideas can result in:
+          - a quick-win feature,
+          - a prototype for a future direction that hasn't been considered yet, or
+          - an excellent learning opportunity.
+    -
+      name: Stand-up
+      icon: '👋'
+      theme: coordination
+      sub-heading: What are you going to work on?
+      description: |
+        Stand-ups are used to give status updates about current work-in-progress.
+
+        Team members can answer these questions:
+          - What have you worked on since the last stand-up?
+          - What do you plan to work on next?
+          - Do you have any work that can't be progressed forwards and why?
+features:
+  -
+    title: Facilitate
+    description: Share the facilitation role across members of the team to increase engagement.
+  -
+    title: Schedule
+    description: Agree quickly and effectively on a process that works for everyone. Pick the time and format for every meeting.
+  -
+    title: Share
+    description: Make sure everyone is on the same page. Track your progress.
+getStarted:
+  title: Get Started Now
+  subtitle: Make a room for free.
+footer:
+  contact: Contact us
+  contactEmail: hey@minimal.cards
+  company: Company
+  about: About
+  blog: Articles
+  pricing: Pricing
+  notes: Release notes
+  legal: Legal
+  terms: Terms & Conditions
+  privacy: Privacy policy
+  copyright: '© 2020 Minimum Viable Ceremonies'
+newsletter:
+  header: Stay up to date
+  helptext: Get updates on our progress. We won't spam you!
+  placeholder: you@example.com
+  success: We'll be in touch soon! 🙃
+  failure: That doesn't look like a valid email address! 😭
+themes:
+  coordination:
+    name: Coordination
+    description: Coordination ceremonies are all about getting people on the same page and communicating better.
+  culture:
+    name: Culture
+    description: Happy people thrive with good culture. Culture ceremonies focus on people instead of process.
+  delivery:
+    name: Delivery
+    description: Delivery ceremonies are essential for optimizing efficiency and getting 💩done.
+  innovation:
+    name: Innovation
+    description: Stay relevant. Grow and explore new ideas with innovation ceremonies.
+legal:
+  title: Legal
+  helptext: "TL;DR: We don't own or sell your data, and you can download or delete it at any time. Please get in touch if you're concerned 🙃"
+articles:
+  learning:
+    title: Minimal Learnings ✨
+    text: People are the hardest part of working in a team. That’s why we're here to help. Explore articles to learn about building strong culture.
+  resources:
+    title: Articles
+    text: Resources, best practices, and more!
+  updates:
+    title: Updates
+    text: Updates from the team at Minimum Viable Ceremonies
+slack:
+  install:
+    title: Let's get started!
+    helptext: Start free-to-use rooms easily from your Slack channel. Get everyone involved by messaging them where they are already!
+    callToAction: Add MVC to your Slack team
+  success:
+    title: Congratulations!
+    helptext: You've successfully installed MVC to your Slack workspace. 🥳
+    instruction: "To get started, type the following into any channel in your workspace:"
+    code: /mvc [Your room name]
+  failure:
+    title: Oops!
+    helptext: Something went wrong with that request, sorry! Please give it another go.
+help:
+  title: Having trouble?
+  description: Sorry about that! We're here to help! Feel free to send us a message, we'll get to the bottom of it together 🥳
+  emailUs: Don't trust that mysterious box over there? You can also reach us via email at
+metadata:
+  site:
+    title: Minimum Viable Ceremonies
+    url: https://minimal.cards/
+  home:
+    title: Free Process Planning Tool for Agile Teams
+    description: Stop hating meetings. Build a lean, agile process that works perfectly for your team. It's free!
+  404:
+    title: 404 not found
+    description: Soz friend you are lost :/

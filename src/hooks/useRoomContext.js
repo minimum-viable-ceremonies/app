@@ -77,9 +77,9 @@ const useRoomContext = (id, draft) => {
     organization, name, weekCount, ceremonies, participants,
     shareableLink,
     features,
-    toast, showToast: (message, length = 2500) => {
+    toast, showToast: (message, options = {}, length = 3000) => {
       clearTimeout(toast.timeout)
-      setToast({ message, visible: true, timeout: (
+      setToast({ message, options, visible: true, timeout: (
         setTimeout(() => setToast(toast => ({ ...toast, visible: false })), length)
       ) })
     }

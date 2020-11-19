@@ -7,11 +7,11 @@ import "../styles/toast.scss"
 
 const Toast = ({ theme }) => {
   const { t } = useTranslation()
-  const { toast: { visible, message } } = useContext(Context)
+  const { toast: { visible, message, options } } = useContext(Context)
 
   return (
     <label className={`toast ${visible ? 'visible' : ''}`}>
-      {t(`toast.${message}`)}
+      {t(`toast.${message}`, options)}
     </label>
   )
 }

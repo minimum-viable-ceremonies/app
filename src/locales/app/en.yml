@@ -622,6 +622,11 @@ hours:
   1395: 11:15 PM
   1410: 11:30 PM
   1425: 11:45 PM
+toast:
+  slack:
+    success: Successfully shared to Slack 🙃
+  sendgrid:
+    success: Successfully notified {{count}} people by email 🙃
 metadata:
   site:
     title: Minimum Viable Ceremonies

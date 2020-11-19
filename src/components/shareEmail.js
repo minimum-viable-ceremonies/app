@@ -1,17 +1,20 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
+import Select from "react-select"
 import { useTranslation } from "react-i18next"
 
 import Context from "../contexts/modal"
 
-const ShareEmail = () => {
-  const { currentStep } = useContext(Context)
+const ShareSlack = () => {
+  const { currentStep, nextStep, setModel } = useContext(Context)
   const { t } = useTranslation()
 
   return (
-    <div className="flex-grow flex items-center justify-center">
-      <div>WARK</div>
+    <div className="flex-grow">
+      <h1 className="mb-4">{t("shareCard.slack.title")}</h1>
+      <p className="mb-8">{t("shareCard.slack.helptext")}</p>
+      <p>(enter recipients here)</p>
     </div>
   )
 }
 
-export default ShareEmail
+export default ShareSlack

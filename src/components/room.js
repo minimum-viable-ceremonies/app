@@ -147,13 +147,19 @@ const Room = ({ uuid }) => {
           width: "auto",
           height: "auto"
         }}
-        initialModel={{ uuid: context.uuid, method: 'email', recipients: [] }}
+        initialModel={{ uuid: context.uuid, method: 'sendgrid', recipients: [{
+          name: 'James K', email: 'james.kiesel@gmail.com',
+        }] }}
         steps={[{
           next: "common.share",
           canProceed: model => model.recipients.length > 0
         }]}
         singleControl={true}
-        submit={model => share(model).then(context.setShare)}
+        submit={model => share(model).then(() => {
+          context.setShare(false)
+          console.log('wark!')
+          context.showToast(`sendgrid.success`, { count: model.recipients.length })
+        })}
       />
       <Modal
         Content={ShareSlack}
@@ -173,7 +179,10 @@ const Room = ({ uuid }) => {
         }]}
         initialModel={{ uuid: context.uuid, method: 'slack' }}
         singleControl={true}
-        submit={model => share(model).then(context.setShare)}
+        submit={model => share(model).then(() => {
+          context.setShare(false)
+          context.showToast(`slack.success`)
+        })}
       />
     </Context.Provider>
   )

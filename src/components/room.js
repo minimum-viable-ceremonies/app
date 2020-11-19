@@ -137,7 +137,7 @@ const Room = ({ uuid }) => {
       />
       <Modal
         Content={ShareEmail}
-        open={context.share === 'email'}
+        open={context.share === 'sendgrid'}
         close={context.setShare}
         styles={{
           top: "auto",
@@ -157,7 +157,6 @@ const Room = ({ uuid }) => {
         singleControl={true}
         submit={model => share(model).then(() => {
           context.setShare(false)
-          console.log('wark!')
           context.showToast(`sendgrid.success`, { count: model.recipients.length })
         })}
       />

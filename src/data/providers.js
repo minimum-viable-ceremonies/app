@@ -15,5 +15,5 @@ export default {
   slack: {
     logo: SlackLogo
   },
-  email: {}
+  sendgrid: {}
 }

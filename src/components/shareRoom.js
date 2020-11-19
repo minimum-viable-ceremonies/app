@@ -12,7 +12,7 @@ const ShareRoom = () => {
         <h2 className="mb-4">{t(`shareRoom.title`)}</h2>
         <p className="mb-12">{t(`shareRoom.description`)}</p>
         <div className="flex flex-row">
-          <ShareCard method="email" />
+          <ShareCard method="sendgrid" />
           <ShareCard method="slack" />
         </div>
       </div>

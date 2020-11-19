@@ -483,7 +483,7 @@ shareRoom:
   title: Share and save your results
   description: Share a summary of the board. This includes an overview of the ceremonies that are scheduled in a sprint or cadence.
 shareCard:
-  email:
+  sendgrid:
     icon: '✨'
     title: Share via email
     description: Add email address to share.

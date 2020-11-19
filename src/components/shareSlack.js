@@ -22,11 +22,13 @@ const ShareSlack = () => {
     <div className="flex-grow">
       <h1 className="mb-4">{t("shareCard.slack.title")}</h1>
       <p className="mb-8">{t("shareCard.slack.helptext")}</p>
-      <Select
-        options={channels}
-        defaultValue={channels[0]}
-        onChange={({ value }) => setModel(model => ({ ...model, channel: value }))}
-      />
+      <div className="mb-16">
+        <Select
+          options={channels}
+          defaultValue={channels[0]}
+          onChange={({ value }) => setModel(model => ({ ...model, channel: value }))}
+        />
+      </div>
     </div>
   )
 }

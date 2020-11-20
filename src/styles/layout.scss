@@ -898,7 +898,7 @@ pre tt:after {
   &__Content {
     top: 8vh !important;
     max-height: 80vh !important;
-    width: 90vw !important;
+    max-width: 90vw !important;
     transition: 0.2s ease-in-out;
     border-radius: 4px;
 
